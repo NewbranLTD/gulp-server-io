@@ -1,0 +1,32 @@
+{
+  "generator-nodex": {
+    "promptValues": {
+      "authorName": "NEWBRAN.CH",
+      "authorEmail": "info@newbran.ch ",
+      "authorUrl": "https://newbran.ch"
+    },
+    "name": "gulp-server-io",
+    "description":
+      "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
+    "homepage": "https://newbran.ch",
+    "yarnInstalled": true,
+    "authorName": "NEWBRAN.CH",
+    "authorEmail": "info@newbran.ch ",
+    "authorUrl": "https://newbran.ch",
+    "keywords": [
+      "node",
+      "connect",
+      "server",
+      "livereload",
+      "socket.io",
+      "gulp",
+      "development",
+      "spa"
+    ],
+    "includeCoveralls": true,
+    "githubAccount": "NewbranLTD",
+    "setupNginx": false,
+    "installer": "yarnInstall",
+    "lang": "en"
+  }
+}
