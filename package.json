@@ -9,8 +9,8 @@
     "email": "info@newbran.ch ",
     "url": "https://newbran.ch"
   },
-  "files": ["src"],
-  "main": "src/index.js",
+  "files": ["src", "server.js"],
+  "main": "index.js",
   "keywords": [
     "node",
     "connect",
