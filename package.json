@@ -1,15 +1,17 @@
 {
   "name": "gulp-server-io",
   "version": "0.0.0",
-  "description":
-    "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
+  "description": "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
   "homepage": "https://newbran.ch",
   "author": {
     "name": "NEWBRAN.CH",
     "email": "info@newbran.ch",
     "url": "https://newbran.ch"
   },
-  "files": ["src", "server.js"],
+  "files": [
+    "src",
+    "server.js"
+  ],
   "main": "index.js",
   "keywords": [
     "node",
@@ -32,20 +34,31 @@
     "jest-cli": "^21.0.0",
     "lint-staged": "^4.3.0",
     "nsp": "^2.8.1",
-    "prettier": "^1.7.4"
+    "prettier": "^1.7.4",
+    "supertest": "^3.0.0"
   },
   "scripts": {
     "prepublishOnly": "nsp check",
     "pretest": "eslint . --fix",
     "precommit": "lint-staged",
-    "test": "jest"
+    "test": "jest",
+    "example": "node ./__tests__/examples/site.js"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"],
-    "*.json": ["prettier --write", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "eslintConfig": {
-    "extends": ["xo", "prettier"],
+    "extends": [
+      "xo",
+      "prettier"
+    ],
     "env": {
       "jest": true,
       "node": true
@@ -59,16 +72,22 @@
         }
       ]
     },
-    "plugins": ["prettier"]
+    "plugins": [
+      "prettier"
+    ]
   },
   "repository": "git@github.com:NewbranLTD/gulp-server-io.git",
   "jest": {
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["/fixtures/", "/examples/"]
+    "testPathIgnorePatterns": [
+      "/fixtures/",
+      "/examples/"
+    ]
   },
   "license": "MIT",
   "dependencies": {
+    "chalk": "^2.3.0",
     "connect": "^3.6.5",
-    "supertest": "^3.0.0"
+    "serve-static": "^1.13.1"
   }
 }
