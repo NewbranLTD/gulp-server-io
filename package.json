@@ -67,6 +67,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "connect": "^3.6.5"
+    "connect": "^3.6.5",
+    "supertest": "^3.0.0"
   }
 }
