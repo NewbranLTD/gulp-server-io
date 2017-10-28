@@ -9,8 +9,8 @@
     "email": "info@newbran.ch ",
     "url": "https://newbran.ch"
   },
-  "files": ["lib"],
-  "main": "lib/index.js",
+  "files": ["src"],
+  "main": "src/index.js",
   "keywords": [
     "node",
     "connect",
@@ -66,5 +66,7 @@
     "testEnvironment": "node"
   },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "connect": "^3.6.5"
+  }
 }
