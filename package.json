@@ -6,7 +6,7 @@
   "homepage": "https://newbran.ch",
   "author": {
     "name": "NEWBRAN.CH",
-    "email": "info@newbran.ch ",
+    "email": "info@newbran.ch",
     "url": "https://newbran.ch"
   },
   "files": ["src", "server.js"],
