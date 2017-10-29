@@ -16,17 +16,19 @@ const tinyLr = require('tiny-lr');
 const root = path.join(__dirname, '..', 'fixtures', 'app');
 const app = connect();
 const tinyLrSrv = tinyLr();
-const livereloadFn = require('../../src/lib/livereload.js');
+const livereloadFn = require('../../src/lib/connect-livereload.js');
+
+// Inject the livereload scripts
+app.use(livereloadFn());
+
 // Cache-Control: no-cache, must-revalidate
 app.use(
   serveStatic(root, {
     index: ['index.html', 'index.htm']
   })
 );
-app.use(livereloadFn());
-// Inject the livereload scripts
 
-// create server
+// Create server
 const server = http.createServer(app);
 
 server.listen(3001, () => {
@@ -44,7 +46,7 @@ const streamWatcher = bacon.fromBinder(sink => {
     };
   });
 });
-
+let start = false;
 streamWatcher
   .skipDuplicates(_.isEqual)
   .map('.path')
@@ -53,8 +55,13 @@ streamWatcher
     return a;
   })
   .debounce(300)
-  .subscribe(files => {
-    // Console.log('files', f);
+  .onValue(files => {
+    if (!start) {
+      // Skip the first one
+      start = true;
+      return;
+    }
+    console.log('change event fired');
     tinyLrSrv.changed({
       body: {
         files: files
