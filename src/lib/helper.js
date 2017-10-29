@@ -3,7 +3,7 @@
  * Breaking out from the livereload method
  * since most of this methods are standalone anyway
  */
-const prepand = function(w, s) {
+const prepend = function(w, s) {
   return s + w;
 };
 
@@ -25,7 +25,7 @@ exports.stockExcludeList = [
   /\.json(\?.*)?$/
 ];
 
-exports.stockRules = [
+const rules = [
   {
     match: /<\/body>(?![\s\S]*<\/body>)/i,
     fn: prepend
@@ -39,7 +39,9 @@ exports.stockRules = [
     fn: append
   }
 ];
- // Helper functions
+/**
+ * generate a regex for use later
+ */
 const regex = (function() {
   const matches = rules
     .map(function(item) {
@@ -48,8 +50,15 @@ const regex = (function() {
     .join('|');
     return new RegExp(matches, 'i');
 })();
-
-exports.snippet = function(src, host, port, plugins) {
+/**
+ * internal use only to inject the script
+ * @param {string} src
+ * @param {string} host
+ * @param {int} port
+ * @param {array} plugins
+ * @return {string} html
+ */
+const snippet = function(src, host, port, plugins) {
   const _src = src || '//' + host + ':' + port + '/livereload.js?snipver=1';
   return [_src]
     .concat(plugins)
@@ -58,34 +67,51 @@ exports.snippet = function(src, host, port, plugins) {
     })
     .join('');
 };
-
+/**
+ * @param {string} str
+ * @return {boolean} result  
+ */
 exports._html = function(str) {
   if (!str) {
     return false;
   }
   return /<[:_-\w\s\!\/\=\"\']+>/i.test(str);
 };
-
+/**
+ * @param {string} body
+ * @return {boolean} result
+ */
 exports.exists = function(body) {
   if (!body) {
     return false;
   }
   return regex.test(body);
 };
-
+/**
+ * @param {string} body
+ * @return {boolean} result
+ */
 exports.snip = function(body) {
   if (!body) {
     return false;
   }
   return ~body.lastIndexOf('/livereload.js');
 };
- // Src, host, port, plugins
+/**
+ * @param {string} body
+ * @param {string} host
+ * @param {array} rules
+ * @param {string} src
+ * @param {int} port
+ * @param {array} plugins
+ * @return {mixed} html or boolean
+ */
 exports.snap = function(body, host, rules, src, port, plugins) {
   let _body = body;
   rules.some(function(rule) {
     if (rule.match.test(body)) {
       _body = body.replace(rule.match, w => {
-        return rule.fn(w, exports.snippet(src, host, port, plugins));
+        return rule.fn(w, snippet(src, host, port, plugins));
       });
       return true;
     }
@@ -93,7 +119,10 @@ exports.snap = function(body, host, rules, src, port, plugins) {
   });
   return _body;
 };
-
+/**
+ * @param {object} req
+ * @return {boolean} result
+ */
 exports.accept = function(req) {
   let ha = req.headers.accept;
   if (!ha) {
@@ -101,7 +130,11 @@ exports.accept = function(req) {
   }
   return ~ha.indexOf('html');
 };
-
+/**
+ * @param {string} str
+ * @param {array} arr
+ * @return {boolean} result
+ */
 exports.check = function(str, arr) {
   if (!str) {
     return true;
@@ -114,8 +147,12 @@ exports.check = function(str, arr) {
   });
 };
 
-// more
-
+/**
+ * create a random number between two values, for creating a random port number
+ * @param {int} min
+ * @param {int} max
+ * @return {int} port
+ */
 exports.getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };

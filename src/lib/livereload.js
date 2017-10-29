@@ -1,16 +1,12 @@
 /* eslint-disable */
 const {
-  snippet,
-  prepand,
-  append,
   _html,
   exists,
   snip,
   snap,
   accept,
   check,
-  stockExcludeList,
-  stockRules
+  stockExcludeList
 } = require('./helper.js');
 /**
  * This is the core of the connect-live-reload, due to it's so dated.
