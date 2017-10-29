@@ -2,10 +2,10 @@
 /**
  * Middleware to serve up the client file
  */
-const _ = require('lodash');
 const fs = require('fs');
+const _ = require('lodash');
 const chalk = require('chalk');
-const join = require('path').join;
+const { join } = require('path');
 // Const gutil = require('gulp-util');
 const logutil = require('./log.js');
 // Note the config pass here now is not the full original object, just the config.debugger part

@@ -6,7 +6,7 @@ const jsonServer = require('json-server');
 const server = jsonServer.create();
 const middlewares = jsonServer.defaults();
 const logutil = require('./log.js');
-
+// Expect to return this server config for the proxies
 module.export = function(opt) {
   const router = jsonServer.router(opt.json);
   server.use(middlewares);

@@ -80,6 +80,7 @@
     "lodash": "^4.17.4",
     "opn": "^5.1.0",
     "reload": "^2.2.2",
+    "serve-index": "^1.9.1",
     "serve-static": "^1.13.1",
     "socket.io": "^2.0.4",
     "through2": "^2.0.3",

@@ -1,7 +1,11 @@
 /**
 * Create a default options to reduce the complexity of the main file
 */
+const path = require('path');
+const { version } = require('../../package.json');
+
 module.exports = {
+  version: version,
   /**
   * Basic options
   */
@@ -59,5 +63,7 @@ module.exports = {
     client: true, // Allow passing a configuration to overwrite the client
     server: true, // Allow passing configuration - see middleware.js for more detail
     log: false // See wiki for more info
-  }
+  },
+  devKeyPem: path.join(__dirname, '..', 'certs', 'cert.pem'),
+  devCrtPem: path.join(__dirname, '..', 'certs', 'cert.crt')
 };
