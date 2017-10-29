@@ -2,19 +2,50 @@
 
 > Create a static server, livereload and a socket.io debugger for your SPA development with gulp
 
+## Introduction
+
+
+
 ## Installation
 
 ```sh
-$ npm install --save gulp-server-io
+  $ npm install --save-dev gulp-server-io
+```
+
+Using yarn
+
+```sh
+  $ yarn add gulp-server-io --dev
 ```
 
 ## Usage
 
 ```js
+// gulpfile.js  
+const gulp = require('gulp');
 const gulpServerIo = require('gulp-server-io');
 
-gulpServerIo('Rainbow');
+gulp.task('serve', () => {
+  return gulp.src('./app')
+             .pipe(
+               gulpServerIo()
+             );
+});
+
 ```
+
+## Using the `server` as a quick deployable server option
+
+```js
+const server = require('gulp-server-io/server');
+const config = {};
+
+server(config);
+
+```
+
+You can combine with our [generator-nodex](https://github.com/NewbranLTD/generator-nodex) to create a `nginx` and `systemd` files.
+
 ## License
 
 MIT © [NEWBRAN.CH](https://newbran.ch)
