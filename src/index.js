@@ -1,4 +1,2 @@
 
-const http = require('./lib/socket.js');
-
-http();
+//const http = require('./lib/socket.js');

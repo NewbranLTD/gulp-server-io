@@ -6,3 +6,5 @@
  * const server = require('gulp-server-io/server');
  * neat!
  */
+const through = require('through2');
+const server = require('./src/lib/express.js');

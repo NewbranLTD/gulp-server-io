@@ -1,4 +1,5 @@
 # gulp-server-io [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
+
 > Create a static server, livereload and a socket.io debugger for your SPA development with gulp
 
 ## Installation

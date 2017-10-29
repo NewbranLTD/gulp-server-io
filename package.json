@@ -1,15 +1,17 @@
 {
   "name": "gulp-server-io",
   "version": "0.0.0",
-  "description":
-    "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
+  "description": "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
   "homepage": "https://newbran.ch",
   "author": {
     "name": "NEWBRAN.CH",
     "email": "info@newbran.ch",
     "url": "https://newbran.ch"
   },
-  "files": ["src", "server.js"],
+  "files": [
+    "src",
+    "server.js"
+  ],
   "main": "index.js",
   "keywords": [
     "node",
@@ -43,11 +45,20 @@
     "example": "node ./__tests__/examples/site.js"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"],
-    "*.json": ["prettier --write", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "eslintConfig": {
-    "extends": ["xo", "prettier"],
+    "extends": [
+      "xo",
+      "prettier"
+    ],
     "env": {
       "jest": true,
       "node": true
@@ -61,18 +72,29 @@
         }
       ]
     },
-    "plugins": ["prettier"]
+    "plugins": [
+      "prettier"
+    ]
   },
   "repository": "git@github.com:NewbranLTD/gulp-server-io.git",
   "jest": {
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["/fixtures/", "/examples/"]
+    "testPathIgnorePatterns": [
+      "/fixtures/",
+      "/examples/"
+    ]
   },
   "license": "MIT",
   "dependencies": {
+    "baconjs": "^0.7.95",
     "chalk": "^2.3.0",
+    "chokidar": "^1.7.0",
     "connect": "^3.6.5",
+    "express": "^4.16.2",
     "opn": "^5.1.0",
-    "serve-static": "^1.13.1"
+    "reload": "^2.2.2",
+    "serve-static": "^1.13.1",
+    "through2": "^2.0.3",
+    "tiny-lr": "^1.0.5"
   }
 }
