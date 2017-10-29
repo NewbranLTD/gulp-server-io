@@ -16,18 +16,20 @@ const defaultOptions = require('./options');
 const defaultProperties = ['directoryListing', 'livereload', 'debugger', 'mock'];
 // Modules
 const logutil = require('./lib/log');
-const lrServerSetup = require('./lib/tiny-lr');
 const mockServer = require('./lib/mock-server');
 const debuggerClient = require('./lib/debugger-middleware');
 const connectLivereload = require('./lib/connect-livereload');
 const enableMiddlewareShorthand = require('./lib/enable-middleware-shorthand');
-// Export
+/**
+ * Export
+ * @param {object} options
+ * @return {object} app and config for destructing
+ */
 module.exports = function(options = {}) {
   let config = enableMiddlewareShorthand(defaultOptions, options, defaultProperties);
   // Init the app
   const app = connect();
   // Properties
-  let urlToOpen = '';
   let lrServer = null;
   let addDebugger = false;
   let proxies = config.proxies;
@@ -59,8 +61,6 @@ module.exports = function(options = {}) {
         debugger: addDebugger
       })
     );
-    lrServer = lrServerSetup(config);
-    lrServer.listen(config.livereload.port, config.host);
   } else {
     // This should not happen but ...
     app.use(
@@ -88,7 +88,7 @@ module.exports = function(options = {}) {
   // Proxy requests
   proxies.forEach(proxyoptions => {
     if (!proxyoptions.target) {
-      logutil(chalk.red('MISSING target property for proxy setting!'));
+      logutil(chalk.red('Missing target property for proxy setting!'));
       return; // ignore!
     }
     let source = proxyoptions.source;
@@ -106,5 +106,5 @@ module.exports = function(options = {}) {
     );
   }
   // This is the end - we continue in the next level up
-  return app;
+  return { app, config };
 };

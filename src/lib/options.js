@@ -15,6 +15,7 @@ module.exports = {
   fallback: false,
   https: false,
   open: false,
+  indexes: ['index.html', 'index.htm'],
   /**
   * MIDDLEWARE DEFAULTS
   * NOTE:

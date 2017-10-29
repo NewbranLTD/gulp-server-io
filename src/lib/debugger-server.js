@@ -36,6 +36,7 @@ const getColor = function(data) {
  * @param {function} logger
  */
 module.exports = function(config, server, logger) {
+  logger = logger || logutil;
   let socketConfig = null;
   if (typeof config.ioDebugger.server === 'object') {
     if (config.ioDebugger.server.socketOnly) {
@@ -110,7 +111,6 @@ module.exports = function(config, server, logger) {
       }
     });
   }); // End configurable name space
-
   // finally we return the io object just the name space
   return namespace;
 };
