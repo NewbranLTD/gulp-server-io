@@ -75,11 +75,13 @@
     "chokidar": "^1.7.0",
     "connect": "^3.6.5",
     "express": "^4.16.2",
+    "gulp-util": "^3.0.8",
     "lodash": "^4.17.4",
     "opn": "^5.1.0",
     "reload": "^2.2.2",
     "serve-static": "^1.13.1",
     "through2": "^2.0.3",
-    "tiny-lr": "^1.0.5"
+    "tiny-lr": "^1.0.5",
+    "yargs": "^10.0.3"
   }
 }
