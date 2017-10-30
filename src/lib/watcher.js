@@ -9,7 +9,6 @@ const tinyLr = require('./tiny-lr-setup');
 // Export
 module.export = function(config) {
   let watcher;
-  let start = false;
   const tinyLrSrv = tinyLr(config);
   tinyLrSrv.listen(config.livereload.port, config.host);
   // Start the watch files with Bacon wrapper
@@ -34,15 +33,13 @@ module.export = function(config) {
     })
     .debounce(300)
     .onValue(files => {
-      if (!start) {
-        // Skip the first one
-        start = true;
-        return;
+      if (files.length) {
+        console.log('change event fired');
+        tinyLrSrv.changed({
+          body: {
+            files: files
+          }
+        });
       }
-      tinyLrSrv.changed({
-        body: {
-          files: files
-        }
-      });
     });
 };

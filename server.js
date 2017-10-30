@@ -9,6 +9,10 @@ const https = require('https');
 const server = require('./src');
 // Export
 module.export = function(options = {}) {
+  // We always overwrite it here to disable feature that shouldn't be use
+  options.livereload = false;
+  options.debugger = false;
+  // Generate the app 
   const { app, config } = server(options);
   let webserver;
   if (config.https) {

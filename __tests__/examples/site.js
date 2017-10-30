@@ -46,7 +46,7 @@ const streamWatcher = bacon.fromBinder(sink => {
     };
   });
 });
-let start = false;
+
 streamWatcher
   .skipDuplicates(_.isEqual)
   .map('.path')
@@ -56,15 +56,12 @@ streamWatcher
   })
   .debounce(300)
   .onValue(files => {
-    if (!start) {
-      // Skip the first one
-      start = true;
-      return;
+    if (files.length) {
+      console.log('change event fired');
+      tinyLrSrv.changed({
+        body: {
+          files: files
+        }
+      });
     }
-    console.log('change event fired');
-    tinyLrSrv.changed({
-      body: {
-        files: files
-      }
-    });
   });

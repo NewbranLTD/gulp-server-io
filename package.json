@@ -40,7 +40,8 @@
     "pretest": "eslint . --fix",
     "precommit": "lint-staged",
     "test": "jest",
-    "example": "node ./__tests__/examples/site.js"
+    "example": "node ./__tests__/examples/site.js",
+    "test1": "jest ./__tests__/server.test.js"
   },
   "lint-staged": {
     "*.js": ["eslint --fix", "git add"],

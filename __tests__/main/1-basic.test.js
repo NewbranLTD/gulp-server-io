@@ -5,7 +5,7 @@ const gutil = require('gulp-util');
 const File = gutil.File;
 const log = gutil.log;
 const join = require('path').join;
-const webserver = require('../../src/main.js');
+const webserver = require('../index.js');
 const {
   baseUrl,
   defaultPort,
@@ -16,7 +16,7 @@ const {
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const rootDir = new File({ path: join(__dirname, '..', 'fixtures') });
 // Test start
-describe('gulp-webserver-io stock test', () => {
+describe('gulp-server-io stock test', () => {
   // Setups
   let stream;
   afterEach(() => {

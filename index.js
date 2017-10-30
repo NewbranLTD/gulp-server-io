@@ -61,27 +61,7 @@ module.export = function(options = {}) {
     });
   // Start another part
   let webserver = null;
-  if (config.https) {
-    let opts;
-    if (config.https.pfx) {
-      opts = {
-        pfx: fs.readFileSync(config.https.pfx),
-        passphrase: config.https.passphrase
-      };
-    } else {
-      opts = {
-        key: fs.readFileSync(config.https.key || config.devKeyPem),
-        cert: fs.readFileSync(config.https.cert || config.devCrtPem)
-      };
-    }
-    webserver = https
-      .createServer(opts, app)
-      .listen(config.port, config.host, helper.openInBrowser(config));
-  } else {
-    webserver = http
-      .createServer(app)
-      .listen(config.port, config.host, helper.openInBrowser(config));
-  }
+  
   // Init our socket.io server
   let socket = null;
   if (config.debugger.enable && config.debugger.server !== false) {
