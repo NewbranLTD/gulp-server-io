@@ -1,71 +1,34 @@
-/* eslint no-useless-escape: 0 */
-'use strict';
+/* eslint no-unused-vars:0 */
+/**
+ * Express edition
+ */
 const open = require('opn');
-const path = require('path');
-const http = require('http');
-const chalk = require('chalk');
-
-const connect = require('connect');
-const serveStatic = require('serve-static');
-
-const chokidar = require('chokidar');
-const bacon = require('baconjs');
 const _ = require('lodash');
-const tinyLr = require('tiny-lr');
-
+const http = require('http');
+const path = require('path');
+const reload = require('reload');
+const logger = require('morgan');
+const express = require('express');
+const bodyParser = require('body-parser');
+// Properties
 const root = path.join(__dirname, '..', 'fixtures', 'app');
-const app = connect();
-const tinyLrSrv = tinyLr();
-const livereloadFn = require('../../src/lib/connect-livereload.js');
+const scriptInject = require('../../src/lib/script-inject');
+const options = require('../../src/lib/options');
+// Init
+const app = express();
+// Overwrite the config
+const config = _.extend({}, options, { debugger: false });
 
-// Inject the livereload scripts
-app.use(livereloadFn());
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(express.static(root));
+app.use(scriptInject(config));
 
-// Cache-Control: no-cache, must-revalidate
-app.use(
-  serveStatic(root, {
-    index: ['index.html', 'index.htm']
-  })
-);
+const server = http.createSever(app);
 
-// Create server
-const server = http.createServer(app);
+reload(app);
 
-server.listen(3001, () => {
-  console.log(chalk.yellow('Example server start @ 3001'));
-  open('http://localhost:3001');
+server.listen(3000, () => {
+  console.log('server start @ 3000');
+  open('http://localhost:3000');
 });
-let watcher;
-// Start the watch files with Bacon wrapper
-const streamWatcher = bacon.fromBinder(sink => {
-  watcher = chokidar.watch(root, { ignored: /(^|[\/\\])\../ });
-  watcher.on('all', (event, path) => {
-    sink({ event: event, path: path });
-    return () => {
-      watcher.unwatch(root);
-    };
-  });
-});
-let files = [];
-streamWatcher
-  .skipDuplicates(_.isEqual)
-  .map('.path')
-  .doAction(f => files.push(f))
-  /*
-  .scan([], (a, b) => {
-    a.push(b);
-    return a;
-  })
-  */
-  .debounce(300)
-  .onValue(files => {
-    if (files.length) {
-      console.log('change event fired', files);
-      tinyLrSrv.changed({
-        body: {
-          files: files
-        }
-      });
-      files = [];
-    }
-  });
