@@ -4,6 +4,22 @@
  * upgrade to ES6 syntax, and stop using the name export
  */
 module.exports = function(opt = {}) {
+
+  const prepend = function(w, s) {
+    return s + w;
+  };
+
+  const append = function(w, s) {
+    return w + s;
+  };
+
+  const _html = function(str) {
+    if (!str) {
+      return false;
+    }
+    return /<[:_-\w\s\!\/\=\"\']+>/i.test(str);
+  };
+
   const ignore = opt.ignore ||
     opt.excludeList || [
       /\.js(\?.*)?$/,
@@ -59,20 +75,7 @@ module.exports = function(opt = {}) {
     return new RegExp(matches, 'i');
   })();
 
-  const prepend = function(w, s) {
-    return s + w;
-  };
 
-  const append = function(w, s) {
-    return w + s;
-  };
-
-  const _html = function(str) {
-    if (!str) {
-      return false;
-    }
-    return /<[:_-\w\s\!\/\=\"\']+>/i.test(str);
-  };
 
   const exists = function(body) {
     if (!body) {

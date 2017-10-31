@@ -46,22 +46,26 @@ const streamWatcher = bacon.fromBinder(sink => {
     };
   });
 });
-
+let files = [];
 streamWatcher
   .skipDuplicates(_.isEqual)
   .map('.path')
+  .doAction(f => files.push(f))
+  /*
   .scan([], (a, b) => {
     a.push(b);
     return a;
   })
+  */
   .debounce(300)
   .onValue(files => {
     if (files.length) {
-      console.log('change event fired');
+      console.log('change event fired', files);
       tinyLrSrv.changed({
         body: {
           files: files
         }
       });
+      files = [];
     }
   });
