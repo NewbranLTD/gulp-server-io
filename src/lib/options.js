@@ -25,9 +25,9 @@ module.exports = {
   *      livereload: true
   *    });
   */
-  livereload: {
+  reload: {
     enable: true,
-    port: 35729, // GetRandomInt(35000, 40000), // Should create a random number each time
+    // Port: 35729, // GetRandomInt(35000, 40000), // Should create a random number each time
     filter: function(filename) {
       if (filename.match(/node_modules/)) {
         return false;
