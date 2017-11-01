@@ -68,7 +68,7 @@
   "repository": "git@github.com:NewbranLTD/gulp-server-io.git",
   "jest": {
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["/fixtures/", "/examples/"]
+    "testPathIgnorePatterns": ["/fixtures/", "/examples/", "/old"]
   },
   "license": "MIT",
   "dependencies": {

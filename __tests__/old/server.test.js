@@ -22,7 +22,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 describe('Standlone server test', () => {
   let server;
 
-  afterEach( () => {
+  afterEach(() => {
     server.close();
   });
 
@@ -30,6 +30,5 @@ describe('Standlone server test', () => {
     server = webserver({
       path: root
     });
-
   });
 });
