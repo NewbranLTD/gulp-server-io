@@ -5,26 +5,23 @@ module.exports = function(opt = {}) {
   const ignore = opt.ignore ||
     opt.excludeList || ['.js', '.css', '.svg', '.ico', '.woff', '.png', '.jpg', '.jpeg'];
   const prepend = (w, s) => s + w;
-  const append = (w, s) => w + s;
-  const _html = str => {
+  // Append is useless
+  // const append = (w, s) => w + s;
+  const isHtml = str => {
     if (!str) {
       return false;
     }
     return /<[:_-\w\s\!\/\=\"\']+>/i.test(str);
   };
-  const html = opt.html || _html;
+  const html = opt.html || isHtml;
   const rules = opt.rules || [
+    {
+      match: /<\/head>/,
+      fn: prepend
+    },
     {
       match: /<\/body>/,
       fn: prepend
-    },
-    {
-      match: /<\/html>/,
-      fn: prepend
-    },
-    {
-      match: /<\!DOCTYPE.+>/,
-      fn: append
     }
   ];
   const snippetBuilder = snippet => {
@@ -61,6 +58,9 @@ module.exports = function(opt = {}) {
     }
     return body.lastIndexOf(snippet) !== -1;
   };
+  // This is problematic
+  // we need to normalise all the rules into an array
+  // and run through it regardless
   const snap = body => {
     var _body = body;
     rules.some(function(rule) {
