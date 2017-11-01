@@ -5,12 +5,16 @@
 const _ = require('lodash');
 const chokidar = require('chokidar');
 const bacon = require('baconjs');
-const tinyLr = require('./tiny-lr-setup');
-// Export
-module.export = function(config) {
+const reload = require('reload');
+/**
+ * @param {string} root path to watch
+ * @param {object} app express app
+ * @param {object} config for reload (optional)
+ * @return {object} bacon instance for watch later
+ */
+module.exports = function(root, app, config = {}) {
+  const reloadServer = reload(app, config);
   let watcher;
-  const tinyLrSrv = tinyLr(config);
-  tinyLrSrv.listen(config.livereload.port, config.host);
   // Start the watch files with Bacon wrapper
   const streamWatcher = bacon.fromBinder(sink => {
     watcher = chokidar.watch(root, {
@@ -24,7 +28,7 @@ module.export = function(config) {
     });
   });
   // Reactive
-  streamWatcher
+  return streamWatcher
     .skipDuplicates(_.isEqual)
     .map('.path')
     .scan([], (a, b) => {
@@ -35,11 +39,7 @@ module.export = function(config) {
     .onValue(files => {
       if (files.length) {
         console.log('change event fired');
-        tinyLrSrv.changed({
-          body: {
-            files: files
-          }
-        });
+        reloadServer.reload();
       }
     });
 };

@@ -6,7 +6,7 @@ const open = require('opn');
 const _ = require('lodash');
 const http = require('http');
 const path = require('path');
-const reload = require('reload');
+
 const logger = require('morgan');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -15,6 +15,7 @@ const root = path.join(__dirname, '..', 'fixtures', 'app');
 // Const connectInject = require('connect-inject');
 const scriptInject = require('../../src/lib/script-inject');
 const options = require('../../src/lib/options');
+const watcher = require('../../src/lib/watcher');
 // Init
 const app = express();
 
@@ -30,7 +31,7 @@ app.use(express.static(root));
 
 const server = http.createServer(app);
 
-reload(app, { verbose: true });
+watcher(root, app, { verbose: true });
 
 server.listen(3000, () => {
   console.log('server start @ 3000');
