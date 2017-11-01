@@ -41,6 +41,7 @@
     "precommit": "lint-staged",
     "test": "jest",
     "example": "node ./__tests__/examples/site.js",
+    "connect": "node ./__tests__/examples/site-connect.js",
     "test1": "jest ./__tests__/server.test.js"
   },
   "lint-staged": {

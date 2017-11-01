@@ -18,17 +18,19 @@ const options = require('../../src/lib/options');
 // Init
 const app = express();
 
-// App.use(logger('dev'));
-// app.use(bodyParser.json());
-app.use(express.static(root, { index: ['index.html', 'index.htm'] }));
+app.use(logger('dev'));
+app.use(bodyParser.json());
 app.use(
   scriptInject({
     snippet: `<script type="text/javascript" src="/reload/reload.js"></script>`
   })
 );
+
+app.use(express.static(root));
+
 const server = http.createServer(app);
 
-reload(app);
+reload(app, { verbose: true });
 
 server.listen(3000, () => {
   console.log('server start @ 3000');

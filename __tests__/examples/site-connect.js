@@ -16,10 +16,14 @@ const tinyLr = require('tiny-lr');
 const root = path.join(__dirname, '..', 'fixtures', 'app');
 const app = connect();
 const tinyLrSrv = tinyLr();
-const livereloadFn = require('../../src/lib/connect-livereload.js');
+const scriptInject = require('../../src/lib/script-inject');
 
 // Inject the livereload scripts
-app.use(livereloadFn());
+app.use(
+  scriptInject({
+    snippet: `<script type="text/javascript" src="/reload/reload.js"></script>`
+  })
+);
 
 // Cache-Control: no-cache, must-revalidate
 app.use(
@@ -51,12 +55,6 @@ streamWatcher
   .skipDuplicates(_.isEqual)
   .map('.path')
   .doAction(f => files.push(f))
-  /*
-  .scan([], (a, b) => {
-    a.push(b);
-    return a;
-  })
-  */
   .debounce(300)
   .onValue(files => {
     if (files.length) {

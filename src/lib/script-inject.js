@@ -1,6 +1,6 @@
 /* eslint no-useless-escape: 0, no-negated-condition: 0 */
 
-module.export = function(opt = {}) {
+module.exports = function(opt = {}) {
   // Options
   const ignore = opt.ignore ||
     opt.excludeList || ['.js', '.css', '.svg', '.ico', '.woff', '.png', '.jpg', '.jpeg'];
@@ -37,6 +37,7 @@ module.export = function(opt = {}) {
     return '';
   };
   const snippet = snippetBuilder(opt.snippet);
+  // Console.log('snippet', snippet);
   const runAll = opt.runAll || false;
   // Helper functions
   const regex = (function() {
@@ -55,11 +56,10 @@ module.export = function(opt = {}) {
   };
   // This is wrong!
   const snip = body => {
-    console.log('called snip', body);
     if (!body) {
       return false;
     }
-    return body.lastIndexOf('/livereload.js') !== -1;
+    return body.lastIndexOf(snippet) !== -1;
   };
   const snap = body => {
     var _body = body;
@@ -120,7 +120,7 @@ module.export = function(opt = {}) {
       res.data = (res.data || '') + chunk;
     };
 
-    res.inject = (string, encoding) => {
+    res.write = (string, encoding) => {
       if (string !== undefined) {
         var body = string instanceof Buffer ? string.toString(encoding) : string;
         if (exists(body) && !snip(res.data)) {
@@ -136,7 +136,7 @@ module.export = function(opt = {}) {
       }
       return true;
     };
-    res.write = res.inject;
+    res.inject = res.write;
     res.writeHead = () => {};
     res.end = (string, encoding) => {
       restore();
@@ -149,6 +149,8 @@ module.export = function(opt = {}) {
       }
       res.end(res.data, encoding);
     };
+    // If (!res.inject) {
     next();
+    // }
   };
 };
