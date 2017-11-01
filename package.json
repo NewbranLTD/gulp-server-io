@@ -76,7 +76,6 @@
     "body-parser": "^1.18.2",
     "chalk": "^2.3.0",
     "chokidar": "^1.7.0",
-    "connect": "^3.6.5",
     "express": "^4.16.2",
     "gulp-util": "^3.0.8",
     "http-proxy-middleware": "^0.17.4",
@@ -85,8 +84,6 @@
     "morgan": "^1.9.0",
     "opn": "^5.1.0",
     "reload": "^2.2.2",
-    "serve-index": "^1.9.1",
-    "serve-static": "^1.13.1",
     "socket.io": "^2.0.4",
     "through2": "^2.0.3",
     "yargs": "^10.0.3"
