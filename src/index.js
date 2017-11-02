@@ -84,8 +84,8 @@ module.exports = function(options = {}) {
   */
   // Proxy requests
   proxies.forEach(proxyoptions => {
-    if (!proxyoptions.target) {
-      logutil(chalk.red('Missing target property for proxy setting!'));
+    if (!proxyoptions.target || !proxyoptions.source) {
+      logutil(chalk.red('Missing target or source property for proxy setting!'));
       return; // ignore!
     }
     let source = proxyoptions.source;

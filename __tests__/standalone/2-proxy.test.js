@@ -27,7 +27,7 @@ describe('Testing the standlone setup via the gulp-server-io/server', () => {
       reload: false,
       proxies: [{
         target: '/api',
-        source: proxyEndpoint
+        source: proxyEndpoint + '/api'
       }]
     });
   });

@@ -16,7 +16,11 @@ const server = standaloneSrv({
   path: root,
   callback: () => {
     console.log('standalone server started');
-  }
+  },
+  proxies: [{
+    target: 'http://localhost:3000',
+    source: '/api'
+  }]
 });
 
 server.on('connect', () => console.log('connect'));
