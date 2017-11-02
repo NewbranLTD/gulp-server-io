@@ -4,9 +4,9 @@
  */
 const path = require('path');
 const request = require('supertest');
-const standaloneSrv = require('../server');
+const standaloneSrv = require('../../server');
 // Properties
-const root = path.join(__dirname, 'fixtures', 'app');
+const root = path.join(__dirname, '..', 'fixtures', 'app');
 // Start test
 describe('Testing the standlone setup via the gulp-server-io/server', () => {
   let server;
