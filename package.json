@@ -41,9 +41,8 @@
     "precommit": "lint-staged",
     "test": "jest",
     "example": "node ./__tests__/examples/site.js",
-    "connect": "node ./__tests__/examples/site-connect.js",
-    "standalone": "node ./__tests__/examples/standalone.js",
-    "test1": "jest ./__tests__/server.test.js"
+    "gulp": "node ./__tests__/examples/gulp.js",
+    "standalone": "node ./__tests__/examples/standalone.js"
   },
   "lint-staged": {
     "*.js": ["eslint --fix", "git add"],
