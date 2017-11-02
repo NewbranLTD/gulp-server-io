@@ -20,14 +20,14 @@ module.export = function(options = {}) {
   const { app, config } = server(options);
   // Store the files for ?
   let files = [];
-  let lrServer;
+  let unwatchFn;
   // Create static server wrap in a stream
   const stream = through
     .obj((file, enc, callback) => {
       app.use(express.static(config.path));
       if (config.reload.enable) {
         // Run the watcher
-        watcher(config.path, app, { verbose: config.reload.verbose });
+        unwatchFn = watcher(config.path, app, { verbose: config.reload.verbose });
       }
       files.push(file);
       callback();
@@ -50,7 +50,6 @@ module.export = function(options = {}) {
     });
   // Start another part
   let webserver = null;
-
   // Init our socket.io server
   let socket = null;
   if (config.debugger.enable && config.debugger.server !== false) {
@@ -66,9 +65,8 @@ module.export = function(options = {}) {
   // When ctrl-c or stream.emit('kill')
   stream.on('kill', () => {
     webserver.close();
-    if (lrServer) {
-      lrServer.close();
-    }
+    unwatchFn();
+    // Need to add kill watcher
     if (socket && socket.server) {
       socket.server.close();
     }
