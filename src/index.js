@@ -16,8 +16,8 @@ const defaultProperties = ['directoryListing', 'livereload', 'debugger', 'mock']
 // Modules
 const logutil = require('./lib/log');
 // @TODO add them back later
-// Const mockServer = require('./lib/mock-server');
-// const debuggerClient = require('./lib/debugger-middleware');
+const mockServer = require('./lib/mock-server');
+// Const debuggerClient = require('./lib/debugger-middleware');
 const scriptsInjector = require('./lib/injector');
 const enableMiddlewareShorthand = require('./lib/enable-middleware-shorthand');
 /**
@@ -76,12 +76,13 @@ module.exports = function(options = {}) {
   }
 
   // First need to setup the mock (NEW)
-  /*
+
   if (config.mock) {
     // Here we overwrite the proxies so the proxy get to the mock server
-    proxies = mockServer(config.mock);
+    // @TODO sort out particular url that shouldn't be mock?
+    proxies = mockServer(config);
   }
-  */
+
   // Proxy requests
   proxies.forEach(proxyoptions => {
     if (!proxyoptions.target || !proxyoptions.source) {

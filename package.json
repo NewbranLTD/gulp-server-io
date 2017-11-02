@@ -9,7 +9,7 @@
     "email": "info@newbran.ch",
     "url": "https://newbran.ch"
   },
-  "files": ["src", "server.js"],
+  "files": ["src", "index.js", "server.js", "gulp.js"],
   "main": "index.js",
   "keywords": [
     "node",
@@ -78,6 +78,8 @@
     "chalk": "^2.3.0",
     "chokidar": "^1.7.0",
     "express": "^4.16.2",
+    "fs-extra": "^4.0.2",
+    "gulp": "gulpjs/gulp#4.0",
     "gulp-util": "^3.0.8",
     "http-proxy-middleware": "^0.17.4",
     "json-server": "^0.12.0",

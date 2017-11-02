@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict';
 /**
  * create a standalone server
@@ -27,6 +28,9 @@ server.on('connect', () => console.log('connect'));
 
 const proxyServer = jsonServer.create();
 const router = jsonServer.router(path.join(__dirname, '..', 'fixtures', 'dummy.json'));
+
+console.log('router', router);
+
 const middlewares = jsonServer.defaults();
 proxyServer.use(middlewares);
 proxyServer.use(router);
