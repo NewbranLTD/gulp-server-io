@@ -3,9 +3,11 @@
  * New file watcher
  */
 const _ = require('lodash');
-const chokidar = require('chokidar');
+// Const args = require('yargs');
 const bacon = require('baconjs');
 const reload = require('reload');
+const chokidar = require('chokidar');
+const log = require('./utils/log');
 /**
  * @param {string} root path to watch
  * @param {object} app express app
@@ -38,7 +40,7 @@ module.exports = function(root, app, config = {}) {
     .debounce(300)
     .onValue(files => {
       if (files.length) {
-        console.log('change event fired');
+        log('change event fired');
         reloadServer.reload();
       }
     });

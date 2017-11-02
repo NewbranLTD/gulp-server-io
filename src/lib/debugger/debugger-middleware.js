@@ -7,7 +7,7 @@ const _ = require('lodash');
 const chalk = require('chalk');
 const { join } = require('path');
 // Const gutil = require('gulp-util');
-const logutil = require('./log.js');
+const logutil = require('../utils/log');
 // Note the config pass here now is not the full original object, just the config.debugger part
 module.exports = function(config) {
   // Now we need to supply a configurated option to not just point to our own local test machine
@@ -18,7 +18,7 @@ module.exports = function(config) {
   const eventName = config.eventName;
 
   logutil(chalk.white('[debugger] ') + chalk.yellow('client is running'));
-
+  // Export middleware
   return function(req, res, next) {
     if (req.url === debuggerJs) {
       fs.readFile(join(__dirname, 'client.tpl'), function(err, data) {

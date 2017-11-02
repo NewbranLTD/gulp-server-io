@@ -3,7 +3,6 @@
 /**
  * Move some of the functions out of the main.js to reduce the complexity
  */
-const open = require('open');
 const chalk = require('chalk');
 const logutil = require('./log.js');
 
@@ -25,39 +24,6 @@ const isString = function (opt) {
   return (typeof opt === 'string');
 };
 
-/**
- * Encap the whole open method into a function to call
- * @param {object} config
- */
-exports.openInBrowser = config => {
-  let urlToOpen = '';
-  return () => {
-    if (config.open === false) {
-      return;
-    }
-    let openMsg = '[Open ';
-    if (typeof config.open === 'string' && config.open.indexOf('http') === 0) {
-      // If this is a complete url form
-      const browser = config.browser || '';
-      openMsg += config.open;
-      if (browser !== '') {
-        openMsg += ' with browser ' + config.browser;
-      }
-      logutil(chalk.white(openMsg + ']'));
-      urlToOpen = config.open;
-      open(urlToOpen, browser);
-      return;
-    }
-    // When it gets here the open becomes the target file instead
-    urlToOpen = 'http' + (config.https ? 's' : '') + '://' + config.host + ':' + config.port;
-    const browser = (typeof config.browser === 'string' ? config.browser : '');
-    openMsg += urlToOpen + (browser === '' ? '' : ' with browser ' + config.browser);
-    logutil(chalk.white(openMsg + ']'));
-    // The actual open call
-    open(urlToOpen + (typeof config.open === 'string' ? config.open : ''), browser);
-    return urlToOpen;
-  };
-};
 /**
  * Set headers
  * @param {object} config

@@ -12,6 +12,9 @@ module.exports = function(options) {
   let proxies = [];
   const opt = options.mock;
   const port = opt.port || 3000;
+  const host = opt.host || 'http://localhost';
+  // @TODO check if the host has the http to start?
+  // @TODO add https options
   if (args.debug) {
     logutil('mock option', opt);
   }
@@ -20,7 +23,7 @@ module.exports = function(options) {
     const url = name.substring(0, 1) === '/' ? name.substring(1, name.length) : name;
     proxies.push({
       source: '/' + url,
-      target: ['http://localhost', port].join(':')
+      target: [host, port].join(':')
     });
   });
   // @TODO later we need to take look at the proxies and,

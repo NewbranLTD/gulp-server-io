@@ -149,8 +149,6 @@ module.exports = function(opt = {}) {
       }
       res.end(res.data, encoding);
     };
-    // If (!res.inject) {
     next();
-    // }
   };
 };

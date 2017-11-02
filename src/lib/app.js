@@ -13,13 +13,13 @@ const isarray = Array.isArray;
 // Properties
 const defaultOptions = require('./options');
 const defaultProperties = ['directoryListing', 'livereload', 'debugger', 'mock'];
+const enableMiddlewareShorthand = require('./options/enable-middleware-shorthand');
 // Modules
-const logutil = require('./log');
+const logutil = require('./utils/log');
 // @TODO add them back later
-const mockServer = require('./mock-server');
+const mockServer = require('./utils/mock-server');
 // Const debuggerClient = require('./lib/debugger-middleware');
 const scriptsInjector = require('./injector');
-const enableMiddlewareShorthand = require('./enable-middleware-shorthand');
 /**
  * Export
  * @param {object} options

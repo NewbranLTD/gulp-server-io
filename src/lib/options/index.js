@@ -2,7 +2,7 @@
 * Create a default options to reduce the complexity of the main file
 */
 const path = require('path');
-const { version } = require('../../package.json');
+const { version } = require('../../../package.json');
 
 module.exports = {
   version: version,
