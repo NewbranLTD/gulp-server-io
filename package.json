@@ -40,9 +40,8 @@
     "pretest": "eslint . --fix",
     "precommit": "lint-staged",
     "test": "jest",
-    "example": "node ./__tests__/examples/site.js",
-    "gulp": "node ./__tests__/examples/gulp.js",
-    "standalone": "node ./__tests__/examples/standalone.js"
+    "gulp-example": "gulp serve --gulpfile ./__tests__/examples/gulpfile.js",
+    "standalone-example": "node ./__tests__/examples/standalone.js"
   },
   "lint-staged": {
     "*.js": ["eslint --fix", "git add"],

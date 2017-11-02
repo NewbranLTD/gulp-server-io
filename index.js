@@ -11,13 +11,12 @@ const chalk = require('chalk');
 const express = require('express');
 const through = require('through2');
 // Modules
-const server = require('./src');
 const logutil = require('./src/lib/log');
-const watcher = require('./src/lib/watcher');
-const debuggerServer = require('./src/lib/debugger-server');
+const { appGenerator, serverGenerator, appWatcher } = require('./src');
+
 // Final export for gulp
-module.export = function(options = {}) {
-  const { app, config } = server(options);
+module.exports = function(options = {}) {
+  const { app, config, mockServerInstance } = appGenerator(options);
   // Store the files for ?
   let files = [];
   let unwatchFn;
@@ -27,7 +26,7 @@ module.export = function(options = {}) {
       app.use(express.static(config.path));
       if (config.reload.enable) {
         // Run the watcher
-        unwatchFn = watcher(config.path, app, { verbose: config.reload.verbose });
+        unwatchFn = appWatcher(config.path, app, { verbose: config.reload.verbose });
       }
       files.push(file);
       callback();
@@ -48,28 +47,27 @@ module.export = function(options = {}) {
         });
       }
     });
-  // Start another part
-  let webserver = null;
-  // Init our socket.io server
-  let socket = null;
-  if (config.debugger.enable && config.debugger.server !== false) {
-    // Passing the raw io object back
-    socket = debuggerServer(config.debugger, webserver);
-  }
-  logutil(
-    chalk.white('Webserver started at'),
-    chalk.cyan(
-      'http' + (config.https ? 's' : '') + '://' + config.host + ':' + config.port
-    )
-  );
+  // Overwriting the callback
+  const cb = config.callback;
+  config.callback = () => {
+    cb();
+    logutil(
+      chalk.white('Webserver started at'),
+      chalk.cyan(
+        'http' + (config.https ? 's' : '') + '://' + config.host + ':' + config.port
+      )
+    );
+  };
+  const webserver = serverGenerator(app, config);
+  // @TODO add debuggerServer start up here
+
   // When ctrl-c or stream.emit('kill')
   stream.on('kill', () => {
     webserver.close();
-    unwatchFn();
     // Need to add kill watcher
-    if (socket && socket.server) {
-      socket.server.close();
-    }
+    unwatchFn();
+    // @TODO kill the debugger server
+    mockServerInstance.close();
   });
   return stream;
 };

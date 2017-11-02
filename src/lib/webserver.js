@@ -4,7 +4,7 @@
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
-const helper = require('./helper');
+// Const helper = require('./src/helper');
 /**
  * @param {object} app the connect app
  * @param {object} config options
@@ -29,7 +29,7 @@ module.export = function(app, config) {
   } else {
     webserver = http.createServer(app);
   }
-  webserver.listen(config.port, config.host, helper.openInBrowser(config));
+  webserver.listen(config.port, config.host, config.callback);
   // Return it
   return webserver;
 };
