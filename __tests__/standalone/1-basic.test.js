@@ -7,13 +7,14 @@ const request = require('supertest');
 const standaloneSrv = require('../../server');
 // Properties
 const root = path.join(__dirname, '..', 'fixtures', 'app');
+// According to https://github.com/visionmedia/supertest/issues/111
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // Start test
-describe('Testing the standlone setup via the gulp-server-io/server', () => {
+describe('Testing the default gulp-server-io/server setup for standalone server', () => {
   let server;
   beforeEach(() => {
     server = standaloneSrv({
-      path: root,
-      reload: false
+      path: root
     });
   });
 
@@ -25,5 +26,24 @@ describe('Testing the standlone setup via the gulp-server-io/server', () => {
     return request(server)
       .get('/')
       .expect(200, /Bootstrap Template test for gulp-server-io/);
+  });
+});
+
+// Testing the https
+describe('Testing the gulp-server-io/server https', () => {
+  let server;
+  beforeEach(() => {
+    server = standaloneSrv({
+      path: root,
+      https: true
+    });
+  });
+  afterEach(() => {
+    server.close();
+  });
+  test('It should serve up https connection', () => {
+    return request('https://localhost:8000')
+      .get('/')
+      .expect(200);
   });
 });

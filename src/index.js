@@ -34,6 +34,9 @@ module.exports = function(options = {}) {
   let middlewares = [];
   let addDebugger = false;
   let proxies = config.proxies;
+  const closeFn = { close: () => {} };
+  let mockServerInstance = closeFn;
+  let debuggerInstance = closeFn;
   // Make sure the namespace is correct first
   if (config.debugger.enable) {
     const namespace = config.debugger.namespace;
@@ -69,20 +72,19 @@ module.exports = function(options = {}) {
   } else if (isarray(config.middleware)) {
     middlewares = middlewares.concat(config.middleware);
   }
-
   // Now inject the middlewares
   if (middlewares.length) {
     middlewares.filter(m => typeof m === 'function').forEach(m => app.use(m));
   }
-
   // First need to setup the mock (NEW)
-
-  if (config.mock) {
+  if (config.mock !== false) {
     // Here we overwrite the proxies so the proxy get to the mock server
     // @TODO sort out particular url that shouldn't be mock?
-    proxies = mockServer(config);
+    const _mock = mockServer(config);
+    mockServerInstance = _mock.server;
+    proxies = _mock.proxies;
   }
-
+  console.log(proxies);
   // Proxy requests
   proxies.forEach(proxyoptions => {
     if (!proxyoptions.target || !proxyoptions.source) {
@@ -93,7 +95,6 @@ module.exports = function(options = {}) {
     delete proxyoptions.source;
     app.use(source, httpProxy(proxyoptions));
   });
-
-  // This is the end - we continue in the next level up
-  return { app, config };
+  // This is the end - we continue in the next level to construct the server
+  return { app, config, mockServerInstance, debuggerInstance };
 };

@@ -8,16 +8,16 @@ const chalk = require('chalk');
 const jsonServer = require('json-server');
 const logutil = require('./log.js');
 // Expect to return this server config for the proxies
-module.export = function(options) {
+module.exports = function(options) {
   let proxies = [];
   const opt = options.mock;
   const port = opt.port || 3000;
   if (args.debug) {
     logutil('mock option', opt);
   }
-  const json = fs.readJSON(opt.json);
+  const json = fs.readJsonSync(opt.json);
   _.forEach(json, (payload, name) => {
-    const url = name.subtr(0, 1) === '/' ? name.substr(1, name.length) : name;
+    const url = name.substring(0, 1) === '/' ? name.substring(1, name.length) : name;
     proxies.push({
       source: '/' + url,
       target: ['http://localhost', port].join(':')
@@ -35,15 +35,12 @@ module.export = function(options) {
   if (opt.middlewares && Array.isArray(opt.middlewares) && opt.middlewares.length > 0) {
     opt.middlewares.map(middleware => _server.use(middleware));
   }
-  // If for some reason why only want the server object
-  if (opt.serverOnly) {
-    return { _server, proxies };
-  }
   // This is the real server that we need to call exit
   const server = _server.listen(port, () => {
     if (args.debug) {
       logutil(chalk.white('Mock json Server is running @ ', port));
     }
   });
+  // Return
   return { server, proxies };
 };
