@@ -14,7 +14,7 @@ describe('Testing the mock server gulp-server-io/server', () => {
     server = standaloneSrv({
       path: root,
       mock: {
-        json: path.join(__dirname, '..', 'dummy.json')
+        json: path.join(__dirname, '..', 'fixtures', 'dummy.json')
       }
     });
   });

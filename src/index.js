@@ -84,7 +84,6 @@ module.exports = function(options = {}) {
     mockServerInstance = _mock.server;
     proxies = _mock.proxies;
   }
-  console.log(proxies);
   // Proxy requests
   proxies.forEach(proxyoptions => {
     if (!proxyoptions.target || !proxyoptions.source) {

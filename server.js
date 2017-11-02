@@ -3,6 +3,7 @@
  * The main export module will wrap that in stream
  * This way, we have two different ways to use this module
  */
+const _ = require('lodash');
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
@@ -11,12 +12,15 @@ const server = require('./src');
 // Export
 module.exports = function(options = {}) {
   // We always overwrite it here to disable feature that shouldn't be use
-  options.open = false;
-  options.reload = false;
-  options.debugger = false;
-  options.development = false;
+  const disable = {
+    open: false,
+    reload: false,
+    debugger: false,
+    development: false
+  };
+  options = _.merge(options, disable);
   // Generate the app
-  const { app, config } = server(options);
+  const { app, config, mockServerInstance } = server(options);
   // Static serving
   app.use(express.static(config.path, config.staticOptions));
   // Configure the server
@@ -39,5 +43,9 @@ module.exports = function(options = {}) {
     webserver = http.createServer(app);
   }
   webserver.listen(config.port, config.host, config.callback);
+  webserver.on('close', () => {
+    mockServerInstance.close();
+    // DebuggerInstance.close();
+  });
   return webserver;
 };
