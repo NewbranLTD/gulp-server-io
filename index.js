@@ -7,15 +7,12 @@
  * neat!
  */
 const fs = require('fs');
-const http = require('http');
-const https = require('https');
 const chalk = require('chalk');
+const express = require('express');
 const through = require('through2');
-const serveStatic = require('serve-static');
 // Modules
 const server = require('./src');
 const logutil = require('./src/lib/log');
-const helper = require('./src/lib/helper');
 const watcher = require('./src/lib/watcher');
 const debuggerServer = require('./src/lib/debugger-server');
 // Final export for gulp
@@ -27,18 +24,10 @@ module.export = function(options = {}) {
   // Create static server wrap in a stream
   const stream = through
     .obj((file, enc, callback) => {
-      app.use(
-        config.path,
-        serveStatic(file.path, {
-          index: config.indexes
-          /* TBC about this one
-          setHeaders: helper.setHeaders(config, {
-            index: config.indexes
-          }) */
-        })
-      );
-      if (config.livereload.enable) {
-        lrServer = watcher(config);
+      app.use(express.static(config.path));
+      if (config.reload.enable) {
+        // Run the watcher
+        watcher(config.path, app, { verbose: config.reload.verbose });
       }
       files.push(file);
       callback();
@@ -61,7 +50,7 @@ module.export = function(options = {}) {
     });
   // Start another part
   let webserver = null;
-  
+
   // Init our socket.io server
   let socket = null;
   if (config.debugger.enable && config.debugger.server !== false) {

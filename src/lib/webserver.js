@@ -11,7 +11,7 @@ const helper = require('./helper');
  * @return {object} http(s) webserver
  */
 module.export = function(app, config) {
-  const let webserver;
+  let webserver;
   if (config.https) {
     let opts;
     if (config.https.pfx) {

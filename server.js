@@ -6,14 +6,20 @@
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
+const express = require('express');
 const server = require('./src');
 // Export
-module.export = function(options = {}) {
+module.exports = function(options = {}) {
   // We always overwrite it here to disable feature that shouldn't be use
-  options.livereload = false;
+  options.open = false;
+  options.reload = false;
   options.debugger = false;
-  // Generate the app 
+  options.development = false;
+  // Generate the app
   const { app, config } = server(options);
+  // Static serving
+  app.use(express.static(config.path, config.staticOptions));
+  // Configure the server
   let webserver;
   if (config.https) {
     let opts;
@@ -28,9 +34,10 @@ module.export = function(options = {}) {
         cert: fs.readFileSync(config.https.cert || config.devCrtPem)
       };
     }
-    webserver = https.createServer(opts, app).listen(config.port, config.host);
+    webserver = https.createServer(opts, app);
   } else {
-    webserver = http.createServer(app).listen(config.port, config.host);
+    webserver = http.createServer(app);
   }
+  webserver.listen(config.port, config.host, config.callback);
   return webserver;
 };

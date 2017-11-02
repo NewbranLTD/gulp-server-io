@@ -42,6 +42,7 @@
     "test": "jest",
     "example": "node ./__tests__/examples/site.js",
     "connect": "node ./__tests__/examples/site-connect.js",
+    "standalone": "node ./__tests__/examples/standalone.js",
     "test1": "jest ./__tests__/server.test.js"
   },
   "lint-staged": {
@@ -68,7 +69,7 @@
   "repository": "git@github.com:NewbranLTD/gulp-server-io.git",
   "jest": {
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["/fixtures/", "/examples/", "/old"]
+    "testPathIgnorePatterns": ["/fixtures/", "/examples/", "/old/"]
   },
   "license": "MIT",
   "dependencies": {

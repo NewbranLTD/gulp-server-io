@@ -10,10 +10,10 @@ const root = path.join(__dirname, 'fixtures', 'app');
 // Start test
 describe('Testing the standlone setup via the gulp-server-io/server', () => {
   let server;
-
   beforeEach(() => {
     server = standaloneSrv({
-      path: root
+      path: root,
+      reload: false
     });
   });
 

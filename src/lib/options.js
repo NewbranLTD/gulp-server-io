@@ -9,13 +9,16 @@ module.exports = {
   /**
   * Basic options
   */
+  development: true,
   host: 'localhost',
   port: 8000,
   path: '/',
   fallback: false,
   https: false,
-  open: false,
+  open: true,
   indexes: ['index.html', 'index.htm'],
+  callback: () => {},
+  staticOptions: {},
   /**
   * MIDDLEWARE DEFAULTS
   * NOTE:
@@ -27,21 +30,7 @@ module.exports = {
   */
   reload: {
     enable: true,
-    // Port: 35729, // GetRandomInt(35000, 40000), // Should create a random number each time
-    filter: function(filename) {
-      if (filename.match(/node_modules/)) {
-        return false;
-      }
-      return true;
-    }
-  },
-  // Middleware: Directory listing
-  // For possible options, see:
-  //  https://github.com/expressjs/serve-index
-  directoryListing: {
-    enable: false,
-    path: './',
-    options: undefined
+    verbose: true
   },
   headers: {
     // For overwrite
