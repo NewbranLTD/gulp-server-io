@@ -12,36 +12,36 @@ const proxyPort = 3000;
 const proxyEndpoint = ['http://localhost', proxyPort].join(':');
 // Start test
 describe('Testing the standlone setup via the gulp-server-io/server', () => {
-  let server, proxyServer;
+  let server, proxyServer, srv;
   beforeEach(() => {
     proxyServer = jsonServer.create();
     const router = jsonServer.router(path.join(__dirname, '..', 'fixtures', 'dummy.json'));
     const middlewares = jsonServer.defaults();
     proxyServer.use(middlewares);
-    proxyServer.use('/api', router);
-    proxyServer.listen(proxyPort, () => {
+    proxyServer.use(router);
+    // this is where the actual http server return! 
+    srv = proxyServer.listen(proxyPort, () => {
       console.log(`JSON Server is running @ ${proxyEndpoint}`);
     });
     server = standaloneSrv({
       path: root,
       reload: false,
       proxies: [{
-        target: '/api',
-        source: proxyEndpoint + '/api'
+        source: '/api',
+        target: proxyEndpoint
       }]
     });
   });
 
   afterEach(() => {
     server.close();
-    if (proxyServer && proxyServer.close) {
-      proxyServer.close();
-    }
+    srv.close();
+    proxyServer = null;
   });
 
   test('It should able to talk to the proxy server', () => {
     return request(server)
-      .post('/api')
+      .get('/api')
       .expect(200, /cats/);
   });
 });
