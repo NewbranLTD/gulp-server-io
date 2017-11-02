@@ -4,7 +4,6 @@
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
-// Const helper = require('./src/helper');
 /**
  * @param {object} app the connect app
  * @param {object} config options

@@ -4,17 +4,15 @@
  * Move some of the functions out of the main.js to reduce the complexity
  */
 const _ = require('lodash');
-const chalk = require('chalk');
 const express = require('express');
 const logutil = require('./log.js');
-
 /**
  * create a random number between two values, for creating a random port number
  * @param {int} min
  * @param {int} max
  * @return {int} port
  */
-exports.getRandomInt = function (min, max) {
+const getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
@@ -54,7 +52,6 @@ const setHeaders = (config, urlToOpen) => {
     );
   };
 };
-exports.setHeaders = setHeaders;
 /**
  * @param {string} webroot path to where the files are
  * @param {object} config the main config
@@ -62,6 +59,7 @@ exports.setHeaders = setHeaders;
  * @return {function} middleware
  */
 exports.serveStatic = (webroot, config, urlToOpen = '') => {
+  logutil(config);
   // @TODO configure the directoryListing option here
   const staticOptions = _.merge(
     {
@@ -72,3 +70,6 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
   );
   return express.static(webroot, staticOptions);
 };
+// export
+exports.setHeaders = setHeaders;
+exports.getRandomInt = getRandomInt;

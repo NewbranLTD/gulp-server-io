@@ -7,42 +7,44 @@ const request = require('supertest');
 const standaloneSrv = require('../../server');
 // Properties
 const root = path.join(__dirname, '..', 'fixtures', 'app');
-// According to https://github.com/visionmedia/supertest/issues/111
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-// Start test
-describe('Testing the default gulp-server-io/server setup for standalone server', () => {
-  let server;
-  beforeEach(() => {
-    server = standaloneSrv({
-      webroot: root
-    });
-  });
 
-  afterEach(() => {
-    server.close();
-  });
-
-  test('It should run with default option', () => {
-    return request(server)
-      .get('/')
-      .expect(200, /Bootstrap Template test for gulp-server-io/);
-  });
-});
-// Testing the https
-describe('Testing the gulp-server-io/server https', () => {
+// change port to 3838
+describe('Testing the gulp-server-io/server with different port number 3838', () => {
   let server;
+  const url1 = 'http://localhost:3838';
   beforeEach(() => {
     server = standaloneSrv({
       webroot: root,
-      https: true
+      port: 3838
     });
   });
   afterEach(() => {
     server.close();
   });
-  test('It should serve up https connection', () => {
-    return request('https://localhost:8000')
+  test(`It should connect to ${url1}`, () => {
+    return request(url1)
       .get('/')
       .expect(200, /Bootstrap Template test for gulp-server-io/);
   });
 });
+// change path to /sub
+/*
+describe('Testing the gulp-server-io/server serve from different path /sub', () => {
+  let server;
+  const url2 = 'http://localhost:8000/sub';
+  beforeEach(() => {
+    server = standaloneSrv({
+      webroot: root,
+      path: '/sub'
+    });
+  });
+  afterEach(() => {
+    server.close();
+  });
+  test(`It should connect to ${url2}`, () => {
+    return request(url2)
+      .get('/')
+      .expect(200, /Bootstrap Template test for gulp-server-io/);
+  });
+});
+*/

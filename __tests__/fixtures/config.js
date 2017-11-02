@@ -3,16 +3,19 @@
  * Share all this options across different test
  */
 const path = require('path');
+const join = path.join;
 const baseUrl = 'localhost';
 const defaultPort = 8000;
 const defaultUrl = ['http://', baseUrl, ':', defaultPort].join('');
 const defaultSSLUrl = ['https://', baseUrl, ':', defaultPort].join('');
-const root = path.resolve(path.join(__dirname, 'app'));
-
+const root = path.resolve( join(__dirname, 'app') );
+const rootDir = new File({ path: join(__dirname) });
+// Export 
 module.exports = {
-  baseUrl: baseUrl,
-  defaultPort: defaultPort,
-  defaultUrl: defaultUrl,
-  defaultSSLUrl: defaultSSLUrl,
-  root: root
+  root,
+  rootDir,
+  baseUrl,
+  defaultUrl,
+  defaultPort,
+  defaultSSLUrl
 };

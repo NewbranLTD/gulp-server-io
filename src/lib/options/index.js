@@ -9,7 +9,7 @@ module.exports = {
   /**
   * Basic options
   */
-  development: true,
+  development: false,
   host: 'localhost',
   port: 8000,
   path: '/',
