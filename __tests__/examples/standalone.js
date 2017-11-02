@@ -15,9 +15,11 @@ const server = standaloneSrv({
   callback: () => {
     console.log('standalone server started');
   },
+  //path: '/another'
   mock: {
     json: path.join(__dirname, '..', 'fixtures', 'dummy.json')
   }
+
 });
 
-server.on('connect', () => console.log('connect'));
+server.on('connect', () => console.log('detect server connected'));
