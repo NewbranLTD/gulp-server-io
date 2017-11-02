@@ -11,7 +11,7 @@ const chalk = require('chalk');
 const express = require('express');
 const through = require('through2');
 // Modules
-const logutil = require('./src/lib/log');
+const logutil = require('./src/lib/utils/log');
 const { appGenerator, serverGenerator, appWatcher, openInBrowser } = require('./src');
 
 // Final export for gulp
