@@ -12,7 +12,7 @@ describe('Testing the mock server gulp-server-io/server', () => {
   let server;
   beforeEach(() => {
     server = standaloneSrv({
-      path: root,
+      webroot: root,
       mock: {
         json: path.join(__dirname, '..', 'fixtures', 'dummy.json')
       }

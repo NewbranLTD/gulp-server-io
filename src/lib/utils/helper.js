@@ -32,7 +32,7 @@ const isString = function (opt) {
  * @param {string} urlToOpen
  * @return {function} middleware
  */
-exports.setHeaders = (config, urlToOpen) => {
+const setHeaders = (config, urlToOpen) => {
   return res => {
     if (isString(config.headers.origin) || (urlToOpen && urlToOpen.indexOf('http') === 0)) {
       res.setHeader(
@@ -54,6 +54,7 @@ exports.setHeaders = (config, urlToOpen) => {
     );
   };
 };
+exports.setHeaders = setHeaders;
 /**
  * @param {string} webroot path to where the files are
  * @param {object} config the main config
@@ -62,14 +63,12 @@ exports.setHeaders = (config, urlToOpen) => {
  */
 exports.serveStatic = (webroot, config, urlToOpen = '') => {
   // @TODO configure the directoryListing option here
-  config.staticOptions = _.merge(
+  const staticOptions = _.merge(
     {
-      setHeaders: exports.setHeader(config, urlToOpen),
+      setHeaders: setHeaders(config, urlToOpen),
       index: config.indexes
     },
     config.staticOptions
   );
-  return express.static(
-    webroot, config.staticOptions
-  );
+  return express.static(webroot, staticOptions);
 };

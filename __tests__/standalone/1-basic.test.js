@@ -14,7 +14,7 @@ describe('Testing the default gulp-server-io/server setup for standalone server'
   let server;
   beforeEach(() => {
     server = standaloneSrv({
-      path: root
+      webroot: root
     });
   });
 
@@ -34,7 +34,7 @@ describe('Testing the gulp-server-io/server https', () => {
   let server;
   beforeEach(() => {
     server = standaloneSrv({
-      path: root,
+      webroot: root,
       https: true
     });
   });
@@ -44,6 +44,44 @@ describe('Testing the gulp-server-io/server https', () => {
   test('It should serve up https connection', () => {
     return request('https://localhost:8000')
       .get('/')
-      .expect(200);
+      .expect(200, /Bootstrap Template test for gulp-server-io/);
+  });
+});
+
+describe('Testing the gulp-server-io/server with different port number 3838', () => {
+  let server;
+  const url1 = 'http://localhost:3838';
+  beforeEach(() => {
+    server = standaloneSrv({
+      webroot: root,
+      port: 3838
+    });
+  });
+  afterEach(() => {
+    server.close();
+  });
+  test(`It should connect to ${url1}`, () => {
+    return request(url1)
+      .get('/')
+      .expect(200, /Bootstrap Template test for gulp-server-io/);
+  });
+});
+
+describe('Testing the gulp-server-io/server serve from different path /sub', () => {
+  let server;
+  const url2 = 'http://localhost:8000/sub';
+  beforeEach(() => {
+    server = standaloneSrv({
+      webroot: root,
+      path: '/sub'
+    });
+  });
+  afterEach(() => {
+    server.close();
+  });
+  test(`It should connect to ${url2}`, () => {
+    return request(url2)
+      .get('/')
+      .expect(200, /Bootstrap Template test for gulp-server-io/);
   });
 });

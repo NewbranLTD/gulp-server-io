@@ -12,7 +12,7 @@ const join = path.join;
 const isarray = Array.isArray;
 // Properties
 const defaultOptions = require('./options');
-const defaultProperties = ['directoryListing', 'livereload', 'debugger', 'mock'];
+const defaultProperties = ['reload', 'debugger', 'mock', 'indexes'];
 const enableMiddlewareShorthand = require('./options/enable-middleware-shorthand');
 // Modules
 const logutil = require('./utils/log');
