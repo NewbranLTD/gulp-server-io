@@ -10,7 +10,7 @@ const https = require('https');
  * @param {object} config options
  * @return {object} http(s) webserver
  */
-module.export = function(app, config) {
+module.exports = function(app, config) {
   let webserver;
   if (config.https) {
     let opts;
