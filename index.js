@@ -12,7 +12,7 @@ const express = require('express');
 const through = require('through2');
 // Modules
 const logutil = require('./src/lib/log');
-const { appGenerator, serverGenerator, appWatcher } = require('./src');
+const { appGenerator, serverGenerator, appWatcher, openInBrowser } = require('./src');
 
 // Final export for gulp
 module.exports = function(options = {}) {
@@ -51,12 +51,15 @@ module.exports = function(options = {}) {
   const cb = config.callback;
   config.callback = () => {
     cb();
+    // Notify
     logutil(
       chalk.white('Webserver started at'),
       chalk.cyan(
         'http' + (config.https ? 's' : '') + '://' + config.host + ':' + config.port
       )
     );
+    // Open in browser
+    openInBrowser(config);
   };
   const webserver = serverGenerator(app, config);
   // @TODO add debuggerServer start up here

@@ -3,11 +3,13 @@
  * them to construct the final version of their server
  */
 const appGenerator = require('./lib/app');
-const serverGenerator = require('./lib/webserver');
 const appWatcher = require('./lib/watcher');
+const openInBrowser = require('./lib/open');
+const serverGenerator = require('./lib/webserver');
 // @TODO const debuggerServer = require('./lib/debugger-server');
 module.exports = {
+  appWatcher,
   appGenerator,
-  serverGenerator,
-  appWatcher
+  openInBrowser,
+  serverGenerator
 };
