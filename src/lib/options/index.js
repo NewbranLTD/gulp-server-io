@@ -3,7 +3,7 @@
 */
 const path = require('path');
 const { version } = require('../../../package.json');
-
+const src = path.join(__dirname, '..', '..');
 module.exports = {
   version: version,
   /**
@@ -54,6 +54,6 @@ module.exports = {
     server: true, // Allow passing configuration - see middleware.js for more detail
     log: false // See wiki for more info
   },
-  devKeyPem: path.join(__dirname, '..', 'certs', 'cert.pem'),
-  devCrtPem: path.join(__dirname, '..', 'certs', 'cert.crt')
+  devKeyPem: path.join(src, 'certs', 'cert.pem'),
+  devCrtPem: path.join(src, 'certs', 'cert.crt')
 };
