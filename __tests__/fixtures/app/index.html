@@ -61,11 +61,9 @@
           <br>
           All you get is this text and a mostly barebones HTML document.
         </p>
+        <button type="button" class="btn btn-primary" id="click">CLICK</button>
       </div>
-
     </div><!-- /.container -->
-
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -75,7 +73,15 @@
     <script src="./js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="./js/ie10-viewport-bug-workaround.js"></script>
-
-
+    <script type="text/javascript">
+      $(function() {
+        $('#click').click(function() {
+          $.get('/api', {ask: 'what'}).then(function(result) {
+            console.log('post result', result);
+          });
+          return false;
+        });
+      });
+    </script>
   </body>
 </html>
