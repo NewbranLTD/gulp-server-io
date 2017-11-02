@@ -3,7 +3,9 @@
 /**
  * Move some of the functions out of the main.js to reduce the complexity
  */
+const _ = require('lodash');
 const chalk = require('chalk');
+const express = require('express');
 const logutil = require('./log.js');
 
 /**
@@ -28,6 +30,7 @@ const isString = function (opt) {
  * Set headers
  * @param {object} config
  * @param {string} urlToOpen
+ * @return {function} middleware
  */
 exports.setHeaders = (config, urlToOpen) => {
   return res => {
@@ -51,5 +54,22 @@ exports.setHeaders = (config, urlToOpen) => {
     );
   };
 };
-
-// -- EOF --
+/**
+ * @param {string} webroot path to where the files are
+ * @param {object} config the main config
+ * @param {string} urlToOpen (optional) @TODO
+ * @return {function} middleware
+ */
+exports.serveStatic = (webroot, config, urlToOpen = '') => {
+  // @TODO configure the directoryListing option here
+  config.staticOptions = _.merge(
+    {
+      setHeaders: exports.setHeader(config, urlToOpen),
+      index: config.indexes
+    },
+    config.staticOptions
+  );
+  return express.static(
+    webroot, config.staticOptions
+  );
+};

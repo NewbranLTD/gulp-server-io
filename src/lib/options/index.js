@@ -13,6 +13,7 @@ module.exports = {
   host: 'localhost',
   port: 8000,
   path: '/',
+  webroot: path.join(process.cwd(), 'app'),
   fallback: false,
   https: false,
   open: true,

@@ -8,12 +8,11 @@
  */
 const fs = require('fs');
 const chalk = require('chalk');
-const express = require('express');
 const through = require('through2');
 // Modules
 const logutil = require('./src/lib/utils/log');
+const { serveStatic } = require('./src/lib/utils/helper');
 const { appGenerator, serverGenerator, appWatcher, openInBrowser } = require('./src');
-
 // Final export for gulp
 module.exports = function(options = {}) {
   const { app, config, mockServerInstance } = appGenerator(options);
@@ -23,10 +22,12 @@ module.exports = function(options = {}) {
   // Create static server wrap in a stream
   const stream = through
     .obj((file, enc, callback) => {
-      app.use(express.static(config.path));
+      app.use(config.path, serveStatic(file.path, config));
       if (config.reload.enable) {
-        // Run the watcher
-        unwatchFn = appWatcher(config.path, app, { verbose: config.reload.verbose });
+        // Run the watcher, return an unwatch function
+        unwatchFn = appWatcher(config.path, app, {
+          verbose: config.reload.verbose
+        });
       }
       files.push(file);
       callback();

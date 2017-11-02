@@ -9,7 +9,7 @@
     "email": "info@newbran.ch",
     "url": "https://newbran.ch"
   },
-  "files": ["src", "index.js", "server.js", "gulp.js"],
+  "files": ["src", "index.js", "server.js", "gulp.js", "cli.js"],
   "main": "index.js",
   "keywords": [
     "node",
@@ -67,7 +67,7 @@
   "repository": "git@github.com:NewbranLTD/gulp-server-io.git",
   "jest": {
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["/fixtures/", "/examples/", "/old/"],
+    "testPathIgnorePatterns": ["/fixtures/", "/examples/", "/gulp/"],
     "collectCoverage": true
   },
   "license": "MIT",

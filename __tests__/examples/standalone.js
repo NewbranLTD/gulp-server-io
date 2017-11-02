@@ -11,7 +11,7 @@ const standaloneSrv = require('../../server');
 const root = path.join(__dirname, '..', 'fixtures','app');
 
 const server = standaloneSrv({
-  path: root,
+  webroot: root,
   callback: () => {
     console.log('standalone server started');
   },
