@@ -60,17 +60,20 @@ const setHeaders = (config, urlToOpen) => {
  * @return {function} middleware
  */
 exports.serveStatic = (webroot, config, urlToOpen = '') => {
+  let cacheControl = false;
   if (config.development === false) {
+    cacheControl = true;
     const _root = process.cwd();
     if (webroot === path.join(_root, 'app')) {
       webroot = path.join(_root, 'dest');
     }
   }
-  // logutil(config);
+  logutil(config);
   // @TODO configure the directoryListing option here
   const staticOptions = _.merge(
     {
-      setHeaders: setHeaders(config, urlToOpen),
+      cacheControl: cacheControl,
+      // setHeaders: setHeaders(config, urlToOpen),
       index: config.indexes
     },
     config.staticOptions

@@ -18,13 +18,15 @@ module.exports = function(options = {}) {
   const { app, config, mockServerInstance } = appGenerator(options);
   // Store the files for ?
   let files = [];
-  let unwatchFn;
+  let unwatchFn = () => {};
   // Create static server wrap in a stream
   const stream = through
     .obj((file, enc, callback) => {
+      logutil(file.path);
+      // Serve up the files
       app.use(config.path, serveStatic(file.path, config));
+      // Run the watcher, return an unwatch function
       if (config.reload.enable) {
-        // Run the watcher, return an unwatch function
         unwatchFn = appWatcher(config.path, app, {
           verbose: config.reload.verbose
         });
@@ -54,7 +56,7 @@ module.exports = function(options = {}) {
     cb();
     // Notify
     logutil(
-      chalk.white('Webserver started at'),
+      chalk.white(`gulp-server-io (${config.version}) running at`),
       chalk.cyan(
         'http' + (config.https ? 's' : '') + '://' + config.host + ':' + config.port
       )
