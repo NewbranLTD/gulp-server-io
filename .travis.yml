@@ -6,4 +6,6 @@ branches:
   only:
   - master
   - develop
+env:
+  - NODE_ENV=test
 after_script: 'cat ./coverage/lcov.info | coveralls'
