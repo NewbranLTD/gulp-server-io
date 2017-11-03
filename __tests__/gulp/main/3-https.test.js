@@ -44,8 +44,8 @@ describe('gulp-webserver-io stock test', () => {
       reload: false,
       open: false,
       https: {
-        key: join(__dirname, '..', '..', '..', 'src', 'certs', 'dev-key.pem'),
-        cert: join(__dirname, '..', '..', '..', 'src', 'certs', 'dev-cert.pem')
+        key: join(__dirname, '..', '..', '..', 'src', 'certs', 'cert.pem'),
+        cert: join(__dirname, '..', '..', '..', 'src', 'certs', 'cert.crt')
       }
     });
 
