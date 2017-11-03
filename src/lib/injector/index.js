@@ -21,7 +21,6 @@ module.exports = function(features, config) {
       [config.debugger.namespace, config.debugger.js].join('/')
     ]);
   }
-  console.log('scripts', scripts);
   return scriptInject({
     snippet: scripts
       .map(s => `<script type="text/javascript" src="${s}"></script>`)
