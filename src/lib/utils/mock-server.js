@@ -10,9 +10,10 @@ const logutil = require('./log.js');
 // Expect to return this server config for the proxies
 module.exports = function(options) {
   let proxies = [];
+  const start = 'http://';
   const opt = options.mock;
-  const port = opt.port || 3000;
-  const host = opt.host || 'http://localhost';
+  const port = opt.port || 3838;
+  const host = opt.host || 'localhost';
   // @TODO check if the host has the http to start?
   // @TODO add https options
   if (args.debug) {
@@ -23,7 +24,7 @@ module.exports = function(options) {
     const url = name.substring(0, 1) === '/' ? name.substring(1, name.length) : name;
     proxies.push({
       source: '/' + url,
-      target: [host, port].join(':')
+      target: start + [host.replace(start, ''), port].join(':')
     });
   });
   // @TODO later we need to take look at the proxies and,

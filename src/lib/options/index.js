@@ -22,6 +22,14 @@ module.exports = {
   staticOptions: {},
   directoryListing: false,
   headers: {},
+  // Middleware: Proxy
+  // For possible options, see:
+  // https://github.com/chimurai/http-proxy-middleware
+  // replace with the `http-proxy-middleware`
+  proxies: [],
+  // Stock certicates
+  devKeyPem: path.join(src, 'certs', 'cert.pem'),
+  devCrtPem: path.join(src, 'certs', 'cert.crt'),
   /**
   * MIDDLEWARE DEFAULTS
   * NOTE:
@@ -43,11 +51,6 @@ module.exports = {
     port: 3838,
     path: 'localhost'
   },
-  // Middleware: Proxy
-  // For possible options, see:
-  // https://github.com/chimurai/http-proxy-middleware
-  // replace with the `http-proxy-middleware`
-  proxies: [],
   // Create our socket.io debugger
   // using the socket.io instead of just normal post allow us to do this cross domain
   debugger: {
@@ -58,7 +61,5 @@ module.exports = {
     client: true, // Allow passing a configuration to overwrite the client
     server: true, // Allow passing configuration - see middleware.js for more detail
     log: false // @TODO further develop this later
-  },
-  devKeyPem: path.join(src, 'certs', 'cert.pem'),
-  devCrtPem: path.join(src, 'certs', 'cert.crt')
+  }
 };
