@@ -30,7 +30,8 @@ describe('gulp-webserver-io stock test', () => {
     stream = webserver({
       host: test3host,
       debugger: false,
-      reload: false
+      reload: false,
+      open: false
     });
     stream.write(rootDir);
 
@@ -44,7 +45,8 @@ describe('gulp-webserver-io stock test', () => {
     stream = webserver({
       path: test4path,
       debugger: false,
-      reload: false
+      reload: false,
+      open: false
     });
     stream.write(rootDir);
     return request([defaultUrl, test4path].join(''))

@@ -39,6 +39,7 @@ describe('gulp-webserver-io middleware test', () => {
   test('(1) should use middleware function', () => {
     const testPath = '/middleware';
     stream = webserver({
+      open: false,
       reload: false,
       debugger: false,
       middleware: (req, res, next) => {
@@ -58,6 +59,7 @@ describe('gulp-webserver-io middleware test', () => {
   test('(2) , should use middleware array', done => {
     const testPaths = ['middleware1', 'middleware2'];
     stream = webserver({
+      open: false,
       reload: false,
       debugger: false,
       middleware: [

@@ -30,6 +30,7 @@ describe('gulp-webserver-io stock test', () => {
     stream = webserver({
       debugger: false,
       reload: false,
+      open: false,
       fallback: 'default.html'
     });
 
@@ -46,6 +47,7 @@ describe('gulp-webserver-io stock test', () => {
     stream = webserver({
       debugger: false,
       reload: false,
+      open: false,
       fallback: 'default.html'
     });
 

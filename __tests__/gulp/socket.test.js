@@ -44,7 +44,9 @@ const options = {
 // Start test with socket
 describe('gulp-webserver-io ioDebugger test', () => {
   test.skip(`(1) should auto start io-debugger and able to connect default namespace ${namespace}`, done => {
-    stream = webserver();
+    stream = webserver({
+      open: false
+    });
     stream.write(rootDir);
 
     client = io.connect([defaultUrl, namespace].join(''), options);
@@ -59,6 +61,7 @@ describe('gulp-webserver-io ioDebugger test', () => {
 
   test(`(2) should able to use custom settings`, done => {
     stream = webserver({
+      open: false,
       debugger: {
         enable: true,
         namespace: customNamespace

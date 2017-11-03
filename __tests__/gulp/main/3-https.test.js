@@ -29,7 +29,8 @@ describe('gulp-webserver-io stock test', () => {
     stream = webserver({
       https: true,
       debugger: false,
-      reload: false
+      reload: false,
+      open: false
     });
     stream.write(rootDir);
     return request(defaultSSLUrl)
@@ -41,6 +42,7 @@ describe('gulp-webserver-io stock test', () => {
     stream = webserver({
       debugger: false,
       reload: false,
+      open: false,
       https: {
         key: join(__dirname, '..', '..', '..', 'src', 'certs', 'dev-key.pem'),
         cert: join(__dirname, '..', '..', '..', 'src', 'certs', 'dev-cert.pem')

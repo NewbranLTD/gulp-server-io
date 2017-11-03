@@ -35,6 +35,7 @@ describe('gulp-webserver-io stock test', () => {
     stream = webserver({
       debugger: false,
       reload: false,
+      open: false,
       directoryListing: true
     });
 
@@ -51,6 +52,7 @@ describe('gulp-webserver-io stock test', () => {
     const test10port = 35729;
     stream = webserver({
       debugger: false,
+      open: false,
       reload: {
         enable: true,
         port: test10port

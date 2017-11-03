@@ -28,7 +28,8 @@ describe('gulp-server-io default test', () => {
   test('(1) should work with default options', () => {
     stream = webserver({
       debugger: false,
-      reload: false
+      reload: false,
+      open: false
     });
     stream.write(rootDir);
     return request(defaultUrl)
@@ -41,7 +42,8 @@ describe('gulp-server-io default test', () => {
     stream = webserver({
       port: test2port,
       debugger: false,
-      reload: false
+      reload: false,
+      open: false
     });
     stream.write(rootDir);
     return request(['http://', baseUrl, ':', test2port].join(''))
