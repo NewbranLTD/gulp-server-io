@@ -77,7 +77,8 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
       // cacheControl: cacheControl,
       setHeaders: setHeaders(config, urlToOpen),
       index: config.indexes,
-      etag: etag
+      etag: etag,
+      maxage: 0 // just test this and see how we could deal with it
     },
     config.staticOptions
   );
