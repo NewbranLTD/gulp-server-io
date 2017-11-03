@@ -20,25 +20,29 @@ module.exports = {
   indexes: ['index.html', 'index.htm'],
   callback: () => {},
   staticOptions: {},
+  directoryListing: false,
+  headers: {},
   /**
   * MIDDLEWARE DEFAULTS
   * NOTE:
   *  All middleware should defaults should have the 'enable'
   *  property if you want to support shorthand syntax like:
   *    webserver({
-  *      livereload: true
+  *      reload: true
   *    });
   */
   reload: {
     enable: true,
     verbose: true
   },
-  headers: {
-    // For overwrite
-  },
   // New mock server using json-server, please note if this is enable then
   // The proxy will be disable
-  mock: false,
+  mock: {
+    enable: false,
+    json: false,
+    port: 3838,
+    path: 'localhost'
+  },
   // Middleware: Proxy
   // For possible options, see:
   // https://github.com/chimurai/http-proxy-middleware

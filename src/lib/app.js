@@ -74,7 +74,7 @@ module.exports = function(options = {}) {
     middlewares.filter(m => typeof m === 'function').forEach(m => app.use(m));
   }
   // First need to setup the mock (NEW)
-  if (config.mock !== false) {
+  if (config.mock.enable) {
     // Here we overwrite the proxies so the proxy get to the mock server
     // @TODO sort out particular url that shouldn't be mock?
     const _mock = mockServer(config);

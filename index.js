@@ -8,6 +8,7 @@
  */
 const fs = require('fs');
 const chalk = require('chalk');
+const express = require('express');
 const through = require('through2');
 // Modules
 const logutil = require('./src/lib/utils/log');
@@ -31,6 +32,10 @@ module.exports = function(options = {}) {
     .obj((file, enc, callback) => {
       // Serve up the files
       app.use(config.path, serveStatic(file.path, config));
+      // Enable directoryListing
+      if (config.directoryListing) {
+        app.use(express.directory(file.path));
+      }
       // Run the watcher, return an unwatch function
       if (config.reload.enable) {
         unwatchFn = appWatcher(file.path, app, {
