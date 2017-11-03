@@ -17,6 +17,7 @@ const log = require('./utils/log');
 module.exports = function(root, app, config = {}) {
   const reloadServer = reload(app, config);
   let watcher;
+  let files = [];
   // Start the watch files with Bacon wrapper
   const streamWatcher = bacon.fromBinder(sink => {
     watcher = chokidar.watch(root, {
@@ -33,15 +34,14 @@ module.exports = function(root, app, config = {}) {
   return streamWatcher
     .skipDuplicates(_.isEqual)
     .map('.path')
-    .scan([], (a, b) => {
-      a.push(b);
-      return a;
-    })
+    .doAction(a => files.push(a))
     .debounce(300)
-    .onValue(files => {
+    .onValue(() => {
       if (files.length) {
         log('change event fired');
         reloadServer.reload();
+        // Reset
+        files = [];
       }
     });
 };
