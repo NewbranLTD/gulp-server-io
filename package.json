@@ -40,6 +40,7 @@
     "pretest": "eslint . --fix",
     "precommit": "lint-staged",
     "test": "jest",
+    "exp": "node ./__tests__/examples/site.js",
     "gulp-example": "gulp serve --gulpfile ./__tests__/examples/gulpfile.js",
     "standalone-example": "node ./__tests__/examples/standalone.js"
   },
@@ -67,7 +68,7 @@
   "repository": "git@github.com:NewbranLTD/gulp-server-io.git",
   "jest": {
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["/fixtures/", "/examples/", "/main/"],
+    "testPathIgnorePatterns": ["/fixtures/", "/examples/", "/gulp/"],
     "collectCoverage": true
   },
   "license": "MIT",

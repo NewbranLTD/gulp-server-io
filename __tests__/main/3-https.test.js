@@ -40,7 +40,7 @@ describe('gulp-webserver-io stock test', () => {
   test('(6) should work with https and custom certificate', () => {
     stream = webserver({
       debugger: false,
-      reload: false
+      reload: false,
       https: {
         key: join(__dirname, '..', '..', '..', 'src', 'certs', 'cert.pem'),
         cert: join(__dirname, '..', '..', '..', 'src', 'certs', 'cert.crt')

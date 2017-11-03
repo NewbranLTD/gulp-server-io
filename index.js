@@ -87,6 +87,6 @@ module.exports = function(options = {}) {
     // Kill watcher
     unwatchFn();
   });
-
+  // Return
   return stream;
 };
