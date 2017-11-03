@@ -3,11 +3,18 @@
  * Testing the middlewares
  */
 const request = require('supertest');
-const webserver = require('../src/main.js');
 const File = require('gulp-util').File;
 const join = require('path').join;
 // Parameters
-const { baseUrl, defaultUrl } = require('./fixtures/config.js');
+const webserver = require('../../index');
+const {
+  root,
+  rootDir,
+  baseUrl,
+  defaultUrl,
+  defaultPort,
+  defaultSSLUrl
+} = require('../fixtures/config.js');
 // Some configuration to enable https testing
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // Setups
@@ -32,7 +39,8 @@ describe('gulp-webserver-io middleware test', () => {
   test('(1) should use middleware function', () => {
     const testPath = '/middleware';
     stream = webserver({
-      ioDebugger: false,
+      reload: false,
+      debugger: false,
       middleware: (req, res, next) => {
         if (req.url === testPath) {
           res.end(shiftDownOne(testPath));
@@ -50,7 +58,8 @@ describe('gulp-webserver-io middleware test', () => {
   test('(2) , should use middleware array', done => {
     const testPaths = ['middleware1', 'middleware2'];
     stream = webserver({
-      ioDebugger: false,
+      reload: false,
+      debugger: false,
       middleware: [
         function(req, res, next) {
           if (req.url === testPaths[0]) {

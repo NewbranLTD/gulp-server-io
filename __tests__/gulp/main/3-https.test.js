@@ -8,15 +8,14 @@ const join = require('path').join;
 const webserver = require('../../../index');
 const {
   root,
+  rootDir,
   baseUrl,
-  defaultPort,
   defaultUrl,
+  defaultPort,
   defaultSSLUrl
 } = require('../../fixtures/config.js');
 // Some configuration to enable https testing
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-const rootDir = new File({ path: join(__dirname, '..', '..', 'fixtures') });
-
 // Test start
 describe('gulp-webserver-io stock test', () => {
   // Setups
@@ -30,8 +29,7 @@ describe('gulp-webserver-io stock test', () => {
     stream = webserver({
       https: true,
       debugger: false,
-      reload: false,
-      path: root
+      reload: false
     });
     stream.write(rootDir);
     return request(defaultSSLUrl)
@@ -41,7 +39,6 @@ describe('gulp-webserver-io stock test', () => {
   // (6)
   test('(6) should work with https and custom certificate', () => {
     stream = webserver({
-      path: root,
       debugger: false,
       reload: false,
       https: {
