@@ -8,16 +8,7 @@
 This is complete rewrote from [gulp-webserver-io](https://github.com/joelchu/gulp-webserver-io), there are many improvement over the previous version.
 The goal is to create an one stop shop solution during development, as well as simple and quick SPA deployment.
 
-Here is a list of the main changes over the previous version: 
-
-* Replace `connect` with `express`, allow for more third parties middleware integrate into this package.
-* Replace `tiny-lr` with `chokidar`, `reload`, and `baconjs` that allow better cross platform support and, better control over the file watch.
-* Fold several out dated packages into the code and, maintain ourself.
-* Redevelop the socket.io-debugger from ground up to make it easier to develop more features in the future.
-* Add `json-server` combine with `http-proxy-middleware` to allow mock REST API during development (even during deployment).
-* Most of the options are now one line configuation.
-* Completely redesign the code structure to make it easier to develop by breaking up everything into it's own module.
-* Rewrote most of the test and, coverage report to have a better understanding of the progress.  
+See [CHANGELOG.md]('./CHANGELOG.md') for complete list of different between the two version.
 
 ## Installation
 
