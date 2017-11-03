@@ -38,6 +38,7 @@ const getColor = function(data) {
 module.exports = function(config, server, logger) {
   logger = logger || logutil;
   let socketConfig = null;
+  // Force the socket.io server to use websocket protocol only
   if (typeof config.ioDebugger.server === 'object') {
     if (config.ioDebugger.server.socketOnly) {
       socketConfig =
@@ -49,11 +50,7 @@ module.exports = function(config, server, logger) {
   }
   const io = socketIO(server, socketConfig);
   const keys = ['browser', 'location'];
-  // Force the socket.io server to use websocket protocol only
-  /*
-        There is a problem with this setting that cause the whole thing stop working!
-    */
-  // show if this is running
+  // Show if this is running
   logutil(
     chalk.white('[ioDebugger] ') +
       chalk.yellow('server is running') +
@@ -111,7 +108,7 @@ module.exports = function(config, server, logger) {
       }
     });
   }); // End configurable name space
-  // finally we return the io object just the name space
+  // finally we return the io object just the name space instance
   return namespace;
 };
 

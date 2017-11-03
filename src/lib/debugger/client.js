@@ -56,6 +56,7 @@ module.exports = function(config) {
           connectionOptions
         });
         // @TODO we should cache this file, otherwise every reload will have to generate it again
+        // The question is where do we cache it though ...
         res.writeHead(200);
         res.end(serveData);
       });
