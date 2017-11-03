@@ -4,6 +4,7 @@
  * Move some of the functions out of the main.js to reduce the complexity
  */
 const _ = require('lodash');
+const path = require('path');
 const express = require('express');
 const logutil = require('./log.js');
 /**
@@ -59,7 +60,13 @@ const setHeaders = (config, urlToOpen) => {
  * @return {function} middleware
  */
 exports.serveStatic = (webroot, config, urlToOpen = '') => {
-  logutil(config);
+  if (config.development === false) {
+    const _root = process.cwd();
+    if (webroot === path.join(_root, 'app')) {
+      webroot = path.join(_root, 'dest');
+    }
+  }
+  // logutil(config);
   // @TODO configure the directoryListing option here
   const staticOptions = _.merge(
     {
