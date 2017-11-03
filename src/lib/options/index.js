@@ -9,7 +9,7 @@ module.exports = {
   /**
   * Basic options
   */
-  development: false,
+  development: true,
   host: 'localhost',
   port: 8000,
   path: '/',
@@ -49,11 +49,11 @@ module.exports = {
   debugger: {
     enable: true, // Turn on by default otherwise they wouldn't be using this version anyway
     namespace: '/debugger-io',
-    js: 'debugger-client.js',
+    js: '/debugger-client.js',
     eventName: 'gulpServerIoError',
     client: true, // Allow passing a configuration to overwrite the client
     server: true, // Allow passing configuration - see middleware.js for more detail
-    log: false // See wiki for more info
+    log: false // @TODO further develop this later
   },
   devKeyPem: path.join(src, 'certs', 'cert.pem'),
   devCrtPem: path.join(src, 'certs', 'cert.crt')

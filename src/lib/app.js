@@ -18,7 +18,7 @@ const enableMiddlewareShorthand = require('./options/enable-middleware-shorthand
 const logutil = require('./utils/log');
 // @TODO add them back later
 const mockServer = require('./utils/mock-server');
-const debuggerClient = require('./lib/debugger/client');
+const debuggerClient = require('./debugger/client');
 const scriptsInjector = require('./injector');
 /**
  * Export
@@ -47,7 +47,6 @@ module.exports = function(options = {}) {
     }
     addDebugger = config.debugger.client !== false;
   }
-
   // Live reload and inject debugger
   if (config.reload.enable || addDebugger) {
     middlewares.push(

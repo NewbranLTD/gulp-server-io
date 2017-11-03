@@ -9,9 +9,11 @@ module.exports = function(features, config) {
     scripts.push('/reload/reload.js');
   }
   if (features.debugger) {
-    scripts.concat(['/socket.io/socket.io.js', config.debugger.js]);
+    scripts = scripts.concat(['/socket.io/socket.io.js', config.debugger.js]);
   }
   return scriptInject({
-    snippet: scripts.map(s => `<script type="text/javascript" src=${s}></script>`)
+    snippet: scripts
+      .map(s => `<script type="text/javascript" src="${s}"></script>`)
+      .reduce((a, b) => a + b, '')
   });
 };

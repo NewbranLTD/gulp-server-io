@@ -1,6 +1,6 @@
 'use strict';
 /**
- * The socket.io part
+ * The socket.io server and reporting
  */
 const util = require('util');
 const chalk = require('chalk');
