@@ -26,7 +26,7 @@ describe('gulp-webserver-io stock test', () => {
   });
   // (3)
   test('(3) should work with custom host', () => {
-    const test3host = '0.0.0.0';
+    const test3host = '127.0.0.1';
     stream = webserver({
       host: test3host,
       debugger: false,
@@ -40,7 +40,7 @@ describe('gulp-webserver-io stock test', () => {
   });
   // (4)
   test('(4) should work with custom path', () => {
-    const test4path = '/custom/path';
+    const test4path = '/custom';
     stream = webserver({
       path: test4path,
       debugger: false,
