@@ -24,18 +24,6 @@ describe('gulp-webserver-io stock test', () => {
     stream.emit('kill');
     stream = undefined;
   });
-  // (5)
-  test('(5) should work with https', () => {
-    stream = webserver({
-      https: true,
-      debugger: false,
-      reload: false
-    });
-    stream.write(rootDir);
-    return request(defaultSSLUrl)
-      .get('/')
-      .expect(200, /Bootstrap Template test for gulp-server-io/);
-  });
   // (6)
   test('(6) should work with https and custom certificate', () => {
     stream = webserver({
@@ -46,9 +34,7 @@ describe('gulp-webserver-io stock test', () => {
         cert: join(__dirname, '..', '..', 'src', 'certs', 'cert.crt')
       }
     });
-
     stream.write(rootDir);
-
     return request(defaultSSLUrl)
       .get('/')
       .expect(200, /Bootstrap Template test for gulp-server-io/);

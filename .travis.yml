@@ -8,4 +8,5 @@ branches:
   - develop
 env:
   - NODE_ENV=test
+  - NODE_TLS_REJECT_UNAUTHORIZED='0'
 after_script: 'cat ./coverage/lcov.info | coveralls'
