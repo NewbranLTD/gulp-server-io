@@ -12,12 +12,19 @@ const through = require('through2');
 // Modules
 const logutil = require('./src/lib/utils/log');
 const { serveStatic } = require('./src/lib/utils/helper');
-const { appGenerator, serverGenerator, appWatcher, openInBrowser } = require('./src');
+const {
+  appGenerator,
+  serverGenerator,
+  appWatcher,
+  openInBrowser,
+  debuggerServer
+} = require('./src');
 // Final export for gulp
 module.exports = function(options = {}) {
   const { app, config, mockServerInstance } = appGenerator(options);
   // Store the files for ?
   let files = [];
+  let closeDebuggerFn = () => {};
   let unwatchFn = () => {};
   // Create static server wrap in a stream
   const stream = through
@@ -64,16 +71,22 @@ module.exports = function(options = {}) {
     openInBrowser(config);
   };
   const webserver = serverGenerator(app, config);
-
   // @TODO add debuggerServer start up here
-
+  if (config.debugger.enable && config.debugger.server === true) {
+    const { close } = debuggerServer(config, webserver);
+    closeDebuggerFn = close;
+  }
   // When ctrl-c or stream.emit('kill')
   stream.on('kill', () => {
+    // This is unnecessary
     webserver.close();
+    // Close the mock server
+    mockServerInstance.close();
+    // Kill the debugger server
+    closeDebuggerFn();
     // Kill watcher
     unwatchFn();
-    // @TODO kill the debugger server
-    mockServerInstance.close();
   });
+
   return stream;
 };
