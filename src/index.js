@@ -6,10 +6,12 @@ const appGenerator = require('./lib/app');
 const appWatcher = require('./lib/watcher');
 const openInBrowser = require('./lib/open');
 const serverGenerator = require('./lib/webserver');
-// @TODO const debuggerServer = require('./lib/debugger-server');
+const debuggerServer = require('./lib/debugger');
+// Export
 module.exports = {
   appWatcher,
   appGenerator,
   openInBrowser,
-  serverGenerator
+  serverGenerator,
+  debuggerServer
 };

@@ -3,21 +3,24 @@
  * Testing the ioDebugger socket functions
  */
 const request = require('supertest');
-const webserver = require('../src/main.js');
 const File = require('gulp-util').File;
 const join = require('path').join;
 const io = require('socket.io-client');
 // Parameters
-const { baseUrl, defaultUrl } = require('./fixtures/config.js');
+const webserver = require('../../index');
+const {
+  root,
+  rootDir,
+  baseUrl,
+  defaultUrl,
+  defaultPort,
+  defaultSSLUrl
+} = require('../fixtures/config.js');
 // Some configuration to enable https testing
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // Setups
 let stream;
 let client;
-
-const rootDir = new File({
-  path: join(__dirname, 'fixtures')
-});
 
 // Clean up afterward
 afterEach(() => {
@@ -40,8 +43,10 @@ const options = {
 };
 // Start test with socket
 describe('gulp-webserver-io ioDebugger test', () => {
-  test.skip(`(1) should auto start ioDebugger and able to connect default namespace ${namespace}`, done => {
-    stream = webserver();
+  test.skip(`(1) should auto start io-debugger and able to connect default namespace ${namespace}`, done => {
+    stream = webserver({
+      open: false
+    });
     stream.write(rootDir);
 
     client = io.connect([defaultUrl, namespace].join(''), options);
@@ -56,7 +61,7 @@ describe('gulp-webserver-io ioDebugger test', () => {
 
   test(`(2) should able to use custom settings`, done => {
     stream = webserver({
-      ioDebugger: {
+      debugger: {
         enable: true,
         namespace: customNamespace
       }

@@ -8,7 +8,7 @@ const chalk = require('chalk');
 const { join } = require('path');
 // Const gutil = require('gulp-util');
 const logutil = require('../utils/log');
-// Note the config pass here now is not the full original object, just the config.debugger part
+// Note the config is only the debugger part
 module.exports = function(config) {
   // Now we need to supply a configurated option to not just point to our own local test machine
   // const debuggerHost = config.server.host || config.host;
@@ -16,7 +16,7 @@ module.exports = function(config) {
   const debuggerPath = config.namespace;
   const debuggerJs = [debuggerPath, config.js].join('/');
   const eventName = config.eventName;
-
+  // Just notify the console
   logutil(chalk.white('[debugger] ') + chalk.yellow('client is running'));
   // Export middleware
   return function(req, res, next) {
@@ -39,13 +39,13 @@ module.exports = function(config) {
         // @2017-06-29 forcing the connection to socket only because it just serving up local!
         let connectionOptions =
           ", {'force new connection': false , 'transports': ['websocket']}";
-        if (typeof config.debugger.server === 'object') {
+        if (typeof config.server === 'object') {
           if (
-            config.debugger.server.clientConnectionOptions &&
-            typeof config.debugger.server.clientConnectionOptions === 'object'
+            config.server.clientConnectionOptions &&
+            typeof config.server.clientConnectionOptions === 'object'
           ) {
             connectionOptions =
-              ', ' + JSON.stringify(config.debugger.server.clientConnectionOptions);
+              ', ' + JSON.stringify(config.server.clientConnectionOptions);
           }
         }
         // Using the template method instead
@@ -56,6 +56,7 @@ module.exports = function(config) {
           connectionOptions
         });
         // @TODO we should cache this file, otherwise every reload will have to generate it again
+        // The question is where do we cache it though ...
         res.writeHead(200);
         res.end(serveData);
       });

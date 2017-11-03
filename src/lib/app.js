@@ -18,7 +18,7 @@ const enableMiddlewareShorthand = require('./options/enable-middleware-shorthand
 const logutil = require('./utils/log');
 // @TODO add them back later
 const mockServer = require('./utils/mock-server');
-// Const debuggerClient = require('./lib/debugger-middleware');
+const debuggerClient = require('./debugger/client');
 const scriptsInjector = require('./injector');
 /**
  * Export
@@ -47,7 +47,6 @@ module.exports = function(options = {}) {
     }
     addDebugger = config.debugger.client !== false;
   }
-
   // Live reload and inject debugger
   if (config.reload.enable || addDebugger) {
     middlewares.push(
@@ -61,11 +60,9 @@ module.exports = function(options = {}) {
     );
   }
   // Init the debugger
-  /*
   if (addDebugger) {
     middlewares.push(debuggerClient(config.debugger));
   }
-  */
   // Extra middlewares pass directly from config
   if (typeof config.middleware === 'function') {
     middlewares.push(config.middleware);
@@ -77,7 +74,7 @@ module.exports = function(options = {}) {
     middlewares.filter(m => typeof m === 'function').forEach(m => app.use(m));
   }
   // First need to setup the mock (NEW)
-  if (config.mock !== false) {
+  if (config.mock.enable && config.mock.json) {
     // Here we overwrite the proxies so the proxy get to the mock server
     // @TODO sort out particular url that shouldn't be mock?
     const _mock = mockServer(config);

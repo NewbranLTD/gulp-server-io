@@ -1,11 +1,11 @@
 'use strict';
 /**
- * The socket.io part
+ * The socket.io server and reporting
  */
 const util = require('util');
 const chalk = require('chalk');
 const socketIO = require('socket.io');
-const logutil = require('../log.js');
+const logutil = require('../utils/log');
 /**
  * Just getting some color configuration
  */
@@ -30,51 +30,49 @@ const getColor = function(data) {
   }
 };
 /**
- * IoDebuggerServer
+ * DebuggerServer
  * @param {object} config
  * @param {object} server http/https server instance
  * @param {function} logger
+ * @return {object} socket the namespace instance and a close method
  */
 module.exports = function(config, server, logger) {
   logger = logger || logutil;
   let socketConfig = null;
-  if (typeof config.ioDebugger.server === 'object') {
-    if (config.ioDebugger.server.socketOnly) {
+  // Force the socket.io server to use websocket protocol only
+  if (typeof config.debugger.server === 'object') {
+    if (config.debugger.server.socketOnly) {
       socketConfig =
-        config.ioDebugger.server.transportConfig &&
-        Array.isArray(config.ioDebugger.server.transportConfig)
-          ? config.ioDebugger.server.transportConfig
+        config.debugger.server.transportConfig &&
+        Array.isArray(config.debugger.server.transportConfig)
+          ? config.debugger.server.transportConfig
           : ['websocket'];
     }
   }
   const io = socketIO(server, socketConfig);
   const keys = ['browser', 'location'];
-  // Force the socket.io server to use websocket protocol only
-  /*
-        There is a problem with this setting that cause the whole thing stop working!
-    */
-  // show if this is running
+  // Show if this is running
   logutil(
-    chalk.white('[ioDebugger] ') +
+    chalk.white('[debugger] ') +
       chalk.yellow('server is running') +
       ' ' +
       chalk.white(config.version)
   );
-  if (config.ioDebugger.debugSocket) {
-    logutil(chalk.white('[ioDebugger] socket server:'), server, socketConfig);
+  if (config.debugger.debugSocket) {
+    logutil(chalk.white('[debugger] socket server:'), server, socketConfig);
   }
   // Run
-  const namespace = io.of(config.ioDebugger.namespace);
+  const namespace = io.of(config.debugger.namespace);
   // Start
   namespace.on('connection', function(socket) {
     // Announce to the client that is working
     socket.emit('hello', 'IO DEBUGGER is listening ...');
     // Listen
-    socket.on(config.ioDebugger.eventName, function(data) {
+    socket.on(config.debugger.eventName, function(data) {
       // Provide a logger
       if (logger && typeof logger === 'function') {
         logger(data);
-        if (config.ioDebugger.log !== 'BOTH') {
+        if (config.debugger.log !== 'BOTH') {
           return;
         }
       }
@@ -111,8 +109,13 @@ module.exports = function(config, server, logger) {
       }
     });
   }); // End configurable name space
-  // finally we return the io object just the name space
-  return namespace;
+  // finally we return the io object just the name space instance
+  return {
+    socket: namespace,
+    close: () => {
+      namespace.socket.close();
+    }
+  };
 };
 
 // EOF

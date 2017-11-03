@@ -34,9 +34,10 @@ module.exports = function(opt = {}) {
     return '';
   };
   const snippet = snippetBuilder(opt.snippet);
-  // Console.log('snippet', snippet);
+  // Still not sure how this work at all
   const runAll = opt.runAll || false;
   // Helper functions
+  // this is necessary to wrap in a fn
   const regex = (function() {
     const matches = rules
       .map(function(item) {

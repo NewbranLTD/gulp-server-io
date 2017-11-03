@@ -5,19 +5,18 @@ const gutil = require('gulp-util');
 const File = gutil.File;
 const log = gutil.log;
 const join = require('path').join;
-const webserver = require('../../src/main.js');
+const webserver = require('../../index');
 const {
+  root,
+  rootDir,
   baseUrl,
-  defaultPort,
   defaultUrl,
-  defaultSSLUrl
+  defaultPort,
+  defaultSSLUrl,
+  directoryIndexMissingDir
 } = require('../fixtures/config.js');
 // Some configuration to enable https testing
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-const rootDir = new File({ path: join(__dirname, '..', 'fixtures') });
-const directoryIndexMissingDir = new File({
-  path: join(__dirname, '..', 'fixtures', 'directoryIndexMissing')
-});
 // Test start
 describe('gulp-webserver-io stock test', () => {
   // Setups
@@ -29,7 +28,8 @@ describe('gulp-webserver-io stock test', () => {
   // (7)
   test('(7) should fallback to default.html', () => {
     stream = webserver({
-      ioDebugger: false,
+      debugger: false,
+      reload: false,
       fallback: 'default.html'
     });
 
@@ -44,7 +44,8 @@ describe('gulp-webserver-io stock test', () => {
   // (8)
   test('(8) should server multiple sources even with a fallback', () => {
     stream = webserver({
-      ioDebugger: false,
+      debugger: false,
+      reload: false,
       fallback: 'default.html'
     });
 

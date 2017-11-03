@@ -5,17 +5,17 @@ const gutil = require('gulp-util');
 const File = gutil.File;
 const log = gutil.log;
 const join = require('path').join;
-const webserver = require('../../../index');
+const webserver = require('../../index');
 const {
   root,
+  rootDir,
   baseUrl,
-  defaultPort,
   defaultUrl,
+  defaultPort,
   defaultSSLUrl
-} = require('../../fixtures/config.js');
+} = require('../fixtures/config.js');
 // Some configuration to enable https testing
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-const rootDir = new File({ path: join(__dirname, '..', '..', 'fixtures') });
 // Test start
 describe('gulp-server-io default test', () => {
   // Setups
@@ -27,7 +27,6 @@ describe('gulp-server-io default test', () => {
   // (1) test with basic options
   test('(1) should work with default options', () => {
     stream = webserver({
-      path: root,
       debugger: false,
       reload: false
     });
@@ -41,7 +40,6 @@ describe('gulp-server-io default test', () => {
     const test2port = 1111;
     stream = webserver({
       port: test2port,
-      path: root,
       debugger: false,
       reload: false
     });
