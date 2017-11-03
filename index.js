@@ -26,7 +26,7 @@ module.exports = function(options = {}) {
       app.use(config.path, serveStatic(file.path, config));
       // Run the watcher, return an unwatch function
       if (config.reload.enable) {
-        unwatchFn = appWatcher(config.webroot, app, {
+        unwatchFn = appWatcher(file.path, app, {
           verbose: config.reload.verbose
         });
       }
