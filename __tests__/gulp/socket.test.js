@@ -61,7 +61,6 @@ describe('gulp-webserver-io ioDebugger test', () => {
 
   test(`(2) should able to use custom settings`, done => {
     stream = webserver({
-      open: false,
       debugger: {
         enable: true,
         namespace: customNamespace

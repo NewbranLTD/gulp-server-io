@@ -20,10 +20,6 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // Setups
 let stream;
 
-const rootDir = new File({
-  path: join(__dirname, 'fixtures')
-});
-
 // Clean up afterward
 afterEach(() => {
   if (stream) {
@@ -39,7 +35,6 @@ describe('gulp-webserver-io middleware test', () => {
   test('(1) should use middleware function', () => {
     const testPath = '/middleware';
     stream = webserver({
-      open: false,
       reload: false,
       debugger: false,
       middleware: (req, res, next) => {
@@ -59,7 +54,6 @@ describe('gulp-webserver-io middleware test', () => {
   test('(2) , should use middleware array', done => {
     const testPaths = ['middleware1', 'middleware2'];
     stream = webserver({
-      open: false,
       reload: false,
       debugger: false,
       middleware: [

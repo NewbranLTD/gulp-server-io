@@ -5,7 +5,7 @@ const gutil = require('gulp-util');
 const File = gutil.File;
 const log = gutil.log;
 const join = require('path').join;
-const webserver = require('../../../index');
+const webserver = require('../../index');
 const {
   root,
   rootDir,
@@ -13,7 +13,7 @@ const {
   defaultUrl,
   defaultPort,
   defaultSSLUrl
-} = require('../../fixtures/config.js');
+} = require('../fixtures/config.js');
 // Some configuration to enable https testing
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // Test start
@@ -24,32 +24,32 @@ describe('gulp-webserver-io stock test', () => {
     stream.emit('kill');
     stream = undefined;
   });
-  // (3)
-  test('(3) should work with custom host', () => {
-    const test3host = '0.0.0.0';
+  // (5)
+  test('(5) should work with https', () => {
     stream = webserver({
-      host: test3host,
+      https: true,
       debugger: false,
-      reload: false,
-      open: false
+      reload: false
     });
     stream.write(rootDir);
-
-    return request(['http://', test3host, ':', defaultPort].join(''))
+    return request(defaultSSLUrl)
       .get('/')
       .expect(200, /Bootstrap Template test for gulp-server-io/);
   });
-  // (4)
-  test('(4) should work with custom path', () => {
-    const test4path = '/custom/path';
+  // (6)
+  test('(6) should work with https and custom certificate', () => {
     stream = webserver({
-      path: test4path,
       debugger: false,
-      reload: false,
-      open: false
+      reload: false
+      https: {
+        key: join(__dirname, '..', '..', '..', 'src', 'certs', 'cert.pem'),
+        cert: join(__dirname, '..', '..', '..', 'src', 'certs', 'cert.crt')
+      }
     });
+
     stream.write(rootDir);
-    return request([defaultUrl, test4path].join(''))
+
+    return request(defaultSSLUrl)
       .get('/')
       .expect(200, /Bootstrap Template test for gulp-server-io/);
   });

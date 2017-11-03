@@ -5,7 +5,7 @@ const gutil = require('gulp-util');
 const File = gutil.File;
 const log = gutil.log;
 const join = require('path').join;
-const webserver = require('../../../index');
+const webserver = require('../../index');
 const {
   root,
   rootDir,
@@ -13,40 +13,41 @@ const {
   defaultUrl,
   defaultPort,
   defaultSSLUrl
-} = require('../../fixtures/config.js');
+} = require('../fixtures/config.js');
 // Some configuration to enable https testing
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // Test start
-describe('gulp-server-io default test', () => {
+describe('gulp-webserver-io stock test', () => {
   // Setups
   let stream;
   afterEach(() => {
     stream.emit('kill');
     stream = undefined;
   });
-  // (1) test with basic options
-  test('(1) should work with default options', () => {
+  // (3)
+  test('(3) should work with custom host', () => {
+    const test3host = '0.0.0.0';
     stream = webserver({
+      host: test3host,
       debugger: false,
-      reload: false,
-      open: false
+      reload: false
     });
     stream.write(rootDir);
-    return request(defaultUrl)
+
+    return request(['http://', test3host, ':', defaultPort].join(''))
       .get('/')
       .expect(200, /Bootstrap Template test for gulp-server-io/);
   });
-  // (2) test with custom port number
-  test('(2) should work with custom port', () => {
-    const test2port = 1111;
+  // (4)
+  test('(4) should work with custom path', () => {
+    const test4path = '/custom/path';
     stream = webserver({
-      port: test2port,
+      path: test4path,
       debugger: false,
-      reload: false,
-      open: false
+      reload: false
     });
     stream.write(rootDir);
-    return request(['http://', baseUrl, ':', test2port].join(''))
+    return request([defaultUrl, test4path].join(''))
       .get('/')
       .expect(200, /Bootstrap Template test for gulp-server-io/);
   });
