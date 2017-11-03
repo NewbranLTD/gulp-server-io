@@ -9,24 +9,27 @@ const reload = require('reload');
 const chokidar = require('chokidar');
 const log = require('./utils/log');
 /**
- * @param {string} root path to watch
+ * @param {string} webroot path to watch
  * @param {object} app express app
  * @param {object} config for reload (optional)
  * @return {object} bacon instance for watch later
  */
-module.exports = function(root, app, config = {}) {
+module.exports = function(webroot, app, config = {}) {
   const reloadServer = reload(app, config);
   let watcher;
   let files = [];
+  log('watching', webroot);
   // Start the watch files with Bacon wrapper
   const streamWatcher = bacon.fromBinder(sink => {
-    watcher = chokidar.watch(root, {
+    watcher = chokidar.watch(webroot, {
       ignored: /(^|[\/\\])\../
+      // ignoreInitial: true
     });
     watcher.on('all', (event, path) => {
+      log('chokidar detect changed', event, path);
       sink({ event: event, path: path });
       return () => {
-        watcher.unwatch(root);
+        watcher.close();
       };
     });
   });
@@ -34,7 +37,10 @@ module.exports = function(root, app, config = {}) {
   return streamWatcher
     .skipDuplicates(_.isEqual)
     .map('.path')
-    .doAction(a => files.push(a))
+    .doAction(a => {
+      log('action', a);
+      files.push(a);
+    })
     .debounce(300)
     .onValue(() => {
       if (files.length) {

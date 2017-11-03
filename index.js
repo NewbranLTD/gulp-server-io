@@ -24,6 +24,12 @@ module.exports = function(options = {}) {
     .obj((file, enc, callback) => {
       // Serve up the files
       app.use(config.path, serveStatic(file.path, config));
+      // Run the watcher, return an unwatch function
+      if (config.reload.enable) {
+        unwatchFn = appWatcher(config.webroot, app, {
+          verbose: config.reload.verbose
+        });
+      }
       files.push(file);
       callback();
     })
@@ -51,25 +57,20 @@ module.exports = function(options = {}) {
     logutil(
       chalk.white(`gulp-server-io (${config.version}) running at`),
       chalk.cyan(
-        'http' + (config.https ? 's' : '') + '://' + config.host + ':' + config.port
+        ['http', config.https ? 's' : '', '://', config.host, ':', config.port].join('')
       )
     );
     // Open in browser
     openInBrowser(config);
   };
   const webserver = serverGenerator(app, config);
-  // Run the watcher, return an unwatch function
-  if (config.reload.enable) {
-    unwatchFn = appWatcher(config.webroot, app, {
-      verbose: config.reload.verbose
-    });
-  }
+
   // @TODO add debuggerServer start up here
 
   // When ctrl-c or stream.emit('kill')
   stream.on('kill', () => {
     webserver.close();
-    // Need to add kill watcher
+    // Kill watcher
     unwatchFn();
     // @TODO kill the debugger server
     mockServerInstance.close();

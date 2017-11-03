@@ -68,7 +68,6 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
       webroot = path.join(_root, 'dest');
     }
   }
-  logutil(config);
   // @TODO configure the directoryListing option here
   const staticOptions = _.merge(
     {
