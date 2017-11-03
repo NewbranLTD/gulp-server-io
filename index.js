@@ -22,15 +22,8 @@ module.exports = function(options = {}) {
   // Create static server wrap in a stream
   const stream = through
     .obj((file, enc, callback) => {
-      logutil(file.path);
       // Serve up the files
       app.use(config.path, serveStatic(file.path, config));
-      // Run the watcher, return an unwatch function
-      if (config.reload.enable) {
-        unwatchFn = appWatcher(config.path, app, {
-          verbose: config.reload.verbose
-        });
-      }
       files.push(file);
       callback();
     })
@@ -65,6 +58,12 @@ module.exports = function(options = {}) {
     openInBrowser(config);
   };
   const webserver = serverGenerator(app, config);
+  // Run the watcher, return an unwatch function
+  if (config.reload.enable) {
+    unwatchFn = appWatcher(config.webroot, app, {
+      verbose: config.reload.verbose
+    });
+  }
   // @TODO add debuggerServer start up here
 
   // When ctrl-c or stream.emit('kill')

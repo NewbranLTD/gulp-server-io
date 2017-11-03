@@ -11,8 +11,6 @@ const root = path.join(__dirname, '..', 'fixtures', 'app');
 gulp.task('serve', () => {
   return gulp.src(root)
     .pipe(
-      gulpServerIo({
-        path: root
-      })
+      gulpServerIo()
     );
 });

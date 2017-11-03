@@ -73,7 +73,7 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
   const staticOptions = _.merge(
     {
       cacheControl: cacheControl,
-      // setHeaders: setHeaders(config, urlToOpen),
+      setHeaders: setHeaders(config, urlToOpen),
       index: config.indexes
     },
     config.staticOptions
