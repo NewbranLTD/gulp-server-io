@@ -1,6 +1,7 @@
 # gulp-server-io [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 
-> Create a static server, livereload and a socket.io debugger for your SPA development with gulp
+> Create a static server, live reload and a socket.io debugger for your SPA development with gulp
+> Plus a standalone server with Express / json-server and http proxy for rapid deployment
 
 ## Introduction
 
@@ -38,7 +39,9 @@ gulp.task('serve', () => {
 
 ```js
 const server = require('gulp-server-io/server');
-const config = {};
+const config = {
+  webroot: path.join('path','to','your','webroot')
+};
 
 server(config);
 
