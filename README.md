@@ -51,11 +51,78 @@ development version.
 
 ## Proxies
 
-Status: Working
+```js
+const server = require('gulp-server-io');
+gulp.task('serve', () => {
+  return gulp.src('./app')
+    .pipe(
+      server({
+        proxies: [{
+          source: '/api',
+          target: 'http://otherhost.com'
+        }]
+      })
+    );
+});
+```
+
+Please note when you call the `/api` resource, it will translate to
+`http://otherhost.com/api` call.
+
+Please check [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware)
+
+If you are using the deployment option. Let say you create a `Restify` service running on the localhost port 8989.
+
+```js
+const server = require('gulp-server-io/server');
+server({
+  proxies: [{
+    source: '/api',
+    target: 'http://localhost:8989'
+  }]
+});
+```
+
+Remember, if you are using a proxy server (i.e. Nginx) then your
+host will change. As long as your are calling relative path in your code. Then there is nothing need to change. Because if you are using the stock option: `http://localhost:8000` and your domain name is `http://example.com` it will always callback back to itself like the server code is under the same location.  
+
 
 ## Mock data api
 
-Status: Working
+```js
+  gulp.src('./app')
+      .pipe(
+        server({
+          mock: {
+            enable: true,
+            json: '/path/to/api.json'
+          }
+        })
+      )
+```
+
+Create an `api.json` according to [json-server](https://github.com/typicode/json-server)
+
+```json
+{
+  "users": [
+    {"id": 1, "name": "John Doe"},
+    {"id": 2, "name": "Jane Doe"}
+  ]
+}
+```
+
+In your code:
+
+```js
+  fetch('/users').then( results => {
+    console.log(results); // the array of data
+  });
+```
+
+Please note, once you enable the mock option, your proxies will be
+overwritten by the path found in your json file.
+
 
 ## Deployment
 
@@ -70,10 +137,6 @@ server({
 });
 
 ```
-
-### Use with cli
-
-Status: Will be available in beta
 
 ## Full configuration properties
 

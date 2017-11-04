@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// This is under development
 // Const server = require('./server');
 require('yargs') // eslint-disable-line
   .command(
