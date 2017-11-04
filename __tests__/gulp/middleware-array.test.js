@@ -30,22 +30,37 @@ afterEach(() => {
 const shiftDownOne = str => str.substr(1, str.length - 1);
 // Start the test
 describe('gulp-webserver-io middleware test', () => {
-  test('(1) should use middleware function', () => {
-    const testPath = '/middleware';
+  // there is a bug with supertest?
+  // https://github.com/visionmedia/supertest/issues/430
+  test('(2) , should use middleware array', done => {
+    const testPaths = ['/middleware1', '/middleware2'];
     stream = webserver({
       reload: false,
       debugger: false,
-      middleware: (req, res, next) => {
-        if (req.url === testPath) {
-          res.end(shiftDownOne(testPath));
-        } else {
-          next();
+      middleware: [
+        function(req, res, next) {
+          if (req.url === testPaths[0]) {
+            console.log('pass through 0');
+            res.end(shiftDownOne(testPaths[0]));
+          } else {
+            next();
+          }
+        },
+        function(req, res, next) {
+          if (req.url === testPaths[1]) {
+            console.log('pass through 1');
+            res.end(shiftDownOne(testPaths[1]));
+          } else {
+            next();
+          }
         }
-      }
+      ]
     });
     stream.write(rootDir);
+
     return request(defaultUrl)
-      .get(testPath)
-      .expect(200, 'middleware');
+      .get(testPaths[1])
+      .expect(200, shiftDownOne(testPaths[1]))
+      .end( done );
   });
 });
