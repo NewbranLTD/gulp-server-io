@@ -16,8 +16,6 @@ const {
   defaultPort,
   defaultOptions
 } = require('../fixtures/config.js');
-// Some configuration to enable https testing
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // Socket options
 const defaultNamespace = defaultOptions.debugger.namespace;
 const expectedMsg = defaultOptions.debugger.hello;
