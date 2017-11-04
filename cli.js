@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-const server = require('./server');
+// This is under development
+// Const server = require('./server');
 require('yargs') // eslint-disable-line
   .command(
     'serve [webroot]',
@@ -14,9 +15,12 @@ require('yargs') // eslint-disable-line
       if (argv.verbose) {
         console.info(`start server on :${argv.port}`);
       }
-      server({
+      /*
+      Server({
         port: argv.weboot
       });
+      */
+      console.log('call execute', argv);
     }
   )
   .option('verbose', {

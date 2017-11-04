@@ -1,6 +1,6 @@
 {
   "name": "gulp-server-io",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-beta.1",
   "description":
     "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
   "homepage": "https://newbran.ch",
@@ -40,8 +40,9 @@
     "pretest": "eslint . --fix",
     "precommit": "lint-staged",
     "test": "jest --forceExit",
-    "test-socket": "jest --forceExit gulp/socket-custom.test.js",
-    "exp": "node ./__tests__/examples/site.js",
+    "cli": "node ./cli.js",
+    "dev": "node ./__tests__/examples/site.js",
+    "socket": "jest gulp/socket-client.test.js",
     "gulp-example": "gulp serve --gulpfile ./__tests__/examples/gulpfile.js",
     "standalone-example": "node ./__tests__/examples/standalone.js"
   },
