@@ -45,7 +45,9 @@ gulp.task('serve', () => {
 
 ## Socket.io Debugger
 
-Status: Will be available in beta
+This is enable by default. To turn it off, pass `debugger: false` to the configuration.
+Please note this will not be enable in the server version. It's only available for the gulp
+development version.
 
 ## Proxies
 
@@ -75,7 +77,28 @@ Status: Will be available in beta
 
 ## Full configuration properties
 
-TBC
+| Property name  | Description | Default |
+| ------------- | ------------- | ---------|
+| development  | A toggle flag  | `true` |
+| host  | Host name or ip address without the `http://`  | `localhost` |
+| path  | tailing | `/` |
+| webroot | Where you files is | `./app` |
+| fallback | when 404 where to fallback to | `false` |
+| https | Use secure or not | `false` |
+| open  | automatically open browser | `true` |
+| indexes | Array of indexes to search | `[index.html, index.htm]` |
+| callback | A function to execute after the server start | `() => {}` |
+| staticOptions | Look at `server-static` | `{}` |
+| directoryListing | Look at `server-index` | `false` |
+| headers | extra headers to pass | `{}` |
+| proxies | Array of proxies `{ source , target }` | `[]` |
+| devKeyPem | When you set `https` to true you can supply your own `pem` file | `cert.pem` |
+| devCrtPem | Same as above, supply a crt file | `cert.crt` |
+| mock | Create mock REST API using json-server | `false` |
+| debugger | Socket.io debugger | `true` |
+
+Please see wiki for more information about all the available options.
+
 
 
 You can combine with our [generator-nodex](https://github.com/NewbranLTD/generator-nodex) to create a `nginx` and `systemd` files.
