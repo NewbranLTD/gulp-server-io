@@ -27,7 +27,7 @@ const options = {
   'force new connection': true
 };
 // Start test with socket
-describe('gulp-webserver-io debugger test', () => {
+describe('gulp-webserver-io debugger custom option test', () => {
   // Setups
   let stream;
   let client;
@@ -40,7 +40,7 @@ describe('gulp-webserver-io debugger test', () => {
     client = undefined;
   });
 
-  test(`(2) should able to use custom settings ${customNamespace}`, done => {
+  test(`should able to use custom settings ${customNamespace}`, done => {
     stream = webserver({
       debugger: {
         enable: true,
