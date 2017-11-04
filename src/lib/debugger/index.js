@@ -37,8 +37,6 @@ const getColor = function(data) {
  * @return {object} socket the namespace instance and a close method
  */
 module.exports = function(config, server, logger) {
-  console.log(config.debugger);
-
   logger = logger || logutil;
   let socketConfig = null;
   // Force the socket.io server to use websocket protocol only
