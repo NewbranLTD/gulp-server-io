@@ -40,7 +40,7 @@
     "pretest": "eslint . --fix",
     "precommit": "lint-staged",
     "test": "jest",
-    "test-middleware": "jest gulp/middleware-array.test.js",
+    "test-socket": "jest gulp/socket.test.js",
     "exp": "node ./__tests__/examples/site.js",
     "gulp-example": "gulp serve --gulpfile ./__tests__/examples/gulpfile.js",
     "standalone-example": "node ./__tests__/examples/standalone.js"

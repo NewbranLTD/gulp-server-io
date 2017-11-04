@@ -34,7 +34,7 @@ afterEach(() => {
   }
 });
 // Socket options
-const namespace = '/iodebugger';
+const defaultNamespace = '/debugger-io';
 const customNamespace = '/my-custom-namespace';
 const expectedMsg = 'IO DEBUGGER is listening ...';
 const options = {
@@ -43,13 +43,13 @@ const options = {
 };
 // Start test with socket
 describe('gulp-webserver-io ioDebugger test', () => {
-  test.skip(`(1) should auto start io-debugger and able to connect default namespace ${namespace}`, done => {
+  test(`(1) should auto start debugger-io and able to connect default namespace ${defaultNamespace}`, done => {
     stream = webserver({
-      open: false
+      reload: false
     });
     stream.write(rootDir);
 
-    client = io.connect([defaultUrl, namespace].join(''), options);
+    client = io.connect([defaultUrl, defaultNamespace].join(''), options);
     client.on('connect', () => {
       expect(true).toBeTruthy(); // Just throw one at it
     });
@@ -59,7 +59,7 @@ describe('gulp-webserver-io ioDebugger test', () => {
     });
   });
 
-  test(`(2) should able to use custom settings`, done => {
+  test.skip(`(2) should able to use custom settings`, done => {
     stream = webserver({
       debugger: {
         enable: true,
