@@ -1,6 +1,7 @@
 'use strict';
 /**
  * Testing the ioDebugger socket functions
+ * @TODO use this for testing reload at port 9856
  */
 const request = require('supertest');
 const File = require('gulp-util').File;
@@ -19,7 +20,6 @@ const {
 // Some configuration to enable https testing
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // Socket options
-const defaultNamespace = '/debugger-io';
 const customNamespace = '/my-custom-namespace';
 const expectedMsg = 'IO DEBUGGER is listening ...';
 const options = {
@@ -39,20 +39,25 @@ describe('gulp-webserver-io debugger test', () => {
     }
     client = undefined;
   });
-  // first test
-  test(`(1) should auto start debugger-io and connect to default namespace ${defaultNamespace}`, done => {
+
+  test(`(2) should able to use custom settings ${customNamespace}`, done => {
     stream = webserver({
-      reload: false
+      debugger: {
+        enable: true,
+        namespace: customNamespace
+      }
     });
     stream.write(rootDir);
-
-    client = io.connect([defaultUrl, defaultNamespace].join(''), options);
+    client = io.connect([defaultUrl, customNamespace].join(''), options);
     client.on('connect', () => {
-      expect(true).toBeTruthy(); // Just throw one at it
+      expect(true).toBeTruthy();
     });
+
     client.on('hello', msg => {
       expect(msg).toBe(expectedMsg);
       done();
     });
   });
 });
+
+// -- EOF --

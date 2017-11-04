@@ -31,7 +31,7 @@ const getColor = function(data) {
 };
 /**
  * DebuggerServer
- * @param {object} config
+ * @param {object} config - the full configuration object
  * @param {object} server http/https server instance
  * @param {function} logger
  * @return {object} socket the namespace instance and a close method
@@ -66,7 +66,7 @@ module.exports = function(config, server, logger) {
   // Start
   namespace.on('connection', function(socket) {
     // Announce to the client that is working
-    socket.emit('hello', 'IO DEBUGGER is listening ...');
+    socket.emit('hello', config.debugger.hello);
     // Listen
     socket.on(config.debugger.eventName, function(data) {
       // Provide a logger
@@ -109,11 +109,19 @@ module.exports = function(config, server, logger) {
       }
     });
   }); // End configurable name space
+
   // finally we return the io object just the name space instance
   return {
     socket: namespace,
     close: () => {
-      namespace.socket.close();
+      const connectedNameSpaceSockets = Object.keys(namespace.connected); // Get Object with Connected SocketIds as properties
+      connectedNameSpaceSockets.forEach(socketId => {
+        namespace.connected[socketId].disconnect(); // Disconnect Each socket
+      });
+      namespace.removeAllListeners(); // Remove all Listeners for the event emitter
+      delete io.nsps[namespace];
+      // Now close the server?
+      namespace.server.close();
     }
   };
 };

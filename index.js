@@ -76,7 +76,7 @@ module.exports = function(options = {}) {
     openInBrowser(config);
   };
   const webserver = serverGenerator(app, config);
-  // @TODO add debuggerServer start up here
+  // Debugger server start
   if (config.debugger.enable && config.debugger.server === true) {
     const { close } = debuggerServer(config, webserver);
     closeDebuggerFn = close;

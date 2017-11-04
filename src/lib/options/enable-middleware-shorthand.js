@@ -1,12 +1,13 @@
 /**
  * From the original gulp-webserver
  */
-const extend = require('util')._extend;
+// const extend = require('util')._extend;
+const extend = require('lodash').merge;
 /**
  * @param {object} defaults - the stock options
  * @param {object} options - configuration params
  * @param {array} props - special properties need preserved
- * @return {object} config 
+ * @return {object} config
  */
 module.exports = function(defaults, options, props) {
   const originalDefaults = extend({}, defaults);
