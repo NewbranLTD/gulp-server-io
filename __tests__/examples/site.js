@@ -12,6 +12,11 @@ const {
   defaultSSLUrl
 } = require('../fixtures/config.js');
 
-const config = {};
-const stream = webserver({});
+const config = {
+  debugger: {
+    enable: true,
+    namespace: '/my-custom-namespace'
+  }
+};
+const stream = webserver(config);
 stream.write(rootDir);
