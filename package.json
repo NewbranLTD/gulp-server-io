@@ -39,8 +39,8 @@
     "prepublishOnly": "nsp check",
     "pretest": "eslint . --fix",
     "precommit": "lint-staged",
-    "test": "jest",
-    "test-socket": "jest gulp/socket-custom.test.js",
+    "test": "jest --forceExit",
+    "test-socket": "jest --forceExit gulp/socket-custom.test.js",
     "exp": "node ./__tests__/examples/site.js",
     "gulp-example": "gulp serve --gulpfile ./__tests__/examples/gulpfile.js",
     "standalone-example": "node ./__tests__/examples/standalone.js"

@@ -1,6 +1,7 @@
 'use strict';
 /**
  * Testing the ioDebugger socket functions
+ * @TODO use this for testing reload at port 9856
  */
 const request = require('supertest');
 const File = require('gulp-util').File;
@@ -26,7 +27,7 @@ const options = {
   'force new connection': true
 };
 // Start test with socket
-describe('gulp-webserver-io ioDebugger test', () => {
+describe('gulp-webserver-io debugger test', () => {
   // Setups
   let stream;
   let client;

@@ -27,7 +27,7 @@ const options = {
   'force new connection': true
 };
 // Start test with socket
-describe('gulp-webserver-io ioDebugger test', () => {
+describe('gulp-webserver-io debugger test', () => {
   // Setups
   let stream;
   let client;
@@ -40,7 +40,7 @@ describe('gulp-webserver-io ioDebugger test', () => {
     client = undefined;
   });
   // first test
-  test(`(1) should auto start debugger-io and able to connect default namespace ${defaultNamespace}`, done => {
+  test(`(1) should auto start debugger-io and connect to default namespace ${defaultNamespace}`, done => {
     stream = webserver({
       reload: false
     });
@@ -56,5 +56,3 @@ describe('gulp-webserver-io ioDebugger test', () => {
     });
   });
 });
-
-// -- EOF --

@@ -114,6 +114,13 @@ module.exports = function(config, server, logger) {
   return {
     socket: namespace,
     close: () => {
+      const connectedNameSpaceSockets = Object.keys(namespace.connected); // Get Object with Connected SocketIds as properties
+      connectedNameSpaceSockets.forEach(socketId => {
+        namespace.connected[socketId].disconnect(); // Disconnect Each socket
+      });
+      namespace.removeAllListeners(); // Remove all Listeners for the event emitter
+      delete io.nsps[namespace];
+      // Now close the server?
       namespace.server.close();
     }
   };
