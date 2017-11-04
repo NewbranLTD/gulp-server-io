@@ -39,7 +39,7 @@
     "prepublishOnly": "nsp check",
     "pretest": "eslint . --fix",
     "precommit": "lint-staged",
-    "test": "jest --forceExit",
+    "test": "jest --runInBand --forceExit",
     "cli": "node ./cli.js",
     "dev": "node ./__tests__/examples/site.js",
     "socket": "jest gulp/socket.test.js",
