@@ -8,31 +8,32 @@ const reload = require('reload');
 const chokidar = require('chokidar');
 const logutil = require('./utils/log');
 /**
- * @param {string} webroot path to watch
+ * @param {array} filePaths the path to the folder get watch
  * @param {object} app express app
  * @param {object} config for reload (optional)
  * @return {object} bacon instance for watch later
  */
-module.exports = function(webroot, app, config = {}) {
+module.exports = function(filePaths, app, config = {}) {
   const reloadServer = reload(app, config);
   const verbose = config.verbose;
-
-  let watcher;
   let files = [];
-  if (verbose) {
-    logutil(chalk.white('[Watcher]'), webroot);
-  }
   // Start the watch files with Bacon wrapper
   const streamWatcher = bacon.fromBinder(sink => {
-    watcher = chokidar.watch(webroot, {
-      ignored: /(^|[\/\\])\../,
-      ignoreInitial: true
-    });
-    watcher.on('all', (event, path) => {
-      sink({ event: event, path: path });
-      return () => {
-        watcher.close();
-      };
+    filePaths.forEach(file => {
+      const webroot = file.path;
+      if (verbose) {
+        logutil(chalk.white('[Watcher]'), webroot);
+      }
+      let watcher = chokidar.watch(webroot, {
+        ignored: /(^|[\/\\])\../,
+        ignoreInitial: true
+      });
+      watcher.on('all', (event, path) => {
+        sink({ event: event, path: path });
+        return () => {
+          watcher.close();
+        };
+      });
     });
   });
   // Reactive

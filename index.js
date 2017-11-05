@@ -8,11 +8,10 @@
  */
 const fs = require('fs');
 const chalk = require('chalk');
-const express = require('express');
 const through = require('through2');
 // Modules
 const logutil = require('./src/lib/utils/log');
-const { serveStatic } = require('./src/lib/utils/helper');
+const { serveStatic, directoryListing } = require('./src/lib/utils/helper');
 const {
   appGenerator,
   serverGenerator,
@@ -28,22 +27,15 @@ module.exports = function(options = {}) {
   let closeDebuggerFn = () => {};
   let unwatchFn = () => {};
   // Create static server wrap in a stream
+  // Please note it could pass an array of paths
+  // So this will call multiple times
   const stream = through
     .obj((file, enc, callback) => {
       // Serve up the files
       app.use(config.path, serveStatic(file.path, config));
       // Enable directoryListing
       if (config.directoryListing) {
-        app.use(express.directory(file.path));
-      }
-      // Run the watcher, return an unwatch function
-      if (config.reload.enable) {
-        // Limiting the config options
-        unwatchFn = appWatcher(file.path, app, {
-          verbose: config.reload.verbose,
-          port: config.reload.port,
-          route: config.reload.route
-        });
+        app.use(directoryListing(file.path));
       }
       files.push(file);
       callback();
@@ -52,6 +44,16 @@ module.exports = function(options = {}) {
       files.push(f);
     })
     .on('end', () => {
+      // Run the watcher, return an unwatch function
+      if (config.reload.enable) {
+        // Limiting the config options
+        unwatchFn = appWatcher(files, app, {
+          verbose: config.reload.verbose,
+          port: config.reload.port,
+          route: config.reload.route
+        });
+      }
+      // Setup fallback i.e. 404.html
       if (config.fallback) {
         files.forEach(file => {
           const fallbackFile = file.path + '/' + config.fallback;

@@ -80,6 +80,13 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
   );
   return express.static(webroot, staticOptions);
 };
+/**
+ * directory listing
+ */
+exports.directoryListing = (dir) => {
+  return express.directory(dir); 
+};
+
 // export
 exports.setHeaders = setHeaders;
 exports.getRandomInt = getRandomInt;
