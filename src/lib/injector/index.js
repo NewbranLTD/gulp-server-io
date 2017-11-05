@@ -11,7 +11,8 @@ const scriptInject = require('./script-inject');
 module.exports = function(features, config) {
   let scripts = [];
   if (features.reload) {
-    scripts.push('/reload/reload.js');
+    const reloadRoute = config.reload.route || 'reload';
+    scripts.push(`/${reloadRoute}/reload.js`);
   }
   if (features.debugger) {
     // @TODO if they change the debugger config
