@@ -4,6 +4,7 @@
  */
 // const _ = require('lodash');
 // Const args = require('yargs');
+const chalk = require('chalk');
 const bacon = require('baconjs');
 const reload = require('reload');
 const chokidar = require('chokidar');
@@ -16,9 +17,12 @@ const log = require('./utils/log');
  */
 module.exports = function(webroot, app, config = {}) {
   const reloadServer = reload(app, config);
+  const verbose = config.reload.verbose;
   let watcher;
   let files = [];
-  log('watching', webroot);
+  if (verbose) {
+    log(chalk.white('[Watcher]'), webroot);
+  }
   // Start the watch files with Bacon wrapper
   const streamWatcher = bacon.fromBinder(sink => {
     watcher = chokidar.watch(webroot, {
@@ -26,7 +30,6 @@ module.exports = function(webroot, app, config = {}) {
       ignoreInitial: true
     });
     watcher.on('all', (event, path) => {
-      log('chokidar detect changed', event, path);
       sink({ event: event, path: path });
       return () => {
         watcher.close();
@@ -34,22 +37,23 @@ module.exports = function(webroot, app, config = {}) {
     });
   });
   // Reactive
-  return (
-    streamWatcher
-      //  .skipDuplicates(_.isEqual)
-      //  .map('.path')
-      .doAction(a => {
-        log('action', a);
-        files.push(a);
-      })
-      .debounce(300)
-      .onValue(() => {
-        if (files.length) {
-          log('change event fired');
-          reloadServer.reload();
-          // Reset
-          files = [];
+  return streamWatcher
+    .doAction(a => {
+      log('action', a);
+      files.push(a);
+    })
+    .debounce(300)
+    .onValue(() => {
+      if (files.length) {
+        if (verbose) {
+          log(chalk.white('[Watcher]'), 'File changed');
+          files.forEach(f => {
+            log(chalk.yellow(f.event), chalk.yellow(f.path));
+          });
         }
-      })
-  );
+        reloadServer.reload();
+        // Reset
+        files = [];
+      }
+    });
 };

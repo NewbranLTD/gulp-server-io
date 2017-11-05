@@ -38,8 +38,11 @@ module.exports = function(options = {}) {
       }
       // Run the watcher, return an unwatch function
       if (config.reload.enable) {
+        // Limiting the config options
         unwatchFn = appWatcher(file.path, app, {
-          verbose: config.reload.verbose
+          verbose: config.reload.verbose,
+          port: config.reload.port,
+          route: config.reload.route
         });
       }
       files.push(file);
