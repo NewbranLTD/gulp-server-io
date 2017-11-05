@@ -49,8 +49,8 @@ module.exports = function(options = {}) {
         // Limiting the config options
         unwatchFn = appWatcher(files, app, {
           verbose: config.reload.verbose,
-          port: config.reload.port,
-          route: config.reload.route
+          port: config.reload.port
+          // Route: config.reload.route
         });
       }
       // Setup fallback i.e. 404.html
