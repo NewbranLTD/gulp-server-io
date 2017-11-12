@@ -15,8 +15,7 @@ module.exports = function(features, config) {
     // @2017-11-05 if we change the route it stop working
     // ${reloadRoute}
     // const liveReloadScript = `<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>`;
-
-    scripts.push(`/route/reload.js`);
+    scripts.push('/reload/reload.js');
   }
   if (features.debugger) {
     // @TODO if they change the debugger config

@@ -14,8 +14,8 @@ const logutil = require('./utils/log');
  * @return {object} bacon instance for watch later
  */
 module.exports = function(filePaths, app, config = {}) {
-  const reloadServer = reload(app, config);
   const verbose = config.verbose;
+  const reloadServer = reload(app, { verbose });
   let files = [];
   // Start the watch files with Bacon wrapper
   const streamWatcher = bacon.fromBinder(sink => {
