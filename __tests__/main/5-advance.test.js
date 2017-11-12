@@ -61,4 +61,15 @@ describe('gulp-webserver-io stock test', () => {
       .get('/')
       .expect(200);
   });
+  // testing the if the file is injected correctly
+  // @20171112 this test still failed could not read the injected file 
+  test.skip('(11) test if we have the reload.js file injected', () => {
+    stream = webserver({
+      debugger: false
+    });
+    stream.write(rootDir);
+    return request(defaultUrl)
+      .get('/')
+      .expect(200, /src="\/reload\/reload.js"/);
+  });
 });

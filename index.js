@@ -8,9 +8,9 @@
  */
 const fs = require('fs');
 const chalk = require('chalk');
+const reload = require('reload');
 const through = require('through2');
 // Modules
-const logutil = require('./src/lib/utils/log');
 const { serveStatic, directoryListing } = require('./src/lib/utils/helper');
 const {
   appGenerator,
@@ -19,6 +19,7 @@ const {
   openInBrowser,
   debuggerServer
 } = require('./src');
+const logutil = require('./src/lib/utils/log');
 // Final export for gulp
 module.exports = function(options = {}) {
   const { app, config, mockServerInstance } = appGenerator(options);
@@ -47,11 +48,8 @@ module.exports = function(options = {}) {
       // Run the watcher, return an unwatch function
       if (config.reload.enable) {
         // Limiting the config options
-        unwatchFn = appWatcher(files, app, {
-          verbose: config.reload.verbose,
-          port: config.reload.port
-          // Route: config.reload.route
-        });
+        const reloadServer = reload(app, { verbose: config.reload.verbose });
+        unwatchFn = appWatcher(files, reloadServer, config.reload);
       }
       // Setup fallback i.e. 404.html
       if (config.fallback) {

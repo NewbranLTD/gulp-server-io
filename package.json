@@ -1,6 +1,6 @@
 {
   "name": "gulp-server-io",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description":
     "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
   "homepage": "https://newbran.ch",
@@ -83,6 +83,7 @@
     "fs-extra": "^4.0.2",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-util": "^3.0.8",
+    "helmet": "^3.9.0",
     "http-proxy-middleware": "^0.17.4",
     "json-server": "^0.12.1",
     "lodash": "^4.17.4",
