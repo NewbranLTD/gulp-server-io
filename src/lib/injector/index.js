@@ -9,7 +9,7 @@ const scriptInject = require('./script-inject');
  * @return {function} middleware
  */
 module.exports = function(features, config) {
-  let scripts = [];
+  let scripts = ['<!-- script-injected via middleware -->'];
   if (features.reload) {
     // Const reloadRoute = config.reload.route || 'reload';
     // @2017-11-05 if we change the route it stop working

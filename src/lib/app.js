@@ -5,6 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
+const helmet = require('helmet');
 const express = require('express');
 const bodyParser = require('body-parser');
 const httpProxy = require('http-proxy-middleware');
@@ -17,10 +18,9 @@ const defaultProperties = ['reload', 'debugger', 'mock'];
 const enableMiddlewareShorthand = require('./options/enable-middleware-shorthand');
 // Modules
 const logutil = require('./utils/log');
-// @TODO add them back later
+const scriptsInjector = require('./injector');
 const mockServer = require('./utils/mock-server');
 const debuggerClient = require('./debugger/client');
-const scriptsInjector = require('./injector');
 /**
  * Export
  * @param {object} options
@@ -32,7 +32,11 @@ module.exports = function(options = {}) {
   // Init the app
   const app = express();
   // Properties
-  let middlewares = [bodyParser()]; // Default add the body-parser first
+  let middlewares = [bodyParser.urlencoded({ extended: true }), bodyParser.json()];
+  if (config.development) {
+    middlewares.push(helmet.noCache());
+  }
+
   let addDebugger = false;
   let proxies = config.proxies;
   const closeFn = { close: () => {} };

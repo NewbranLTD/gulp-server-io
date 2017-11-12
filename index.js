@@ -11,7 +11,6 @@ const chalk = require('chalk');
 const reload = require('reload');
 const through = require('through2');
 // Modules
-const logutil = require('./src/lib/utils/log');
 const { serveStatic, directoryListing } = require('./src/lib/utils/helper');
 const {
   appGenerator,
@@ -20,6 +19,7 @@ const {
   openInBrowser,
   debuggerServer
 } = require('./src');
+const logutil = require('./src/lib/utils/log');
 // Final export for gulp
 module.exports = function(options = {}) {
   const { app, config, mockServerInstance } = appGenerator(options);

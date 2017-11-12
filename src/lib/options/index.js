@@ -42,8 +42,6 @@ module.exports = {
   reload: {
     enable: true,
     verbose: true
-    // Port: 9856,
-    // route: 'reload'
   },
   // New mock server using json-server, please note if this is enable then
   // The proxy will be disable
