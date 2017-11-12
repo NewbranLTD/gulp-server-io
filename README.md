@@ -5,7 +5,9 @@
 
 ## Introduction
 
-This is complete rewrote from [gulp-webserver-io](https://github.com/joelchu/gulp-webserver-io), there are many improvement over the previous version.
+This is a complete rewrote of the [gulp-webserver-io](https://github.com/joelchu/gulp-webserver-io);
+there are many improvement over the previous version.
+
 The goal is to create an one stop shop solution during development, as well as simple and quick SPA deployment.
 
 See [CHANGELOG.md]('./CHANGELOG.md') for complete list of different between the two version.
@@ -26,7 +28,7 @@ Using yarn
 
 ### Use with Gulp
 
-There are several ways to use this npm package. First during development use it with `gulp`:
+There are several ways to use this package. First, during development and, use it with `gulp`:
 
 ```js
 // gulpfile.js  
@@ -46,8 +48,10 @@ gulp.task('serve', () => {
 ## Socket.io Debugger
 
 This is enable by default. To turn it off, pass `debugger: false` to the configuration.
-Please note this will not be enable in the server version. It's only available for the gulp
+Please note this will not be enable in the standalone server version. It's only available for the gulp
 development version.
+
+More about this to come.
 
 ## Proxies
 
@@ -67,11 +71,11 @@ gulp.task('serve', () => {
 ```
 
 Please note when you call the `/api` resource, it will translate to
-`http://otherhost.com/api` call.
+`http://otherhost.com/api`.
 
-Please check [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware)
+For further configuration options, please check [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware)
 
-If you are using the deployment option. Let say you create a `Restify` service running on the localhost port 8989.
+If you are using the deployment option. For example, you create a `Restify` service running on the localhost at port 8989.
 
 ```js
 const server = require('gulp-server-io/server');
@@ -83,9 +87,11 @@ server({
 });
 ```
 
-Remember, if you are using a proxy server (i.e. Nginx) then your
-host will change. As long as your are calling relative path in your code. Then there is nothing need to change. Because if you are using the stock option: `http://localhost:8000` and your domain name is `http://example.com` it will always callback back to itself like the server code is under the same location.  
+Please, note if in your code are all using relative path, then when you deploy your app. It will just work out of the box.
+For example, during development your host is `http://localhost:8000` and, your production domain name is `http://example.com`
 
+If you hard coded your domain name in your code, then you need to change it. But calling it using the relative path will guarantee
+your project can be move however you like.
 
 ## Mock data api
 
@@ -120,13 +126,12 @@ In your code:
   });
 ```
 
-Please note, once you enable the mock option, your proxies will be
+Please note, once you use the mock option, your proxies will be
 overwritten by the path found in your json file.
-
 
 ## Deployment
 
-### Using the `server` as a quick deployable server option
+### Using the `server` as a quick deploy server option
 
 ```js
 const server = require('gulp-server-io/server');
@@ -140,29 +145,29 @@ server({
 
 ## Full configuration properties
 
-| Property name  | Description | Default |
-| ------------- | ------------- | ---------|
-| development  | A toggle flag  | `true` |
-| host  | Host name or ip address without the `http://`  | `localhost` |
-| path  | tailing | `/` |
-| webroot | Where you files is | `./app` |
-| fallback | when 404 where to fallback to | `false` |
-| https | Use secure or not | `false` |
-| open  | automatically open browser | `true` |
-| indexes | Array of indexes to search | `[index.html, index.htm]` |
-| callback | A function to execute after the server start | `() => {}` |
-| staticOptions | Look at `server-static` | `{}` |
-| directoryListing | Look at `server-index` | `false` |
-| headers | extra headers to pass | `{}` |
-| proxies | Array of proxies `{ source , target }` | `[]` |
-| devKeyPem | When you set `https` to true you can supply your own `pem` file | `cert.pem` |
-| devCrtPem | Same as above, supply a crt file | `cert.crt` |
-| mock | Create mock REST API using json-server | `false` |
-| debugger | Socket.io debugger | `true` |
+| Property name  | Description | Default | Type |
+| ------------- | ------------- | ---------| -----|
+| development  | A toggle flag  | `true` | Boolean |
+| host  | Host name or ip address without the `http://`  | `localhost` | String |
+| path  | tailing | `/` | String |
+| webroot | Where your files need to serve up | `./app` | Array or String |
+| fallback | when 404 where to fallback to | `false` | Boolean or String |
+| https | Use secure or not | `false` | Boolean |
+| open  | automatically open browser | `true` | Boolean or String |
+| indexes | Array of indexes to search | `[index.html, index.htm]` | Array |
+| callback | A function to execute after the server start | `() => {}` | Function |
+| staticOptions | Look at `server-static` | `{}` | Object |
+| directoryListing | Look at `server-index` | `false` | Boolean |
+| headers | extra headers to pass | `{}` | Object |
+| proxies | Array of proxies `{ source , target }` | `[]` | Array |
+| devKeyPem | When you set `https` to true you can supply your own `pem` file | `cert.pem` | String |
+| devCrtPem | Same as above, supply a crt file | `cert.crt` | String |
+| mock | Create mock REST API using json-server | `false` | Boolean or String |
+| debugger | Socket.io debugger | `true` | Boolean or Object |
 
 Please see wiki for more information about all the available options.
 
-
+---
 
 You can combine with our [generator-nodex](https://github.com/NewbranLTD/generator-nodex) to create a `nginx` and `systemd` files.
 
