@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 const express = require('express');
+const bodyParser = require('body-parser');
 const httpProxy = require('http-proxy-middleware');
 // Shorthands
 const join = path.join;
@@ -31,7 +32,7 @@ module.exports = function(options = {}) {
   // Init the app
   const app = express();
   // Properties
-  let middlewares = [];
+  let middlewares = [bodyParser()]; // Default add the body-parser first
   let addDebugger = false;
   let proxies = config.proxies;
   const closeFn = { close: () => {} };
