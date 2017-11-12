@@ -11,9 +11,11 @@ const root = [
   path.join(__dirname, '..', 'fixtures', 'rootDir')
 ];
 
+const config = {}; // add stuff here
+
 gulp.task('serve', () => {
   return gulp.src(root)
     .pipe(
-      gulpServerIo()
+      gulpServerIo(config)
     );
 });
