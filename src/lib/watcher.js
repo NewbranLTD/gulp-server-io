@@ -4,18 +4,17 @@
  */
 const chalk = require('chalk');
 const bacon = require('baconjs');
-const reload = require('reload');
+
 const chokidar = require('chokidar');
 const logutil = require('./utils/log');
 /**
+ * @20171112 - change where we start the reload server
  * @param {array} filePaths the path to the folder get watch
- * @param {object} app express app
- * @param {object} config for reload (optional)
+ * @param {object} reloadServer
  * @return {object} bacon instance for watch later
  */
-module.exports = function(filePaths, app, config = {}) {
+module.exports = function(filePaths, reloadServer, config) {
   const verbose = config.verbose;
-  const reloadServer = reload(app, { verbose });
   let files = [];
   // Start the watch files with Bacon wrapper
   const streamWatcher = bacon.fromBinder(sink => {

@@ -49,7 +49,6 @@ module.exports = function(options = {}) {
   }
   // Live reload and inject debugger
   if (config.reload.enable || addDebugger) {
-    console.log('reload config', config.reload);
     middlewares.push(
       scriptsInjector(
         {

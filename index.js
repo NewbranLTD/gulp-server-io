@@ -8,6 +8,7 @@
  */
 const fs = require('fs');
 const chalk = require('chalk');
+const reload = require('reload');
 const through = require('through2');
 // Modules
 const logutil = require('./src/lib/utils/log');
@@ -47,11 +48,8 @@ module.exports = function(options = {}) {
       // Run the watcher, return an unwatch function
       if (config.reload.enable) {
         // Limiting the config options
-        unwatchFn = appWatcher(files, app, {
-          verbose: config.reload.verbose,
-          port: config.reload.port
-          // Route: config.reload.route
-        });
+        const reloadServer = reload(app, { verbose: config.reload.verbose });
+        unwatchFn = appWatcher(files, reloadServer, config.reload);
       }
       // Setup fallback i.e. 404.html
       if (config.fallback) {
