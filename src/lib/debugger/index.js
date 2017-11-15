@@ -4,7 +4,6 @@
  */
 const util = require('util');
 const chalk = require('chalk');
-const { table } = require('table');
 const socketIO = require('socket.io');
 const logutil = require('../utils/log');
 /**
@@ -62,6 +61,22 @@ module.exports = function(config, server, logger) {
   if (config.debugger.debugSocket) {
     logutil(chalk.white('[debugger] socket server:'), server, socketConfig);
   }
+  // Ditch the npm:table
+  const table = rows => {
+    if (Array.isArray(rows)) {
+      rows.forEach(row => logutil(row));
+    } else {
+      logutil(rows);
+    }
+  };
+  const parseObj = data => {
+    try {
+      return JSON.parse(data);
+    } catch (e) {
+      return data;
+    }
+  };
+
   // Encap to one func
   const displayError = e => {
     // This is required so we just do a simple test here
@@ -69,23 +84,24 @@ module.exports = function(config, server, logger) {
     const color = getColor(e);
     let rows = [];
     if (e.from && e.color) {
-      rows.push('FROM: ', e.from);
+      rows.push(chalk.yellow(`FROM: ${e.from}`));
     }
     keys.forEach(function(key) {
       if (e[key]) {
-        rows.push(chalk.yellow(key + ':') + chalk.cyan(e[key]));
+        rows.push([chalk.yellow(key + ':'), chalk.cyan(e[key])].join(' '));
       }
     });
-    if (typeof e.msg === 'string') {
-      rows.push(chalk.yellow('message:') + chalk[color](e.msg));
+    const _msg = parseObj(e.msg);
+    if (typeof _msg === 'string') {
+      rows.push([chalk.yellow('MESSAGE:'), chalk[color](e.msg)].join(' '));
     } else {
       // This is to accomdate the integration with other logging system sending back different messages
-      rows.push(chalk.yellow('MESSAGE:'));
-      rows.push(chalk[color](util.inspect(e.msg, false, 2)));
+      rows.push(
+        [chalk.yellow('MESSAGES:'), chalk[color](util.inspect(_msg, false, 2))].join(' ')
+      );
     }
-    logutil(table(rows));
+    table(rows);
   };
-
   // Run
   const namespace = io.of(config.debugger.namespace);
   // Start
@@ -102,14 +118,9 @@ module.exports = function(config, server, logger) {
       const time = new Date().toString();
       // Output to console
       logutil(chalk.yellow('io debugger msg @ ' + time));
-      let error;
-      try {
-        error = JSON.parse(data);
-      } catch (e) {
-        error = data;
-      }
+      let error = parseObj(data);
       if (typeof error === 'string') {
-        logutil(table([chalk.yellow('STRING TYPE ERROR'), chalk.red(error)]));
+        table([chalk.yellow('STRING TYPE ERROR'), chalk.red(error)]);
       } else if (typeof error === 'object') {
         if (Array.isArray(error)) {
           error.forEach(e => displayError(e));

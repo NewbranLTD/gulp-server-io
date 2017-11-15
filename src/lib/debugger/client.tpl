@@ -1,47 +1,23 @@
 (function(window , navigator)
 {
   'use strict';
-
   /**
-   * from https://stackoverflow.com/questions/6715571/how-to-get-result-of-console-trace-as-string-in-javascript-with-chrome-or-fire
+   * create a global $gulpServerIo namespace to hold everything
    */
-  var getStackTrace = function()
-  {
-    var stack;
-    try {
-      throw new Error('');
-    }
-    catch (error) {
-      stack = error.stack || '';
-    }
-    stack = stack.split('\n').map(function (line) {
-      return line.trim();
-    });
-    return stack.splice(stack[0] == 'Error' ? 2 : 1);
-  };
-
-/**
- * create a global $gulpServerIo namespace to hold everything
- */
   window.$gulpServerIo = {
     server: io.connect('<%= debuggerPath %>'<%= connectionOptions %>),
     eventName: '<%= eventName %>'
   };
-
   var ping = <%= ping %>;
-
-  var send = function(payload)
-  {
+  var send = function(payload) {
     payload.browser = navigator.userAgent;
     payload.location = window.location.href;
     window.$gulpServerIo.server.emit(window.$gulpServerIo.eventName , payload);
   };
-
   /**
    * listen to the init connection
    */
-  window.$gulpServerIo.server.on('hello', function (msg)
-  {
+  window.$gulpServerIo.server.on('hello', function (msg) {
     console.log('debugger init connection: ' , msg);
     if (ping) {
       send({
@@ -49,20 +25,22 @@
       });
     }
   });
-
   /**
    * core implementation
    */
-  window.addEventListener('error', function (e)
-  {
-    var stack = getStackTrace();
+  window.addEventListener('error', function (e) {
     var first = e.error ? e.error.toString() : 'UNKNOWN!';
     if (first === 'UNKNOWN!') {
       console.log('unknown error object?', e);
     }
     var message = [first];
-    if (stack.length) {
-      message = message.concat(stack);
+    var stack = e.stack || '';
+    var stacks = stack.split('\n').map(function (line) {
+      return line.trim();
+    });
+    stacks = stacks.splice(stack[0] == 'Error' ? 2 : 1);
+    if (stacks.length) {
+      message = message.concat(stacks);
     }
     send({
       msg:  message,

@@ -12,6 +12,8 @@
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="./css/starter-template.css" rel="stylesheet">
+    
+
 
   </head>
 
@@ -55,13 +57,18 @@
       <div class="starter-template">
         <h1>Bootstrap Template test for gulp-server-io</h1>
         <p class="lead">
-          Add something back, RELOAD! Viola! 
+          Add something back, RELOAD! Viola!
           <br />
           Use this document as a way to quickly start any new project.
           <br>
           All you get is this text and a mostly barebones HTML document.
         </p>
-        <button type="button" class="btn btn-primary" id="click">CLICK</button>
+        <p>
+          <button type="button" class="btn btn-primary" id="click">CLICK for /api</button>
+        </p>
+        <p>
+          <button type="button" class="btn btn-danger" id="error">CLICK for error</button>
+        </p>
       </div>
     </div><!-- /.container -->
     <!-- Bootstrap core JavaScript
@@ -80,6 +87,9 @@
             console.log('post result', result);
           });
           return false;
+        });
+        $('#error').click(function() {
+          throw new Error('Fake error!');
         });
       });
     </script>
