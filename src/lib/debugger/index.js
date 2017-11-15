@@ -4,6 +4,7 @@
  */
 const util = require('util');
 const chalk = require('chalk');
+const { table } = require('table');
 const socketIO = require('socket.io');
 const logutil = require('../utils/log');
 /**
@@ -61,6 +62,30 @@ module.exports = function(config, server, logger) {
   if (config.debugger.debugSocket) {
     logutil(chalk.white('[debugger] socket server:'), server, socketConfig);
   }
+  // Encap to one func
+  const displayError = e => {
+    // This is required so we just do a simple test here
+    // logutil('check typeof ' + data.toString());
+    const color = getColor(e);
+    let rows = [];
+    if (e.from && e.color) {
+      rows.push('FROM: ', e.from);
+    }
+    keys.forEach(function(key) {
+      if (e[key]) {
+        rows.push(chalk.yellow(key + ':') + chalk.cyan(e[key]));
+      }
+    });
+    if (typeof e.msg === 'string') {
+      rows.push(chalk.yellow('message:') + chalk[color](e.msg));
+    } else {
+      // This is to accomdate the integration with other logging system sending back different messages
+      rows.push(chalk.yellow('MESSAGE:'));
+      rows.push(chalk[color](util.inspect(e.msg, false, 2)));
+    }
+    logutil(table(rows));
+  };
+
   // Run
   const namespace = io.of(config.debugger.namespace);
   // Start
@@ -80,32 +105,26 @@ module.exports = function(config, server, logger) {
       const time = new Date().toString();
       // Output to console
       logutil(chalk.yellow('io debugger msg @ ' + time));
-      if (typeof data === 'string') {
-        logutil(chalk.yellow(data));
-      } else if (data.toString() === '[object Object]') {
-        // This is required so we just do a simple test here
-        // logutil('check typeof ' + data.toString());
-        var color = getColor(data);
-        if (data.from && data.color) {
-          logutil('from: ', data.from);
-        }
-        keys.forEach(function(key) {
-          if (data[key]) {
-            logutil(chalk.yellow(key + ':') + chalk.cyan(data[key]));
-          }
-        });
-        if (typeof data.msg === 'string') {
-          logutil(chalk.yellow('message:') + chalk[color](data.msg));
+      let error;
+      try {
+        error = JSON.parse(data);
+      } catch (e) {
+        error = data;
+      }
+      if (typeof error === 'string') {
+        logutil(table([chalk.yellow('STRING TYPE ERROR'), chalk.red(error)]));
+      } else if (typeof error === 'object') {
+        if (Array.isArray(error)) {
+          error.forEach(e => displayError(e));
         } else {
-          // This is to accomdate the integration with other logging system sending back different messages
-          logutil(chalk.yellow('message:'));
-          logutil(chalk[color](util.inspect(data.msg, false, 2)));
+          displayError(error);
         }
       } else {
-        // Unknown
-        // dump the content out
-        logutil(chalk.cyan('UNKNOWN ERROR TYPE'));
-        logutil(chalk.red(util.inspect(data, false, 2)));
+        // Dump the content out
+        table([
+          chalk.cyan('UNKNOWN ERROR TYPE'),
+          chalk.red(util.inspect(data, false, 2))
+        ]);
       }
     });
   }); // End configurable name space
