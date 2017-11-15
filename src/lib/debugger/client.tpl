@@ -56,14 +56,18 @@
   window.addEventListener('error', function (e)
   {
     var stack = getStackTrace();
-    var message = [e.error.toString()];
+    var first = e.error ? e.error.toString() : 'UNKNOWN!';
+    if (first === 'UNKNOWN!') {
+      console.log('unknown error object?', e);
+    }
+    var message = [first];
     if (stack.length) {
-        message = message.concat(stack);
+      message = message.concat(stack);
     }
     send({
-        msg:  message,
-        from: 'error' ,
-        color: 'debug'
+      msg:  message,
+      from: 'error' ,
+      color: 'debug'
     });
   });
 })(window , navigator);
