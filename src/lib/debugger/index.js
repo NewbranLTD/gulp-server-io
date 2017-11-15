@@ -38,7 +38,7 @@ const getColor = function(data) {
  * @return {object} socket the namespace instance and a close method
  */
 module.exports = function(config, server, logger) {
-  logger = logger || logutil;
+  // Logger = logger || logutil; should not provide anything here!
   let socketConfig = null;
   // Force the socket.io server to use websocket protocol only
   if (typeof config.debugger.server === 'object') {
@@ -96,10 +96,7 @@ module.exports = function(config, server, logger) {
     socket.on(config.debugger.eventName, function(data) {
       // Provide a logger
       if (logger && typeof logger === 'function') {
-        logger(data);
-        if (config.debugger.log !== 'BOTH') {
-          return;
-        }
+        logger(data); // @TODO what to do with the logger
       }
       // Console log output
       const time = new Date().toString();
