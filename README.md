@@ -48,10 +48,26 @@ gulp.task('serve', () => {
 ## Socket.io Debugger
 
 This is enable by default. To turn it off, pass `debugger: false` to the configuration.
-Please note this will not be enable in the standalone server version. It's only available for the gulp
-development version.
 
-More about this to come.
+Please note this will not be enable in the stand alone server version. It's only available for the gulp development version.
+
+V.1.1.0 integrate with [stacktrace.js](https://github.com/stacktracejs/stacktrace.js/) to produce a much nicer output in the console.
+
+The main use is when you need to run your app on your mobile, that allows you to quickly see if there is any error. Also the same method is expose globally, you can do something like this:
+
+```js
+  $gulpServerIo.debugger(msg);
+```
+
+You an pass just a full string to the method. Or you can pass an object which produce nicer output:
+
+* from - you defined where that coming from
+* msg - you can pass error object, array or whatever
+* color - the color available in `chalk`
+
+You can also use the stacktrace.js which is available globally via the `StackTrace` object.
+
+*Please remember to take this down once you are production ready, because the debugger and stacktrace.js only inject into the html dynamically during development.*
 
 ## Proxies
 
@@ -59,7 +75,7 @@ More about this to come.
 const server = require('gulp-server-io');
 gulp.task('serve', () => {
   return gulp.src('./app')
-    .pipe(
+    .pipe(https://github.com/stacktracejs/stacktrace.js/
       server({
         proxies: [{
           source: '/api',

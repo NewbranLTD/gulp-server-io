@@ -12,8 +12,6 @@
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="./css/starter-template.css" rel="stylesheet">
-    
-
 
   </head>
 
@@ -85,6 +83,12 @@
         $('#click').click(function() {
           $.get('/api').then(function(result) {
             console.log('post result', result);
+          }).catch(function(err) {
+            $gulpServerIo.debugger({
+              from: 'custom get /api',
+              msg: err,
+              color: 'debug'
+            });
           });
           return false;
         });

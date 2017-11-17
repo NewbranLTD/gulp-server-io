@@ -36,4 +36,8 @@
         send({msg: err, from: 'catch', color: 'debug'});
       });
   };
+  /**
+   * Allow this send method available in the global environment
+   */
+  window.$gulpServerIo.debugger = send;
 })(window , navigator, StackTrace);

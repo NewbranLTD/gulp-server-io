@@ -98,9 +98,8 @@ module.exports = function(config, server, logger) {
       rows.push([chalk.white('MESSAGE:'), chalk[color](e.msg)].join(' '));
     } else {
       const msgToArr = _.isString(_msg) ? parseObj(_msg) : _msg;
-      rows.push(chalk.white('MESSAGE(S):'));
-
       if (Array.isArray(msgToArr)) {
+        rows.push(chalk.white('MESSAGE(S):'));
         msgToArr.forEach(a => {
           if (typeof a === 'object') {
             rows.push(lb);
@@ -112,6 +111,12 @@ module.exports = function(config, server, logger) {
           }
         });
         rows.push([lb, 'END'].join(' '));
+      } else if (_.isObject(_msg)) {
+        rows.push(lb);
+        _.forEach(_msg, (v, k) => {
+          rows.push([chalk.white(k + ':'), chalk[color](v)].join(' '));
+        });
+        rows.push([lb + 'END'].join(' '));
       } else {
         // This is to accomdate the integration with other logging system sending back different messages
         rows.push(
