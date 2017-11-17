@@ -73,8 +73,8 @@ module.exports = function(config) {
           });
           // @TODO we should cache this file, otherwise every reload will have to generate it again
           // The question is where do we cache it though ...
-          res.writeHead(200);
           res.set('Content-Type', 'application/javascript');
+          res.writeHead(200);
           res.end(serveData);
         });
         break;
@@ -86,8 +86,8 @@ module.exports = function(config) {
             logutil(chalk.red(msg), chalk.yellow(err));
             return res.end(msg);
           }
-          res.writeHead(200);
           res.set('Content-Type', 'application/javascript');
+          res.writeHead(200);
           res.end(`${data}`);
         });
         break;
