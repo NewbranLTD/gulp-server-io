@@ -22,12 +22,14 @@ module.exports = function(features, config) {
     // we might have to do additional checks here just in case
     scripts = scripts.concat([
       '/socket.io/socket.io.js',
+      [config.debugger.namespace, 'stacktrace.js'].join('/'),
       [config.debugger.namespace, config.debugger.js].join('/')
     ]);
   }
+  // The script should wait until everything are all done and settle
   return scriptInject({
     snippet: scripts
-      .map(s => `<script type="text/javascript" src="${s}"></script>`)
+      .map(s => `<script type="text/javascript" src="${s}" defer></script>`)
       .reduce((a, b) => a + b, '')
   });
 };
