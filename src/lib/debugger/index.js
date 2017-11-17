@@ -2,6 +2,7 @@
 /**
  * The socket.io server and reporting
  */
+const _ = require('lodash');
 const util = require('util');
 const chalk = require('chalk');
 const socketIO = require('socket.io');
@@ -51,6 +52,7 @@ module.exports = function(config, server, logger) {
   }
   const io = socketIO(server, socketConfig);
   const keys = ['browser', 'location'];
+  const lb = chalk.white('-'.repeat(90));
   // Show if this is running
   logutil(
     chalk.white('[debugger] ') +
@@ -84,21 +86,38 @@ module.exports = function(config, server, logger) {
     const color = getColor(e);
     let rows = [];
     if (e.from && e.color) {
-      rows.push(chalk.yellow(`FROM: ${e.from}`));
+      rows.push(chalk.white(`FROM: ${e.from}`));
     }
     keys.forEach(function(key) {
       if (e[key]) {
-        rows.push([chalk.yellow(key + ':'), chalk.cyan(e[key])].join(' '));
+        rows.push([chalk.white(key + ':'), chalk.cyan(e[key])].join(' '));
       }
     });
     const _msg = parseObj(e.msg);
-    if (typeof _msg === 'string') {
-      rows.push([chalk.yellow('MESSAGE:'), chalk[color](e.msg)].join(' '));
+    if (_.isString(_msg)) {
+      rows.push([chalk.white('MESSAGE:'), chalk[color](e.msg)].join(' '));
     } else {
-      // This is to accomdate the integration with other logging system sending back different messages
-      rows.push(
-        [chalk.yellow('MESSAGES:'), chalk[color](util.inspect(_msg, false, 2))].join(' ')
-      );
+      const msgToArr = _.isString(_msg) ? parseObj(_msg) : _msg;
+      rows.push(chalk.white('MESSAGE(S):'));
+
+      if (Array.isArray(msgToArr)) {
+        msgToArr.forEach(a => {
+          if (typeof a === 'object') {
+            rows.push(lb);
+            _.forEach(a, (v, k) => {
+              rows.push([chalk.white(k + ':'), chalk[color](v)].join(' '));
+            });
+          } else {
+            rows.push(a);
+          }
+        });
+        rows.push([lb, 'END'].join(' '));
+      } else {
+        // This is to accomdate the integration with other logging system sending back different messages
+        rows.push(
+          [chalk.white('MESSAGES:'), chalk[color](util.inspect(_msg, false, 2))].join(' ')
+        );
+      }
     }
     table(rows);
   };
@@ -122,11 +141,8 @@ module.exports = function(config, server, logger) {
       if (typeof error === 'string') {
         table([chalk.yellow('STRING TYPE ERROR'), chalk.red(error)]);
       } else if (typeof error === 'object') {
-        if (Array.isArray(error)) {
-          error.forEach(e => displayError(e));
-        } else {
-          displayError(error);
-        }
+        // Will always be a object anyway
+        displayError(error);
       } else {
         // Dump the content out
         table([

@@ -1,6 +1,6 @@
 {
   "name": "gulp-server-io",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description":
     "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
   "homepage": "https://newbran.ch",
