@@ -75,7 +75,7 @@ You can also use the stacktrace.js which is available globally via the `StackTra
 const server = require('gulp-server-io');
 gulp.task('serve', () => {
   return gulp.src('./app')
-    .pipe(https://github.com/stacktracejs/stacktrace.js/
+    .pipe(
       server({
         proxies: [{
           source: '/api',
@@ -103,11 +103,9 @@ server({
 });
 ```
 
-Please, note if in your code are all using relative path, then when you deploy your app. It will just work out of the box.
-For example, during development your host is `http://localhost:8000` and, your production domain name is `http://example.com`
+Please, note if in your code are all using relative path, it will work out of the box when you deploy.
 
-If you hard coded your domain name in your code, then you need to change it. But calling it using the relative path will guarantee
-your project can be move however you like.
+For example, during development your host is `http://localhost:8000` and, your production domain name is `http://example.com`; hard coding the domain name in your AJAX call is not recommended. This is why we include the proxy server. Another upside is during your development, you don't have to do any setup for the CORS issue.
 
 ## Mock data api
 
@@ -143,7 +141,7 @@ In your code:
 ```
 
 Please note, once you use the mock option, your proxies will be
-overwritten by the path found in your json file.
+overwritten by the path found in your JSON file.
 
 ## Deployment
 
