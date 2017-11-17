@@ -1,4 +1,4 @@
-(function(window , navigator)
+(function(window , navigator, StackTrace)
 {
   'use strict';
   /**
@@ -28,10 +28,13 @@
   /**
    * core implementation
    */
+
   window.addEventListener('error', function (e) {
     var first = e.error ? e.error.toString() : 'UNKNOWN!';
     if (first === 'UNKNOWN!') {
-      console.log('unknown error object?', e);
+      try {
+        console.error('unknown error object?', e);
+      } catch(_e_) {}
     }
     var message = [first];
     var stack = e.stack || '';
@@ -47,5 +50,17 @@
       from: 'error' ,
       color: 'debug'
     });
+    // try stacktrace example
+    window.onerror = function(msg, file, line, col, error) {
+      console.log('window.onerror', msg, file, line, col, error);
+      // callback is called with an Array[StackFrame]
+      StackTrace.fromError(error)
+        .then(function(data) {
+          console.log('callback', data);
+        })
+        .catch(function(err) {
+          console.error('catch', err);
+        });
+    };
   });
-})(window , navigator);
+})(window , navigator, StackTrace);
