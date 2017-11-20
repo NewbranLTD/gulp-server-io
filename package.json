@@ -94,5 +94,11 @@
     "stacktrace-js": "^2.0.0",
     "through2": "^2.0.3",
     "yargs": "^10.0.3"
+  },
+  "bin": {
+    "gulp-server-io": "./cli"
+  },
+  "engines": {
+    "node": ">=7.00"
   }
 }
