@@ -135,13 +135,41 @@ Create an `api.json` according to [json-server](https://github.com/typicode/json
 In your code:
 
 ```js
-  fetch('/users').then( results => {
-    console.log(results); // the array of data
-  });
+  fetch('/users').then( res => {
+    if (res.ok) {
+       return res.json();
+    }
+    throw new Error('Not OK');
+  })
+  .then( json => {
+    // do your thing
+  })
+  .catch( err => {
+    // deal with your error
+  })
 ```
 
-Please note, once you use the mock option, your proxies will be
-overwritten by the path found in your JSON file.
+Once you use the mock option, all your proxies definition will be
+overwritten by the mock JSON path.
+
+## CLI
+
+You can also use it as a cli tool if you install this globally.
+
+```sh
+  $ npm install gulp-server-io --global
+  $ gulp-server-io /path/to/your/app
+```
+
+This will quickly serve up the folder you point to and use gulp as engine. So you get all the default setup just you did with `gulpfile.js`.
+
+There are several options you can pass as well
+
+* host (h) default `localhost`, if you need to broadcast then use `0.0.0.0`
+* port (p) default `8000`, change it to the port you need
+* config (c) default `undefined`, this allow you to point to an JSON file with the same configuration parameter available for the `gulp-server-io` 
+
+If you need more option then you should set it up as a regular `gulpfile.js`
 
 ## Deployment
 

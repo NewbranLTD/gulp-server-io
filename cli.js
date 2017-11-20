@@ -5,6 +5,7 @@
  */
 // const { gulp } = require('./gulp');
 // const server = require('./index');
+// const fs = require('fs-extra');
 
 require('yargs') // eslint-disable-line
   .command(
@@ -17,10 +18,6 @@ require('yargs') // eslint-disable-line
       });
     },
     argv => {
-      if (argv.verbose) {
-        console.info(`start server on :${argv.port}`);
-      }
-
       /*
       Server({
         port: argv.weboot
@@ -37,7 +34,7 @@ require('yargs') // eslint-disable-line
     alias: 'h',
     default: 'localhost'
   })
-  .option('verbose', {
-    alias: 'v',
-    default: false
+  .option('config', {
+    alias: 'c',
+    default: ''
   }).argv;
