@@ -43,6 +43,7 @@
     "cli": "node ./cli.js",
     "dev": "node ./__tests__/examples/site.js",
     "socket": "jest gulp/socket.test.js",
+    "cli-test": "jest funcs/cli.test.js",
     "gulp-example": "gulp serve --gulpfile ./__tests__/examples/gulpfile.js",
     "standalone-example": "node ./__tests__/examples/standalone.js"
   },
