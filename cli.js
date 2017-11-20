@@ -10,19 +10,14 @@
 require('yargs') // eslint-disable-line
   .command(
     '[webroot]',
-    'start the server',
+    'start the gulp server',
     yargs => {
       yargs.positional('webroot', {
-        describe: '',
+        describe: 'Where the file to serve',
         default: './dest'
       });
     },
     argv => {
-      /*
-      Server({
-        port: argv.weboot
-      });
-      */
       console.log('call execute', argv);
     }
   )
