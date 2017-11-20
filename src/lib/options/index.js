@@ -1,14 +1,14 @@
 /**
-* Create a default options to reduce the complexity of the main file
-*/
+ * Create a default options to reduce the complexity of the main file
+ */
 const path = require('path');
 const { version } = require('../../../package.json');
 const src = path.join(__dirname, '..', '..');
 module.exports = {
   version: version,
   /**
-  * Basic options
-  */
+   * Basic options
+   */
   development: true,
   host: 'localhost',
   port: 8000,
@@ -31,14 +31,14 @@ module.exports = {
   devKeyPem: path.join(src, 'certs', 'cert.pem'),
   devCrtPem: path.join(src, 'certs', 'cert.crt'),
   /**
-  * MIDDLEWARE DEFAULTS
-  * NOTE:
-  *  All middleware should defaults should have the 'enable'
-  *  property if you want to support shorthand syntax like:
-  *    webserver({
-  *      reload: true
-  *    });
-  */
+   * MIDDLEWARE DEFAULTS
+   * NOTE:
+   *  All middleware should defaults should have the 'enable'
+   *  property if you want to support shorthand syntax like:
+   *    webserver({
+   *      reload: true
+   *    });
+   */
   reload: {
     enable: true,
     verbose: true
