@@ -154,20 +154,32 @@ overwritten by the mock JSON path.
 
 ## CLI
 
-You can also use it as a cli tool if you install this globally.
+You can also use it as a cli tool if you install this globally. *Please note we switch to `meow` instead of `yargs` from 1.3 so the option will be different.*
 
 ```sh
   $ npm install gulp-server-io --global
-  $ gulp-server-io --d /path/to/your/app
+  $ gulp-server-io /path/to/your/app
 ```
 
-This will quickly serve up the folder you point to and use gulp as engine. So you get all the default setup just like you did with `gulpfile.js`.
+This will quickly serve up the folder you point to and use gulp as engine. So you get all the default setup just like you did with `gulpfile.js`. You can also pass multiple folders
+
+```sh
+  $ gulp-server-io /path/to/your/app,node_modules,dev 
+```
 
 There are several options you can pass as well
 
 * host (h) default `localhost`, if you need to broadcast then use `0.0.0.0`
 * port (p) default `8000`, change it to the port you need
 * config (c) default `undefined`, this allow you to point to an JSON file with the same configuration parameter available for the `gulp-server-io`
+
+If you need to see all the options an examples
+
+```sh
+  $ gulp-server-io --help
+```
+
+---
 
 If you need more option then you should set it up as a regular `gulpfile.js`
 
