@@ -87,6 +87,7 @@ module.exports = function(options = {}) {
     proxies = _mock.proxies;
   }
   // Proxy requests
+  // @BUG this is not working in server mode
   proxies.forEach(proxyoptions => {
     if (!proxyoptions.target || !proxyoptions.source) {
       logutil(chalk.red('Missing target or source property for proxy setting!'));

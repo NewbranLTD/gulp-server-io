@@ -16,6 +16,7 @@ module.exports = function(config) {
   // const debuggerHost = config.server.host || config.host;
   // const debuggerPort = config.server.port || config.port;
   const stacktraceName = 'stacktrace.js';
+  // @BUG when this is running in server mode, the file disappeared?
   const stacktraceSrc = join(
     __dirname,
     '..',
