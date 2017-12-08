@@ -43,7 +43,7 @@ module.exports = function(options = {}) {
   let mockServerInstance = closeFn;
   let debuggerInstance = closeFn;
   // Make sure the namespace is correct first
-  if (config.debugger.enable) {
+  if (config.debugger.enable && config.develop) {
     const namespace = config.debugger.namespace;
     if (!namespace) {
       config.debugger.namespace = '/debugger-io';
