@@ -79,12 +79,16 @@ gulp.task('serve', () => {
       server({
         proxies: [{
           source: '/api',
-          target: 'http://otherhost.com'
+          target: 'http://otherhost.com',
+          changeOrigin: true,
+          logLevel: 'debug' // check http-proxy-middleware documentation 
         }]
       })
     );
 });
 ```
+
+**Its very important that you pass the config as an array**
 
 Please note when you call the `/api` resource, it will translate to
 `http://otherhost.com/api`.
@@ -164,7 +168,7 @@ You can also use it as a cli tool if you install this globally. *Please note we 
 This will quickly serve up the folder you point to and use gulp as engine. So you get all the default setup just like you did with `gulpfile.js`. You can also pass multiple folders
 
 ```sh
-  $ gulp-server-io /path/to/your/app,node_modules,dev 
+  $ gulp-server-io /path/to/your/app,node_modules,dev
 ```
 
 There are several options you can pass as well

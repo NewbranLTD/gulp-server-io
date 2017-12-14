@@ -2,6 +2,7 @@
 /**
  * The main server that wrap in the stream
  */
+const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
@@ -36,9 +37,11 @@ module.exports = function(options = {}) {
   if (config.development) {
     middlewares.push(helmet.noCache());
   }
-
   let addDebugger = false;
+  // @BUG here if we try to move the object into array
+  // somehow it disappear later (2017-12-14)
   let proxies = config.proxies;
+
   const closeFn = { close: () => {} };
   let mockServerInstance = closeFn;
   let debuggerInstance = closeFn;
@@ -84,6 +87,7 @@ module.exports = function(options = {}) {
     // @TODO sort out particular url that shouldn't be mock?
     const _mock = mockServer(config);
     mockServerInstance = _mock.server;
+    // Overwrite the proxies
     proxies = _mock.proxies;
   }
   // Proxy requests

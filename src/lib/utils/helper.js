@@ -84,9 +84,34 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
  * directory listing
  */
 exports.directoryListing = (dir) => {
-  return express.directory(dir); 
+  return express.directory(dir);
 };
 
-// export
+// export for other use
 exports.setHeaders = setHeaders;
 exports.getRandomInt = getRandomInt;
+
+/**
+ * delay proxy
+ * @param {string} originalUrl (url to delay)
+ * @param {int} delayReqTime time to delay when request in ms
+ * @param {int} delayResTime time to delay when response in ms
+ * @return {function} middleware to use: app.use(url, proxyDelay, myProxy);
+ */
+exports.proxyDelay = function(originalUrl, delayReqTime, delayResTime) {
+  return function (req, res, next) {
+    if (req.originalUrl === originalUrl) {
+      // Delay request by 2 seconds
+      setTimeout(next, delayReqTime);
+      // Delay response completion by 5 seconds
+      const endOriginal = res.end;
+      res.end = function (...args) {
+        setTimeout(function () {
+          endOriginal.apply(res, args);
+        }, delayResTime);
+      };
+    } else {
+      next();
+    }
+  }
+};
