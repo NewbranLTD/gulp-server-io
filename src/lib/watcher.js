@@ -3,10 +3,8 @@
  * New file watcher
  */
 const chalk = require('chalk');
-const bacon = require('baconjs');
-
-const chokidar = require('chokidar');
 const logutil = require('./utils/log');
+const streamWatcher = require('./utils/stream-watcher');
 /**
  * @20171112 - change where we start the reload server
  * @param {array} filePaths the path to the folder get watch
@@ -16,29 +14,10 @@ const logutil = require('./utils/log');
 module.exports = function(filePaths, reloadServer, config) {
   const verbose = config.verbose;
   let files = [];
-  // Start the watch files with Bacon wrapper
-  const streamWatcher = bacon.fromBinder(sink => {
-    filePaths.forEach(file => {
-      const webroot = file.path;
-      if (verbose) {
-        logutil(chalk.white('[Watcher]'), webroot);
-      }
-      let watcher = chokidar.watch(webroot, {
-        ignored: /(^|[\/\\])\../,
-        ignoreInitial: true
-      });
-      watcher.on('all', (event, path) => {
-        sink({ event: event, path: path });
-        return () => {
-          watcher.close();
-        };
-      });
-    });
-  });
   // Reactive
-  return streamWatcher
-    .doAction(a => files.push(a))
-    .debounce(300)
+  return streamWatcher(filePaths, verbose)
+    .doAction(f => files.push(f))
+    .debounce(300) // Should allow config to change
     .onValue(() => {
       if (files.length) {
         if (verbose) {
