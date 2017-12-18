@@ -10,3 +10,16 @@ const streamWatcher = require('./src/lib/utils/stream-watcher');
 exports.gulp = gulp;
 exports.gulpUtil = gulpUtil;
 exports.streamWatcher = streamWatcher;
+exports.watcher = function(filePaths, callback, verbose = true, debounce = 300) {
+  let files = [];
+  return streamWatcher(filePaths, verbose)
+    .doAction(f => files.push(f))
+    .debounce(debounce)
+    .onValue(() => {
+      if (files.length) {
+        callback(files);
+        // Reset
+        files = [];
+      }
+    });
+};
