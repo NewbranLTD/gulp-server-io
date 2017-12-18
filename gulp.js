@@ -5,10 +5,14 @@
  */
 const gulp = require('gulp');
 const gulpUtil = require('gulp-util');
+const helmet = require('helmet');
+const bodyParser = require('body-parser');
 const streamWatcher = require('./src/lib/utils/stream-watcher');
 // Re-export
 exports.gulp = gulp;
 exports.gulpUtil = gulpUtil;
+exports.helmet = helmet;
+exports.bodyParser = bodyParser;
 exports.streamWatcher = streamWatcher;
 exports.watcher = function(filePaths, callback, verbose = true, debounce = 300) {
   let files = [];

@@ -32,19 +32,21 @@ module.exports = function(options = {}) {
   let config = enableMiddlewareShorthand(defaultOptions, options, defaultProperties);
   // Init the app
   const app = express();
-  // Properties
-  let middlewares = [bodyParser.urlencoded({ extended: true }), bodyParser.json()];
-  if (config.development) {
-    middlewares.push(helmet.noCache());
-  }
   let addDebugger = false;
   // @BUG here if we try to move the object into array
   // somehow it disappear later (2017-12-14)
   let proxies = config.proxies;
-
+  // Default callbacks
   const closeFn = { close: () => {} };
   let mockServerInstance = closeFn;
   let debuggerInstance = closeFn;
+  // Properties
+  let middlewares = proxies.length
+    ? []
+    : [bodyParser.urlencoded({ extended: true }), bodyParser.json()];
+  if (config.development) {
+    middlewares.push(helmet.noCache());
+  }
   // Make sure the namespace is correct first
   if (config.debugger.enable && config.development) {
     const namespace = config.debugger.namespace;

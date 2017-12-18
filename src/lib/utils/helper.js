@@ -69,13 +69,15 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
   } else {
     etag = false;
   }
+  // set header only when not using the http-proxy-middlewares
+  const headerOption = (config.proxies.length) ? {setHeaders: setHeaders(config, urlToOpen)} : {};
   // @TODO configure the directoryListing option here
   const staticOptions = _.merge(
     {
-      setHeaders: setHeaders(config, urlToOpen),
       index: config.indexes,
       etag: etag
     },
+    headerOption,
     config.staticOptions
   );
   return express.static(webroot, staticOptions);
