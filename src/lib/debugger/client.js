@@ -17,16 +17,23 @@ module.exports = function(config) {
   // const debuggerPort = config.server.port || config.port;
   const stacktraceName = 'stacktrace.js';
   // @BUG when this is running in server mode, the file disappeared?
-  const stacktraceSrc = join(
-    __dirname,
-    '..',
-    '..',
-    '..',
-    'node_modules',
-    'stacktrace-js',
-    'dist',
-    'stacktrace-with-promises-and-json-polyfills.js'
-  );
+  // that's because the file is not copy inside the node_modules anymore
+  const searchStacktraceSrc = () => {
+    const stacktraceFile = join(
+      'node_modules',
+      'stacktrace-js',
+      'dist',
+      'stacktrace-with-promises-and-json-polyfills.js'
+    );
+    return [join(__dirname, '..', '..', '..', stacktraceFile), stacktraceFile]
+      .filter(f => {
+        return fs.existsSync(f);
+      })
+      .reduce((first, next) => {
+        return next;
+      }, null);
+  };
+
   const debuggerPath = config.namespace;
   const debuggerJs = [debuggerPath, config.js].join('/');
   const stacktraceJsFile = [debuggerPath, stacktraceName].join('/');
@@ -80,7 +87,7 @@ module.exports = function(config) {
         });
         break;
       case stacktraceJsFile:
-        fs.readFile(stacktraceSrc, { encoding: 'utf8' }, (err, data) => {
+        fs.readFile(searchStacktraceSrc(), { encoding: 'utf8' }, (err, data) => {
           if (err) {
             res.writeHead(500);
             const msg = 'Error reading stacktrace source file!';
