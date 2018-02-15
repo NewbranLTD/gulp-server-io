@@ -35,17 +35,5 @@ describe('gulp-server-io default test', () => {
       .get('/')
       .expect(200, /Bootstrap Template test for gulp-server-io/);
   });
-  // (2) test with custom port number
-  test('(2) should work with custom port 1111', () => {
-    const test2port = 1111;
-    stream = webserver({
-      port: test2port,
-      debugger: false,
-      reload: false
-    });
-    stream.write(rootDir);
-    return request(['http://', baseUrl, ':', test2port].join(''))
-      .get('/')
-      .expect(200, /Bootstrap Template test for gulp-server-io/);
-  });
+  
 });
