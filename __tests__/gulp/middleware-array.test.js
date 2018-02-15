@@ -40,7 +40,7 @@ describe('gulp-webserver-io middleware test', () => {
       middleware: [
         function(req, res, next) {
           if (req.url === testPaths[0]) {
-            console.log('pass through 0');
+            // console.log('pass through 0');
             res.end(shiftDownOne(testPaths[0]));
           } else {
             next();
@@ -48,7 +48,7 @@ describe('gulp-webserver-io middleware test', () => {
         },
         function(req, res, next) {
           if (req.url === testPaths[1]) {
-            console.log('pass through 1');
+            // console.log('pass through 1');
             res.end(shiftDownOne(testPaths[1]));
           } else {
             next();
