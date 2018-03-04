@@ -11,7 +11,7 @@ const chalk = require('chalk');
 const reload = require('reload');
 const through = require('through2');
 // Modules
-const { serveStatic, directoryListing } = require('./src/lib/utils/helper');
+const { serveStatic } = require('./src/lib/utils/helper');
 const {
   appGenerator,
   serverGenerator,
@@ -34,10 +34,12 @@ module.exports = function(options = {}) {
     .obj((file, enc, callback) => {
       // Serve up the files
       app.use(config.path, serveStatic(file.path, config));
-      // Enable directoryListing
+      // Enable directoryListing - no longer support since 1.4.0-alpha.2
+      // To do this the user should add to the middlewares and install the module
+      /*
       if (config.directoryListing) {
         app.use(directoryListing(file.path));
-      }
+      } */
       files.push(file);
       callback();
     })
@@ -52,9 +54,9 @@ module.exports = function(options = {}) {
         unwatchFn = appWatcher(files, reloadServer, config.reload);
       }
       // Setup fallback i.e. 404.html
-      if (config.fallback) {
+      if (config.fallback.enable) {
         files.forEach(file => {
-          const fallbackFile = file.path + '/' + config.fallback;
+          const fallbackFile = file.path + '/' + config.fallback.fileName;
           if (fs.existsSync(fallbackFile)) {
             app.use((req, res) => {
               res.setHeader('Content-Type', 'text/html; charset=UTF-8');

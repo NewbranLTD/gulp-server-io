@@ -14,7 +14,7 @@ const https = require('https');
  */
 module.exports = function(app, config) {
   let webserver;
-  if (config.https) {
+  if (config.https.enable) {
     let opts;
     if (config.https.pfx) {
       opts = {

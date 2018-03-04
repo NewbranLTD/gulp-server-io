@@ -14,13 +14,10 @@ module.exports = {
   port: 8000,
   path: '/',
   webroot: path.join(process.cwd(), 'app'),
-  fallback: false,
-  https: false,
-  open: true,
   indexes: ['index.html', 'index.htm'],
   callback: () => {},
   staticOptions: {},
-  directoryListing: false,
+  // @TODO this is still problematic
   headers: {},
   // Middleware: Proxy
   // For possible options, see:
@@ -39,12 +36,28 @@ module.exports = {
    *      reload: true
    *    });
    */
+  fallback: {
+    enable: false,
+    fileName: '404.html'
+  },
+  https: {
+    enable: false
+  },
+  open: {
+    enable: true,
+    url: '/'
+  },
+  // New 1.4.0-alpha.2 enable inject file options
+  inject: {
+    enable: false,
+    dir: {} // Expect /css /js etc
+  },
   reload: {
     enable: true,
     verbose: true
   },
   // New mock server using json-server, please note if this is enable then
-  // The proxy will be disable
+  // The proxy will be disable, @TODO how to merge the two together?
   mock: {
     enable: false,
     json: false,

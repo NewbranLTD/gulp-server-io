@@ -83,12 +83,13 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
   return express.static(webroot, staticOptions);
 };
 /**
- * directory listing
+ * directory listing - no longer support since 1.4.0-alpha.2
  */
+/*
 exports.directoryListing = (dir) => {
   return express.directory(dir);
 };
-
+*/
 // export for other use
 exports.setHeaders = setHeaders;
 exports.getRandomInt = getRandomInt;

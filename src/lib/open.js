@@ -7,12 +7,12 @@ const open = require('opn');
  * @return {boolean} true on open false on failed
  */
 module.exports = function(config = {}) {
-  if (config.open === false || process.env.NODE_ENV === 'test') {
+  if (config.open.enable === false || process.env.NODE_ENV === 'test') {
     return true;
   }
   let args = [];
   // If there is just the true option then we need to construct the link
-  if (config.open === true) {
+  if (config.open.enable === true) {
     args.push(
       [
         'http' + (config.https === false ? '' : 's'),

@@ -81,7 +81,7 @@ gulp.task('serve', () => {
           source: '/api',
           target: 'http://otherhost.com',
           changeOrigin: true,
-          logLevel: 'debug' // check http-proxy-middleware documentation 
+          logLevel: 'debug' // check http-proxy-middleware documentation
         }]
       })
     );
@@ -215,7 +215,7 @@ server({
 | indexes | Array of indexes to search | `[index.html, index.htm]` | Array |
 | callback | A function to execute after the server start | `() => {}` | Function |
 | staticOptions | Look at `server-static` | `{}` | Object |
-| directoryListing | Look at `server-index` | `false` | Boolean |
+| ~~directoryListing~~ | no longer support (1.4.0) too little use | x | x |
 | headers | extra headers to pass | `{}` | Object |
 | proxies | Array of proxies `{ source , target }` | `[]` | Array |
 | devKeyPem | When you set `https` to true you can supply your own `pem` file | `cert.pem` | String |
