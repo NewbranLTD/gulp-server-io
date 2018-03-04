@@ -24,7 +24,7 @@ const cli = meow(
   Options
     -p, --port Port number (default 8000)
     -h, --host host name (default localhost)
-    -s, --ssl use https using snake oil cert (default to false)
+    -s, --https use https using snake oil cert (default to false)
     -c, --config pass a config json file (default '')
 
   Examples
@@ -67,6 +67,11 @@ const serve = cli => {
           }
           if (argv.host) {
             config.host = argv.host;
+          }
+          if (argv.https) {
+            config.https = {
+              enable: true
+            };
           }
         }
         return config;
