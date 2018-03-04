@@ -3,7 +3,7 @@
  * Testing the ioDebugger socket functions
  */
 const request = require('supertest');
-const File = require('gulp-util').File;
+const File = require('vinyl');
 const join = require('path').join;
 const io = require('socket.io-client');
 // Parameters

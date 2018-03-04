@@ -1,9 +1,8 @@
 'use strict';
 const chalk = require('chalk');
 const request = require('supertest');
-const gutil = require('gulp-util');
-const File = gutil.File;
-const log = gutil.log;
+const File = require('vinyl');
+const log = require('fancy-log');
 const join = require('path').join;
 const webserver = require('../../index');
 const {

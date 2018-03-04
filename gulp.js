@@ -4,13 +4,11 @@
  * don't need to add add it to the dependecies
  */
 const gulp = require('gulp');
-const gulpUtil = require('gulp-util');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const streamWatcher = require('./src/lib/utils/stream-watcher');
 // Re-export
 exports.gulp = gulp;
-exports.gulpUtil = gulpUtil;
 exports.helmet = helmet;
 exports.bodyParser = bodyParser;
 exports.streamWatcher = streamWatcher;
