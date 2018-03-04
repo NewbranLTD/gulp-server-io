@@ -7,7 +7,7 @@ const open = require('opn');
  * @return {boolean} true on open false on failed
  */
 module.exports = function(config = {}) {
-  if (config.open.enable === false || process.env.NODE_ENV === 'test') {
+  if (process.env.NODE_ENV === 'test' || config.open.enable === false) {
     return true;
   }
   let args = [];
@@ -15,7 +15,7 @@ module.exports = function(config = {}) {
   if (config.open.enable === true) {
     args.push(
       [
-        'http' + (config.https === false ? '' : 's'),
+        'http' + (config.https.enable === false ? '' : 's'),
         '//' + config.host,
         config.port
       ].join(':')

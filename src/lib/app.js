@@ -30,6 +30,9 @@ const debuggerClient = require('./debugger/client');
 module.exports = function(options = {}) {
   // Config the config options
   let config = enableMiddlewareShorthand(defaultOptions, options, defaultProperties);
+
+  console.log('config', config);
+
   // Init the app
   const app = express();
   let addDebugger = false;
