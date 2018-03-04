@@ -54,9 +54,10 @@ module.exports = function(options = {}) {
         unwatchFn = appWatcher(files, reloadServer, config.reload);
       }
       // Setup fallback i.e. 404.html
-      if (config.fallback.enable) {
+      if (config.fallback !== false) {
         files.forEach(file => {
-          const fallbackFile = file.path + '/' + config.fallback.fileName;
+          const fallbackFile =
+            file.path + '/' + (config.fallback || config.fallback.fileName);
           if (fs.existsSync(fallbackFile)) {
             app.use((req, res) => {
               res.setHeader('Content-Type', 'text/html; charset=UTF-8');

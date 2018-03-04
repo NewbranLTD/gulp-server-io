@@ -1,4 +1,5 @@
 'use strict';
+jest.setTimeout(10000);
 /**
  * Testing the ioDebugger socket functions
  * @TODO use this for testing reload at port 9856

@@ -39,7 +39,7 @@ describe('gulp-webserver-io stock test', () => {
       .expect('Content-Type', /text\/html; charset=UTF-8/);
   });
   // (8)
-  test('(8) should server multiple sources even with a fallback', () => {
+  test('(8) should serve multiple sources even with a fallback', () => {
     stream = webserver({
       debugger: false,
       reload: false,
