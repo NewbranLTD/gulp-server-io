@@ -4,8 +4,10 @@
  */
 const path = require('path');
 const request = require('supertest');
-const standaloneSrv = require('../../server');
 const jsonServer = require('json-server');
+const log = require('fancy-log');
+// ours
+const standaloneSrv = require('../../server');
 // Properties
 const root = path.join(__dirname, '..', 'fixtures', 'app');
 const proxyPort = 3000;
@@ -21,7 +23,7 @@ describe('Testing the standlone setup via the gulp-server-io/server', () => {
     proxyServer.use(router);
     // this is where the actual http server return!
     srv = proxyServer.listen(proxyPort, () => {
-      console.log(`JSON Server is running @ ${proxyEndpoint}`);
+      log.info(`JSON Server is running @ ${proxyEndpoint}`);
     });
     server = standaloneSrv({
       webroot: root,
