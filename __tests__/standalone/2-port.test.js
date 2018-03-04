@@ -7,7 +7,6 @@ const request = require('supertest');
 const standaloneSrv = require('../../server');
 // Properties
 const root = path.join(__dirname, '..', 'fixtures', 'app');
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // change port to 3838
 
 describe('Testing the gulp-server-io/server with different port number 3838', () => {

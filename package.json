@@ -39,7 +39,7 @@
     "XprepublishOnly": "nsp check",
     "pretest": "eslint . --fix",
     "precommit": "lint-staged",
-    "test": "jest --runInBand --forceExit",
+    "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --runInBand --forceExit",
     "cli": "node ./cli.js",
     "meow": "node ./cli-meow.js",
     "dev": "node ./__tests__/examples/site.js",

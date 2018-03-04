@@ -14,7 +14,7 @@ const {
   defaultSSLUrl
 } = require('../fixtures/config.js');
 // Some configuration to enable https testing
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 // Test start
 describe('gulp-webserver-io stock test', () => {
   // Setups

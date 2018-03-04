@@ -7,8 +7,6 @@ const request = require('supertest');
 const standaloneSrv = require('../../server');
 // Properties
 const root = path.join(__dirname, '..', 'fixtures', 'app');
-// According to https://github.com/visionmedia/supertest/issues/111
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // Start test
 describe('Testing the default gulp-server-io/server setup for standalone server', () => {
   let server;

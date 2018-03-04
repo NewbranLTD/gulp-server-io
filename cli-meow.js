@@ -7,12 +7,13 @@ const { gulp } = require('./gulp');
 const server = require('./index');
 const path = require('path');
 const fs = require('fs-extra');
-const chalk = require('chalk');
 const _ = require('lodash');
 const meow = require('meow');
+const log = require('fancy-log');
 const alias = {
   p: 'port',
   h: 'host',
+  s: 'ssl',
   c: 'config'
 };
 const cli = meow(
@@ -23,6 +24,7 @@ const cli = meow(
   Options
     -p, --port Port number (default 8000)
     -h, --host host name (default localhost)
+    -s, --ssl use https using snake oil cert (default to false)
     -c, --config pass a config json file (default '')
 
   Examples
@@ -42,10 +44,8 @@ const cli = meow(
 );
 const serve = cli => {
   if (_.isEmpty(cli.input[0])) {
-    return console.log(
-      chalk.red(
-        'Sorry the path to your file is required! Run `gulp-server-io` --help for more information'
-      )
+    return log.error(
+      'Sorry the path to your file is required! Run `gulp-server-io` --help for more information'
     );
   }
   const argv = cli.flags;

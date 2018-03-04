@@ -4,6 +4,9 @@
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
+// According to https://github.com/visionmedia/supertest/issues/111
+// Put this here to make sure it works everywhere
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 /**
  * @param {object} app the connect app
  * @param {object} config options

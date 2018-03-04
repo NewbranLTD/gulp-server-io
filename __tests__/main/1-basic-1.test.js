@@ -13,8 +13,6 @@ const {
   defaultPort,
   defaultSSLUrl
 } = require('../fixtures/config.js');
-// Some configuration to enable https testing
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // Test start
 describe('gulp-server-io default test', () => {
   // Setups

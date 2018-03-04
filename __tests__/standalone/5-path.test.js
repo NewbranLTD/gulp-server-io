@@ -7,7 +7,6 @@ const request = require('supertest');
 const standaloneSrv = require('../../server');
 // Properties
 const root = path.join(__dirname, '..', 'fixtures', 'app');
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 // change path to /sub
 describe('Testing the gulp-server-io/server serve from different path /sub', () => {
   let server2;
