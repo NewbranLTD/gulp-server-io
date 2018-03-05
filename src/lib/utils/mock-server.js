@@ -45,6 +45,12 @@ module.exports = function(options) {
       logutil(chalk.white('Mock json Server is running @ ', port));
     }
   });
+  // Restart method
+  const restart = () => {
+    logutil(chalk.white('Mock josn server restart'));
+  };
+  // 05032018 - also return a restart method, so whenever the file change
+  // it will restart by itself
   // Return
-  return { server, proxies };
+  return { server, proxies, restart };
 };

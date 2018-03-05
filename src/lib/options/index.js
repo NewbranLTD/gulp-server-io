@@ -60,7 +60,8 @@ module.exports = {
     enable: false,
     json: false,
     port: 3838,
-    path: 'localhost'
+    path: 'localhost',
+    interval: 5000 // Listener interval to restart the server, false then don't restart
   },
   // Create our socket.io debugger
   // using the socket.io instead of just normal post allow us to do this cross domain
