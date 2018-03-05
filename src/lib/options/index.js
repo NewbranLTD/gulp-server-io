@@ -38,9 +38,21 @@ module.exports = {
    *      reload: true
    *    });
    */
+  // @TODO help the user to track their server reload method
+  serverReload: {
+    enable: false,
+    dir: '/srv',
+    start: () => {}, // Start server method
+    stop: () => {} // Stop server method
+  },
+  // Client reload
   reload: {
     enable: true,
     verbose: true
+  },
+  inject: {
+    enable: false,
+    options: {}
   },
   // New mock server using json-server, please note if this is enable then
   // The proxy will be disable

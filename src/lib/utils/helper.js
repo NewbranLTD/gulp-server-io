@@ -80,6 +80,7 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
     headerOption,
     config.staticOptions
   );
+  // does this need to be replace with serve-static? 05032018
   return express.static(webroot, staticOptions);
 };
 /**
