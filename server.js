@@ -5,7 +5,8 @@
  */
 const _ = require('lodash');
 const { serveStatic } = require('./src/lib/utils/helper');
-const { appGenerator, serverGenerator } = require('./src');
+const appGenerator = require('./src/lib/app');
+const serverGenerator = require('./src/lib/webserver');
 const disable = {
   open: false,
   reload: false,

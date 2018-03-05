@@ -45,11 +45,6 @@ module.exports = {
     start: () => {}, // Start server method
     stop: () => {} // Stop server method
   },
-  // Client reload
-  reload: {
-    enable: true,
-    verbose: true
-  },
   inject: {
     enable: false,
     options: {}
@@ -62,6 +57,11 @@ module.exports = {
     port: 3838,
     path: 'localhost',
     interval: 5000 // Listener interval to restart the server, false then don't restart
+  },
+  // Client reload - default TRUE
+  reload: {
+    enable: true,
+    verbose: true
   },
   // Create our socket.io debugger
   // using the socket.io instead of just normal post allow us to do this cross domain
