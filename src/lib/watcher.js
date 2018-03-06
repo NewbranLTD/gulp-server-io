@@ -5,19 +5,21 @@
 const chalk = require('chalk');
 const logutil = require('./utils/log');
 const streamWatcher = require('./utils/stream-watcher');
+const defaultInterval = 300;
 /**
  * @20171112 - change where we start the reload server
  * @param {array} filePaths the path to the folder get watch
- * @param {object} reloadServer
+ * @param {function} reloadServerFn should be just a method to call
+ * @param {object} config pass extra configuration option
  * @return {object} bacon instance for watch later
  */
-module.exports = function(filePaths, reloadServer, config) {
+module.exports = function(filePaths, reloadServerFn, config) {
   const verbose = config.verbose;
   let files = [];
   // Reactive
   return streamWatcher(filePaths, verbose)
     .doAction(f => files.push(f))
-    .debounce(300) // Should allow config to change
+    .debounce(config.interval || defaultInterval) // Should allow config to change
     .onValue(() => {
       if (files.length) {
         if (verbose) {
@@ -26,7 +28,18 @@ module.exports = function(filePaths, reloadServer, config) {
             logutil(chalk.yellow(f.event), chalk.yellow(f.path));
           });
         }
-        reloadServer.reload();
+        // New allow to pass as a function
+        if (typeof reloadServerFn === 'function') {
+          reloadServerFn();
+        } else if (reloadServerFn && typeof reloadServerFn.reload === 'function') {
+          reloadServerFn.reload();
+        } else {
+          logutil(
+            chalk.red(
+              'Could not call reload server, it must be a function or an object contain a reload function!'
+            )
+          );
+        }
         // Reset
         files = [];
       }

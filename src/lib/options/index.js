@@ -48,6 +48,7 @@ module.exports = {
   inject: {
     enable: false,
     target: [], // List of files to inject
+    source: [], // List of files to get inject
     options: {
       read: false
     }
@@ -64,7 +65,8 @@ module.exports = {
   // Client reload - default TRUE
   reload: {
     enable: true,
-    verbose: true
+    verbose: true,
+    interval: 300
   },
   // Create our socket.io debugger
   // using the socket.io instead of just normal post allow us to do this cross domain
