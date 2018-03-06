@@ -47,7 +47,10 @@ module.exports = {
   },
   inject: {
     enable: false,
-    options: {}
+    target: [], // List of files to inject
+    options: {
+      read: false
+    }
   },
   // New mock server using json-server, please note if this is enable then
   // The proxy will be disable

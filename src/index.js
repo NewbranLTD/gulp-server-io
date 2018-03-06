@@ -56,6 +56,8 @@ module.exports = function(options = {}) {
         const reloadServer = reload(app, { verbose: config.reload.verbose });
         unwatchFn = appWatcher(files, reloadServer, config.reload);
       }
+      // @TODO add watching server side files
+
       // Setup fallback i.e. 404.html
       if (config.fallback !== false) {
         files.forEach(file => {

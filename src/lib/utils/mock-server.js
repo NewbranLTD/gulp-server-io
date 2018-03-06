@@ -46,7 +46,12 @@ module.exports = function(options) {
     }
   });
   // Restart method
-  const restart = () => {
+  // if pass kill then just end the instance, this will replace the mockServerInstance
+  const restart = kill => {
+    if (kill) {
+      logutil('Kill the mock server');
+      return;
+    }
     logutil(chalk.white('Mock josn server restart'));
   };
   // 05032018 - also return a restart method, so whenever the file change
