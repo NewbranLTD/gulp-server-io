@@ -7,6 +7,6 @@ const debug = process.env.DEBUG;
 // Main
 module.exports = function(...args) {
   if (!test && !debug) {
-    log.apply(null, args);
+    Reflect.apply(log, args);
   }
 };
