@@ -6,10 +6,12 @@ const args = require('yargs');
 const fs = require('fs-extra');
 const chalk = require('chalk');
 const jsonServer = require('json-server');
-const logutil = require('./log.js');
+const logutil = require('./log');
+const watcherFn = require('../watcher');
 // Expect to return this server config for the proxies
 module.exports = function(options) {
   let proxies = [];
+  let unwatchFn = () => {};
   const start = 'http://';
   const opt = options.mock;
   const port = opt.port || 3838;
@@ -54,8 +56,14 @@ module.exports = function(options) {
     }
     logutil(chalk.white('Mock josn server restart'));
   };
+  // Start the watcher here
+  if (opt.watch !== false) {
+    unwatchFn = watcherFn(opt.json, restart, {
+      interval: opt.interval
+    });
+  }
   // 05032018 - also return a restart method, so whenever the file change
   // it will restart by itself
   // Return
-  return { server, proxies, restart };
+  return { server, proxies, restart, unwatchFn };
 };

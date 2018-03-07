@@ -66,7 +66,8 @@ exports.defaultOptions = {
     json: false,
     port: 3838,
     path: 'localhost',
-    interval: 5000 // Listener interval to restart the server, false then don't restart
+    watch: true,
+    interval: 500 // Listener interval to restart the server, false then don't restart
   },
   // Client reload - default TRUE
   reload: {
