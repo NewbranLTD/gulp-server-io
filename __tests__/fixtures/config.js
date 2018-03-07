@@ -15,7 +15,7 @@ const directoryIndexMissingDir = new File({
   path: join(__dirname, 'directoryIndexMissing')
 });
 // grab the original options as well
-const defaultOptions = require('../../src/lib/options');
+const { defaultOptions } = require('../../src/lib/options');
 // Export
 module.exports = {
   root,
