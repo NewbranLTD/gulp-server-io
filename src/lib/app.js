@@ -14,8 +14,13 @@ const httpProxy = require('http-proxy-middleware');
 const join = path.join;
 const isarray = Array.isArray;
 // Properties
-const { defaultOptions, defaultProperties } = require('./options');
-const enableMiddlewareShorthand = require('./options/enable-middleware-shorthand');
+/*
+const {
+  defaultOptions,
+  defaultProperties,
+  enableMiddlewareShorthand
+} = require('./options');
+*/
 // Modules
 const logutil = require('./utils/log');
 const scriptsInjector = require('./injector');
@@ -26,9 +31,9 @@ const debuggerClient = require('./debugger/client');
  * @param {object} options
  * @return {object} app and config for destructing
  */
-module.exports = function(options = {}) {
+module.exports = function(config) {
   // Config the config options
-  let config = enableMiddlewareShorthand(defaultOptions, options, defaultProperties);
+  // let config = enableMiddlewareShorthand(defaultOptions, options, defaultProperties);
   // Init the app
   const app = express();
   let addDebugger = false;

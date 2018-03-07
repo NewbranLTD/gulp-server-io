@@ -4,13 +4,15 @@
  * otherwise just export the method
  */
 const gulpServerIo = require('./src');
-const enableMiddlewareShorthand = require('./src/lib/options/enable-middleware-shothand');
-const { defaultOptions, defaultProperties } = require('./src/lib/options');
-
+const {
+  defaultOptions,
+  defaultProperties,
+  enableMiddlewareShorthand
+} = require('./src/lib/options');
 // Main
 module.exports = function(options = {}) {
   const config = enableMiddlewareShorthand(defaultOptions, options, defaultProperties);
-  console.log('Top config', config);
+  // Console.log('Top config', config);
   /**
    * @TODO For injection with gulp-inject
    * I think we need to create this here
@@ -27,5 +29,5 @@ module.exports = function(options = {}) {
     )
   }
   */
-  return gulpServerIo(options);
+  return gulpServerIo(config);
 };

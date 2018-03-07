@@ -4,6 +4,9 @@
 const path = require('path');
 const { version } = require('../../../package.json');
 const src = path.join(__dirname, '..', '..');
+// Also export the function here
+const enableMiddlewareShorthand = require('./enable-middleware-shorthand');
+exports.enableMiddlewareShorthand = enableMiddlewareShorthand;
 // Move from the app.js to here
 exports.defaultProperties = ['reload', 'debugger', 'mock', 'serverReload', 'inject'];
 // Rename to the key defaultOptions
