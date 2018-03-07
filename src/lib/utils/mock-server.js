@@ -21,6 +21,7 @@ module.exports = function(options) {
   if (args.debug) {
     logutil('mock option', opt);
   }
+  // @TODO should allow to pass multiple json files
   const json = fs.readJsonSync(opt.json);
   _.forEach(json, (payload, name) => {
     const url = name.substring(0, 1) === '/' ? name.substring(1, name.length) : name;
@@ -58,7 +59,7 @@ module.exports = function(options) {
   };
   // Start the watcher here
   if (opt.watch !== false) {
-    unwatchFn = watcherFn(opt.json, restart, {
+    unwatchFn = watcherFn([opt.json], restart, {
       interval: opt.interval
     });
   }

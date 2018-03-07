@@ -12,6 +12,7 @@ const {
 // Main
 module.exports = function(options = {}) {
   const config = enableMiddlewareShorthand(defaultOptions, options, defaultProperties);
+  config.__processed__ = true;
   // Console.log('Top config', config);
   /**
    * @TODO For injection with gulp-inject
