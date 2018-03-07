@@ -27,9 +27,11 @@ gulp.task('serve', () => {
   //////////////////////////////
 
 const config2 = {
-  
+  inject: {
+    source: ['css/*.css', 'js/*.js'],
+    target: ['another.html']
+  }
 };
-
 
 // testing the wiredep
 gulp.task('wire', () => {

@@ -14,8 +14,7 @@ const httpProxy = require('http-proxy-middleware');
 const join = path.join;
 const isarray = Array.isArray;
 // Properties
-const defaultProperties = ['reload', 'debugger', 'mock', 'serverReload', 'inject'];
-const defaultOptions = require('./options');
+const { defaultOptions, defaultProperties } = require('./options');
 const enableMiddlewareShorthand = require('./options/enable-middleware-shorthand');
 // Modules
 const logutil = require('./utils/log');

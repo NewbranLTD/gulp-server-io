@@ -156,6 +156,9 @@ In your code:
 Once you use the mock option, all your proxies definition will be
 overwritten by the mock JSON path.
 
+*NEW @ 1.4.0* I have added a watcher to your JSON file, so whenever you edit your mock JSON data file,
+the mock server will automatically restart.
+
 ## CLI
 
 You can also use it as a cli tool if you install this globally. *Please note we switch to `meow` instead of `yargs` from 1.3 so the option will be different.*
