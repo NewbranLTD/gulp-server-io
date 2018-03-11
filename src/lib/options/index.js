@@ -2,7 +2,6 @@
  * Create a default options to reduce the complexity of the main file
  */
 const path = require('path');
-const { version } = require('../../../package.json');
 const src = path.join(__dirname, '..', '..');
 // Also export the function here
 const enableMiddlewareShorthand = require('./enable-middleware-shorthand');
@@ -19,7 +18,6 @@ exports.defaultProperties = [
 ];
 // Rename to the key defaultOptions
 exports.defaultOptions = {
-  version: version,
   /**
    * Basic options
    */
