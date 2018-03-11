@@ -1,6 +1,6 @@
 {
   "name": "gulp-server-io",
-  "version": "1.4.0-alpha.5",
+  "version": "1.4.0-beta.1",
   "description":
     "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
   "homepage": "https://newbran.ch",
@@ -9,7 +9,7 @@
     "email": "info@newbran.ch",
     "url": "https://newbran.ch"
   },
-  "files": ["src", "index.js", "server.js", "gulp.js", "cli-meow.js"],
+  "files": ["src", "index.js", "server.js", "gulp.js", "cli.js"],
   "main": "index.js",
   "keywords": [
     "node",
@@ -101,7 +101,7 @@
     "yargs": "^11.0.0"
   },
   "bin": {
-    "gulp-server-io": "./cli-meow.js"
+    "gulp-server-io": "./cli.js"
   },
   "engines": {
     "node": ">=7.00"

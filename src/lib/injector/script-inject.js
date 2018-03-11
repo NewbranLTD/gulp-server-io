@@ -72,7 +72,7 @@ module.exports = function(opt = {}) {
         if (runAll === false) {
           return true;
         }
-        return false;
+        return false; // Is this not needed?
       }
       return false;
     });

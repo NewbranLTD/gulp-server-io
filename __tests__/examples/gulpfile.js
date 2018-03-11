@@ -28,10 +28,15 @@ gulp.task('serve', () => {
 
 const config2 = {
   inject: {
-    source: ['css/*.css', 'js/*.js'],
-    target: ['another.html']
-  },
-  open: false
+    enable: true,
+    source: [
+      'css/bootstrap.min.css',
+      'starter-template.css',
+      'js/bootstrap.min.js',
+      'js/ie10-viewport-bug-workaround.js'
+    ]
+    // target: ['another.html']
+  }
 };
 
 // testing the wiredep
