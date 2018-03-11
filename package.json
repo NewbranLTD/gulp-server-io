@@ -82,6 +82,7 @@
     "cheerio": "^1.0.0-rc.2",
     "chokidar": "^2.0.2",
     "express": "^4.16.2",
+    "express-interceptor": "^1.2.0",
     "fancy-log": "^1.3.2",
     "fs-extra": "^5.0.0",
     "gulp": "gulpjs/gulp#4.0",

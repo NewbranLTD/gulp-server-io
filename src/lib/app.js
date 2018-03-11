@@ -74,11 +74,13 @@ module.exports = function(options = {}) {
       )
     );
   }
-  // Always inject it here, then decided what to do internally
-  middlewares.push(filesInjector(config.inject));
   // Init the debugger
   if (addDebugger) {
     middlewares.push(debuggerClient(config.debugger));
+  }
+  // Enable inject here
+  if (config.inject.enable) {
+    middlewares.push(filesInjector(config.inject));
   }
   // Extra middlewares pass directly from config
   if (typeof config.middleware === 'function') {

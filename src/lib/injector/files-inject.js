@@ -50,9 +50,23 @@
  files to.
 
  */
-// const cheerio = require('cheerio');
+const cheerio = require('cheerio');
+const interceptor = require('express-interceptor');
+// Main
 module.exports = function(config) {
-  if (config.enable) {
+  return interceptor(function(req, res) {
     console.log(config);
-  }
+    return {
+      isInterceptable: function() {
+        // @TODO need to check file name also
+        return /text\/html/.test(res.get('Content-Type'));
+      },
+      intercept: function(body, send) {
+        let $doc = cheerio.load(body);
+        // $doc('head').append(css)
+        // $doc('body').prepend(js)
+        send($doc.html());
+      }
+    };
+  });
 };
