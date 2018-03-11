@@ -94,10 +94,17 @@ const processFiles = source => {
   if (source.indexOf('*') > -1) {
     files = files.concat(glob.sync(source));
   } else {
-    files.push(source);
+    files = files.concat([source]);
   }
   return files;
 };
+const isCss = name => {
+  return name.toLowerCase().substr(-3) === 'css';
+};
+const isJs = name => {
+  return name.toLowerCase().substr(-2) === 'js';
+};
+
 /**
  * @param {mixed} source array or object
  * @return {object} js / css
@@ -108,14 +115,12 @@ const getSource = source => {
   if (source) {
     source = Array.isArray(source) ? source : [source];
     // Processing the object
-    if (Array.isArray(source)) {
-      for (let i = 0, len = source.length; i < len; ++i) {
-        let s = source[i];
-        if (s.indexOf('.css') > -1) {
-          css = processFiles(s);
-        } else if (s.indexOf('.js') > -1) {
-          js = processFiles(s);
-        }
+    for (let i = 0, len = source.length; i < len; ++i) {
+      let s = source[i];
+      if (isCss(s)) {
+        css = css.concat(processFiles(s));
+      } else if (isJs(s)) {
+        js = js.concat(processFiles(s));
       }
     }
     /*
@@ -156,7 +161,7 @@ module.exports = function(config) {
       isInterceptable: function() {
         // @TODO need to check file name also
         if (/text\/html/.test(res.get('Content-Type'))) {
-          console.log(req.url);
+          // Console.log(req.url, res.get('Content-Type'));
           return true;
         }
         return false;
@@ -164,7 +169,7 @@ module.exports = function(config) {
       intercept: function(body, send) {
         let $doc = cheerio.load(body);
         $doc('head').append(tagCss(css, config.ignorePath));
-        $doc('body').prepend(tagJs(js, config.ignorePath));
+        $doc('body').append(tagJs(js, config.ignorePath));
         send($doc.html());
       }
     };
