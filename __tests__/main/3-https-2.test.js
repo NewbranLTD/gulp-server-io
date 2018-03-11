@@ -29,6 +29,7 @@ describe('gulp-webserver-io stock test', () => {
       debugger: false,
       reload: false,
       https: {
+        enable: true,
         key: join(__dirname, '..', '..', 'src', 'certs', 'cert.pem'),
         cert: join(__dirname, '..', '..', 'src', 'certs', 'cert.crt')
       }
