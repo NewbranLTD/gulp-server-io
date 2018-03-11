@@ -30,7 +30,8 @@ const config2 = {
   inject: {
     source: ['css/*.css', 'js/*.js'],
     target: ['another.html']
-  }
+  },
+  open: false
 };
 
 // testing the wiredep

@@ -25,6 +25,7 @@ module.exports = function(config = {}) {
     config.open.length > 0 &&
     config.open.indexOf('http') !== 0
   ) {
+    // This option might not appear again?
     // Ensure leading slash if this is NOT a complete url form
     args.push([config.open.substr(0, 1) === '/' ? '' : '/', config.open].join(''));
   } else if (typeof config.open === 'object') {

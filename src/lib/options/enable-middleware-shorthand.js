@@ -17,8 +17,7 @@ module.exports = function(defaults, options, props) {
   }
   for (let i = 0, len = props.length; i < len; ++i) {
     let prop = props[i];
-    if (config[prop] === true) {
-      // Change from === true
+    if (config[prop]) {
       config[prop] = extend({}, originalDefaults[prop]);
       config[prop].enable = true;
     }

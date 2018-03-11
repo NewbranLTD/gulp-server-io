@@ -8,7 +8,15 @@ const src = path.join(__dirname, '..', '..');
 const enableMiddlewareShorthand = require('./enable-middleware-shorthand');
 exports.enableMiddlewareShorthand = enableMiddlewareShorthand;
 // Move from the app.js to here
-exports.defaultProperties = ['reload', 'debugger', 'mock', 'serverReload', 'inject'];
+exports.defaultProperties = [
+  'reload',
+  'debugger',
+  'mock',
+  'serverReload',
+  'inject',
+  'open',
+  'https'
+];
 // Rename to the key defaultOptions
 exports.defaultOptions = {
   version: version,
@@ -21,8 +29,6 @@ exports.defaultOptions = {
   path: '/',
   webroot: path.join(process.cwd(), 'app'),
   fallback: false,
-  https: false,
-  open: true,
   indexes: ['index.html', 'index.htm'],
   callback: () => {},
   staticOptions: {},
@@ -32,9 +38,17 @@ exports.defaultOptions = {
   // https://github.com/chimurai/http-proxy-middleware
   // replace with the `http-proxy-middleware`
   proxies: [],
-  // Stock certicates
-  devKeyPem: path.join(src, 'certs', 'cert.pem'),
-  devCrtPem: path.join(src, 'certs', 'cert.crt'),
+  // Stock certicates @TODO combine this together
+  open: {
+    enable: true,
+    url: '',
+    browser: ''
+  },
+  https: {
+    enable: false,
+    devKeyPem: path.join(src, 'certs', 'cert.pem'),
+    devCrtPem: path.join(src, 'certs', 'cert.crt')
+  },
   /**
    * MIDDLEWARE DEFAULTS
    * NOTE:
@@ -55,9 +69,7 @@ exports.defaultOptions = {
     enable: false,
     target: [], // List of files to inject
     source: [], // List of files to get inject
-    options: {
-      read: false
-    }
+    options: {} // Reversed for future use
   },
   // New mock server using json-server, please note if this is enable then
   // The proxy will be disable
