@@ -1,3 +1,8 @@
+/**
+ * Continue to inject dependencies (CSS,js) files etc
+ */
+// const cheerio = require('cheerio');
+
 /*
 ## Inject
 
@@ -39,5 +44,5 @@ It's only using part of the injection feature, more options will be add in the f
   this is still problematic, exactly when this should happen?
   Because the gulp-server-io is the final call after all the files been transform
   if we stick the inject there before? after or in between.
-  
+
 */
