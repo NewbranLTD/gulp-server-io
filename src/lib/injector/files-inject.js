@@ -2,7 +2,9 @@
  * Continue to inject dependencies (CSS,js) files etc
  */
 // const cheerio = require('cheerio');
-
+module.exports = function(config) {
+  console.log(config);
+};
 /*
 ## Inject
 

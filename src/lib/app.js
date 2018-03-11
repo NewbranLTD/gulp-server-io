@@ -19,12 +19,11 @@ const {
   defaultProperties,
   enableMiddlewareShorthand
 } = require('./options');
-
 // Modules
 const logutil = require('./utils/log');
-const scriptsInjector = require('./injector');
 const mockServer = require('./utils/mock-server');
 const debuggerClient = require('./debugger/client');
+const { scriptsInjector, filesInjector } = require('./injector');
 /**
  * Export
  * @param {object} options
@@ -75,6 +74,8 @@ module.exports = function(options = {}) {
       )
     );
   }
+  // Always inject it here, then decided what to do internally
+  middlewares.push(filesInjector(config.inject));
   // Init the debugger
   if (addDebugger) {
     middlewares.push(debuggerClient(config.debugger));

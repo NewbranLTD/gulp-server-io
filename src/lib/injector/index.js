@@ -3,12 +3,13 @@
  * the debugger scripts
  */
 const scriptInject = require('./script-inject');
+const filesInject = require('./files-inject');
 /**
  * @param {object} features toggle
  * @param {object} config the main config
  * @return {function} middleware
  */
-module.exports = function(features, config) {
+exports.scriptsInjector = function(features, config) {
   let scripts = [];
   if (features.reload) {
     // Const reloadRoute = config.reload.route || 'reload';
@@ -32,4 +33,8 @@ module.exports = function(features, config) {
       .map(s => `<script type="text/javascript" src="${s}" defer></script>`)
       .reduce((a, b) => a + b, '')
   });
+};
+
+exports.filesInjector = function(config) {
+  return filesInject(config);
 };
