@@ -6,7 +6,7 @@ const path = require('path');
 const request = require('supertest');
 const spawn = require('child_process').spawn;
 // we are going run directly against the node in cmd
-const cli = '../../cli-meow.js';
+const cli = '../../cli.js';
 const root = path.join(__dirname, '..', 'fixtures', 'app');
 const configFile = path.join(__dirname, '..', 'fixtures', 'config.json');
 
