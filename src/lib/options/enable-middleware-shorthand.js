@@ -13,12 +13,21 @@ const { version } = require('../../../package.json');
 module.exports = function(defaults, options, props) {
   const originalDefaults = merge({}, defaults);
   let config = merge(defaults, options);
+  // This just make sure it's an array
   if (Object.prototype.toString.call(props) === '[object String]') {
     props = [props];
   }
   for (let i = 0, len = props.length; i < len; ++i) {
     let prop = props[i];
-    if (config[prop]) {
+    /**
+     * @TODO this doesn't cover enough
+     * The problem is when someone pass optionName: true
+     * it just using the default options
+     * what if they just pass alternative config without passing
+     * enable: true
+     * then the feature is not enable
+     */
+    if (config[prop] === true) {
       config[prop] = merge({}, originalDefaults[prop]);
       config[prop].enable = true;
     }

@@ -28,6 +28,7 @@ gulp.task('serve', () => {
 
 const config2 = {
   inject: {
+    enable: true,
     source: ['css/*.css', 'js/*.js'],
     target: ['another.html']
   },
