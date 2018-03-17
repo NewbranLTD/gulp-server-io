@@ -5,14 +5,14 @@ const {
   enableMiddlewareShorthand,
   defaultProperties,
   defaultOptions
-} from '../../src/lib/options';
+} = require('../../src/lib/options');
 
 const options = {
   https: true
 };
 
 const expectedResult = {
-  
+
 };
 
 /**
@@ -20,8 +20,21 @@ const expectedResult = {
  */
 describe('Testing the core enable-middleware-shorthand', () => {
 
-  expect(
-    enableMiddlewareShorthand(defaultOptions, options, defaultProperties)
-  ).toBe(expectedResult);
+  let config;
+
+  beforeEach(() => {
+    config = enableMiddlewareShorthand(defaultOptions, options, defaultProperties);
+  });
+
+  it('Should pass true and return default option', () => {
+    expect(config).toHaveProperty('https');
+    expect(config).toHaveProperty('https', {
+      enable: true,
+      devCrtPem: "/Users/joelck/Sites/github/gulp-server-io/src/certs/cert.crt",
+      devKeyPem: "/Users/joelck/Sites/github/gulp-server-io/src/certs/cert.pem"
+    });
+  });
+
+
 
 });
