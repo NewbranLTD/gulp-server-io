@@ -1,14 +1,16 @@
 # gulp-server-io [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
+[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
+[![jest](https://facebook.github.io/jest/img/jest-badge.svg)](https://github.com/facebook/jest)
 
 > Create a static server, live reload and a socket.io debugger for your SPA development with gulp
 > Plus a standalone server with Express / json-server and http proxy for rapid deployment
 
 ## Introduction
 
-This is a complete rewrote of the [gulp-webserver-io](https://github.com/joelchu/gulp-webserver-io);
-there are many improvement over the previous version.
+This is a complete rewritten version of the [gulp-webserver-io](https://github.com/joelchu/gulp-webserver-io);
+with many features added, and improvements.
 
-The goal is to create an one stop shop solution during development, as well as simple and quick SPA deployment.
+The goal is to create an one stop shop solution during development, as well as simple, and quick SPA deployment tool.
 
 See [CHANGELOG.md]('./CHANGELOG.md') for complete list of different between the two version.
 
@@ -233,6 +235,7 @@ You can combine with our [generator-nodex](https://github.com/NewbranLTD/generat
 ## License
 
 MIT © [NEWBRAN.CH](https://newbran.ch) &amp; [to1source](https://to1source.com)
+
 
 
 [npm-image]: https://badge.fury.io/js/gulp-server-io.svg
