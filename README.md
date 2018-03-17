@@ -206,23 +206,23 @@ server({
 
 ## Full configuration properties
 
-| Property name  | Description | Default | Type | Require `enable` |
-| ------------- | ------------- | ---------| -----|
-| development  | A toggle flag  | `true` | Boolean | No |
-| host  | Host name or ip address without the `http://`  | `localhost` | String | No |
-| path  | tailing | `/` | String | No |
-| webroot | Where your files need to serve up | `./app` | Array or String | No |
-| fallback | when 404 where to fallback to | `false` | Boolean or String | No |
-| https | Use secure or not @TODO | `false` | Object | Yes |
-| open  | automatically open browser | `true` | Boolean or String | Yes |
-| indexes | Array of indexes to search | `[index.html, index.htm]` | Array | No |
-| callback | A function to execute after the server start | `() => {}` | Function | No |
-| staticOptions | Look at `server-static` | `{}` | Object | No |
-| headers | extra headers to pass | `{}` | Object | No |
-| proxies | Array of proxies `{ source , target }` | `[]` | Array | No |
-| mock | Create mock REST API using json-server | `false` | Boolean or String | Yes |
-| debugger | Socket.io debugger | `true` | Boolean or Object | Yes |
-| inject | inject file to the html you want | false | Object | Yes |
+| Property name  | Description                                    | Default                   | Type              | Require `enable` |
+| ---            | ---                                            | ---                       | ---               | --- |
+| development    | A toggle flag                                  | `true`                    | Boolean           | No |
+| host           | Host name or ip address without the `http://`  | `localhost`               | String            | No |
+| path           | tailing                                        | `/`                       | String            | No |
+| webroot        | Where your files need to serve up              | `./app`                   | Array or String   | No |
+| fallback       | when 404 where to fallback to                  | `false`                   | Boolean or String | No |
+| https          | Use secure or not @TODO                        | `false`                   | Object            | Yes |
+| open           | automatically open browser                     | `true`                    | Boolean or String | Yes |
+| indexes        | Array of indexes to search                     | `[index.html, index.htm]` | Array             | No |
+| callback       | A function to execute after the server start   | `() => {}`                | Function          | No |
+| staticOptions  | Look at `server-static`                        | `{}`                      | Object            | No |
+| headers        | extra headers to pass                          | `{}`                      | Object            | No |
+| proxies        | Array of proxies `{ source , target }`         | `[]`                      | Array             | No |
+| mock           | Create mock REST API using json-server         | `false`                   | Boolean or String | Yes |
+| debugger       | Socket.io debugger                             | `true`                    | Boolean or Object | Yes |
+| inject         | inject file to the html you want               | false                     | Object            | Yes |
 
 Please see wiki for more information about all the available options.
 
