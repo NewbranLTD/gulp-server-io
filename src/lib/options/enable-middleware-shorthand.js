@@ -20,7 +20,6 @@ module.exports = function(defaults, options, props) {
   for (let i = 0, len = props.length; i < len; ++i) {
     let prop = props[i];
     /**
-     * @TODO this doesn't cover enough
      * The problem is when someone pass optionName: true
      * it just using the default options
      * what if they just pass alternative config without passing
@@ -29,6 +28,10 @@ module.exports = function(defaults, options, props) {
      */
     if (config[prop] === true) {
       config[prop] = merge({}, originalDefaults[prop]);
+      config[prop].enable = true;
+    } else if (Object.keys(config[prop]).length) {
+      // If the user has provided some property
+      // Then we add the enable here for the App to use
       config[prop].enable = true;
     }
   }

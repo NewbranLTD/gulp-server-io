@@ -8,11 +8,10 @@ const {
 } = require('../../src/lib/options');
 
 const options = {
-  https: true
-};
-
-const expectedResult = {
-
+  https: {
+    devCrtPem: '/path/to/cert.crt',
+    devKeyPem: '/path/to/cert.pem'
+  }
 };
 
 /**
@@ -30,11 +29,8 @@ describe('Testing the core enable-middleware-shorthand', () => {
     expect(config).toHaveProperty('https');
     expect(config).toHaveProperty('https', {
       enable: true,
-      devCrtPem: "/Users/joelck/Sites/github/gulp-server-io/src/certs/cert.crt",
-      devKeyPem: "/Users/joelck/Sites/github/gulp-server-io/src/certs/cert.pem"
+      devCrtPem: '/path/to/cert.crt',
+      devKeyPem: '/path/to/cert.pem'
     });
   });
-
-
-
 });
