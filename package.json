@@ -15,11 +15,13 @@
     "node",
     "connect",
     "server",
+    "express",
     "livereload",
     "socket.io",
     "gulp",
     "development",
-    "spa"
+    "SPA",
+    "deployment"
   ],
   "devDependencies": {
     "coveralls": "^3.0.0",
@@ -87,7 +89,7 @@
     "express-interceptor": "^1.2.0",
     "fancy-log": "^1.3.2",
     "fs-extra": "^5.0.0",
-    "gulp": "gulpjs/gulp#4.0",
+    "gulp": "gulp@next",
     "helmet": "^3.12.0",
     "http-proxy-middleware": "^0.18.0",
     "json-server": "^0.12.1",
