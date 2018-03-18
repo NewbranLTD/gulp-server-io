@@ -4,14 +4,10 @@
  * otherwise just export the method
  */
 const gulpServerIo = require('./src');
-const {
-  defaultOptions,
-  defaultProperties,
-  enableMiddlewareShorthand
-} = require('./src/lib/options');
+const createConfiguration = require('./src/lib/options');
 // Main
-module.exports = function(options = {}) {
-  const config = enableMiddlewareShorthand(defaultOptions, options, defaultProperties);
+module.exports = function(options) {
+  const config = createConfiguration(options);
   config.__processed__ = true;
   return gulpServerIo(config);
 };

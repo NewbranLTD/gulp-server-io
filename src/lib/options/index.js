@@ -5,9 +5,8 @@ const path = require('path');
 const src = path.join(__dirname, '..', '..');
 // Also export the function here
 const enableMiddlewareShorthand = require('./enable-middleware-shorthand');
-exports.enableMiddlewareShorthand = enableMiddlewareShorthand;
 // Move from the app.js to here
-exports.defaultProperties = [
+const defaultProperties = [
   'reload',
   'debugger',
   'mock',
@@ -17,7 +16,7 @@ exports.defaultProperties = [
   'https'
 ];
 // Rename to the key defaultOptions
-exports.defaultOptions = {
+const defaultOptions = {
   /**
    * Basic options
    */
@@ -31,6 +30,7 @@ exports.defaultOptions = {
   callback: () => {},
   staticOptions: {},
   headers: {},
+  middleware: [],
   // Middleware: Proxy
   // For possible options, see:
   // https://github.com/chimurai/http-proxy-middleware
@@ -97,4 +97,8 @@ exports.defaultOptions = {
     server: true, // Allow passing configuration - see middleware.js for more detail
     log: false // @TODO further develop this later
   }
+};
+// Export just one function
+module.exports = function(options = {}) {
+  return enableMiddlewareShorthand(defaultOptions, defaultProperties, options);
 };

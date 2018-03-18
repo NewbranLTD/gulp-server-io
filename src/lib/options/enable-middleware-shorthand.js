@@ -5,12 +5,13 @@
 const { merge } = require('lodash');
 const { version } = require('../../../package.json');
 /**
- * @param {object} defaults - the stock options
- * @param {object} options - configuration params
- * @param {array} props - special properties need preserved
- * @return {object} config
+ * @param {object} defaults the stock options
+ * @param {array} props special properties need preserved
+ * @param {object} options configuration params pass the end user
+ * @return {object} configuration
  */
-module.exports = function(defaults, options, props) {
+module.exports = function(defaults, props, options) {
+  const originalOptions = merge({}, options);
   const originalDefaults = merge({}, defaults);
   let config = merge(defaults, options);
   // This just make sure it's an array
@@ -29,10 +30,12 @@ module.exports = function(defaults, options, props) {
     if (config[prop] === true) {
       config[prop] = merge({}, originalDefaults[prop]);
       config[prop].enable = true;
-    } else if (Object.keys(config[prop]).length) {
+    } else if (originalOptions[prop] && Object.keys(originalOptions[prop]).length) {
       // If the user has provided some property
       // Then we add the enable here for the App to use
       config[prop].enable = true;
+    } else if (config[prop] === false) {
+      config[prop] = { enable: false };
     }
   }
   // Here we add things that we don't want to get overwritten
