@@ -1,7 +1,7 @@
 /**
  * New test files just to test out if the option pass and return as expected
  */
-const createConfiguration = require('../../src/lib/options');
+const { createConfiguration } = require('../../src/lib/options');
 
 const options = {
   https: {

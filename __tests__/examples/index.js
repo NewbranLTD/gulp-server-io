@@ -2,7 +2,7 @@
  * Just to test out feature in bits
  */
 const chalk = require('chalk');
-const createConfiguration = require('../../src/lib/options');
+const { createConfiguration } = require('../../src/lib/options');
 const options = {
   https: {
     devCrtPem: '/path/to/cert.crt',

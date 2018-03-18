@@ -99,6 +99,10 @@ const defaultOptions = {
   }
 };
 // Export just one function
-module.exports = function(options = {}) {
-  return enableMiddlewareShorthand(defaultOptions, defaultProperties, options);
+module.exports = {
+  defaultOptions,
+  defaultProperties,
+  createConfiguration: function(options = {}) {
+    return enableMiddlewareShorthand(defaultOptions, defaultProperties, options);
+  }
 };

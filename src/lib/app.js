@@ -14,7 +14,7 @@ const httpProxy = require('http-proxy-middleware');
 const join = path.join;
 const isarray = Array.isArray;
 // Properties
-const createConfiguration = require('./options');
+const { createConfiguration } = require('./options');
 // Modules
 const logutil = require('./utils/log');
 const mockServer = require('./utils/mock-server');

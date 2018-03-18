@@ -4,7 +4,7 @@
  * otherwise just export the method
  */
 const gulpServerIo = require('./src');
-const createConfiguration = require('./src/lib/options');
+const { createConfiguration } = require('./src/lib/options');
 // Main
 module.exports = function(options) {
   const config = createConfiguration(options);
