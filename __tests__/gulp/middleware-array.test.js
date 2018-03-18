@@ -14,21 +14,20 @@ const {
   defaultPort,
   defaultSSLUrl
 } = require('../fixtures/config.js');
-// Setups
-let stream;
-
-// Clean up afterward
-afterEach(() => {
-  if (stream) {
-    stream.emit('kill');
-    stream = undefined;
-  }
-});
 // Util method
 const shiftDownOne = str => str.substr(1, str.length - 1);
 // Start the test
 describe('gulp-webserver-io middleware test', () => {
-  // there is a bug with supertest?
+  // Setups
+  let stream;
+  // Clean up afterward
+  afterEach(() => {
+    if (stream) {
+      stream.emit('kill');
+      stream = undefined;
+    }
+  });
+  // There is a bug with supertest?
   // https://github.com/visionmedia/supertest/issues/430
   test('(2) , should use middleware array', done => {
     const testPaths = ['/middleware1', '/middleware2'];
@@ -38,7 +37,6 @@ describe('gulp-webserver-io middleware test', () => {
       middleware: [
         function(req, res, next) {
           if (req.url === testPaths[0]) {
-            // console.log('pass through 0');
             res.end(shiftDownOne(testPaths[0]));
           } else {
             next();
@@ -46,7 +44,6 @@ describe('gulp-webserver-io middleware test', () => {
         },
         function(req, res, next) {
           if (req.url === testPaths[1]) {
-            // console.log('pass through 1');
             res.end(shiftDownOne(testPaths[1]));
           } else {
             next();

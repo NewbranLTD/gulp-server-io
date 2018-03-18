@@ -1,14 +1,17 @@
-# gulp-server-io [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
+# gulp-server-io [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+
+[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
+[![jest](https://facebook.github.io/jest/img/jest-badge.svg)](https://github.com/facebook/jest)
 
 > Create a static server, live reload and a socket.io debugger for your SPA development with gulp
 > Plus a standalone server with Express / json-server and http proxy for rapid deployment
 
 ## Introduction
 
-This is a complete rewrote of the [gulp-webserver-io](https://github.com/joelchu/gulp-webserver-io);
-there are many improvement over the previous version.
+This is a complete rewritten version of the [gulp-webserver-io](https://github.com/joelchu/gulp-webserver-io);
+with many features added, and improvements.
 
-The goal is to create an one stop shop solution during development, as well as simple and quick SPA deployment.
+The goal is to create an one stop shop solution during development, as well as simple, and quick SPA deployment tool.
 
 See [CHANGELOG.md]('./CHANGELOG.md') for complete list of different between the two version.
 
@@ -118,7 +121,6 @@ For example, during development your host is `http://localhost:8000` and, your p
       .pipe(
         server({
           mock: {
-            enable: true, // YOU MUST PASS THIS
             json: '/path/to/api.json'
           }
         })
@@ -136,9 +138,10 @@ Create an `api.json` according to [json-server](https://github.com/typicode/json
 }
 ```
 
-In your code:
+In your UI code, you can fetch data from your fake rest endpoint:
 
 ```js
+
   fetch('/users').then( res => {
     if (res.ok) {
        return res.json();
@@ -206,23 +209,23 @@ server({
 
 ## Full configuration properties
 
-| Property name  | Description                                    | Default                   | Type              | Require `enable` |
-| ---            | ---                                            | ---                       | ---               | --- |
-| development    | A toggle flag                                  | `true`                    | Boolean           | No |
-| host           | Host name or ip address without the `http://`  | `localhost`               | String            | No |
-| path           | tailing                                        | `/`                       | String            | No |
-| webroot        | Where your files need to serve up              | `./app`                   | Array or String   | No |
-| fallback       | when 404 where to fallback to                  | `false`                   | Boolean or String | No |
-| https          | Use secure or not @TODO                        | `false`                   | Object            | Yes |
-| open           | automatically open browser                     | `true`                    | Boolean or String | Yes |
-| indexes        | Array of indexes to search                     | `[index.html, index.htm]` | Array             | No |
-| callback       | A function to execute after the server start   | `() => {}`                | Function          | No |
-| staticOptions  | Look at `server-static`                        | `{}`                      | Object            | No |
-| headers        | extra headers to pass                          | `{}`                      | Object            | No |
-| proxies        | Array of proxies `{ source , target }`         | `[]`                      | Array             | No |
-| mock           | Create mock REST API using json-server         | `false`                   | Boolean or String | Yes |
-| debugger       | Socket.io debugger                             | `true`                    | Boolean or Object | Yes |
-| inject         | inject file to the html you want               | false                     | Object            | Yes |
+| Property name  | Description                                    | Default                   | Type              |
+| ---            | ---                                            | ---                       | ---               |
+| development    | A toggle flag                                  | `true`                    | Boolean           |
+| host           | Host name or ip address without the `http://`  | `localhost`               | String            |
+| path           | tailing                                        | `/`                       | String            |
+| webroot        | Where your files need to serve up              | `./app`                   | Array or String   |
+| fallback       | when 404 where to fallback to                  | `false`                   | Boolean or String |
+| https          | Use secure or not @TODO                        | `false`                   | Object            |
+| open           | automatically open browser                     | `true`                    | Boolean or String |
+| indexes        | Array of indexes to search                     | `[index.html, index.htm]` | Array             |
+| callback       | A function to execute after the server start   | `() => {}`                | Function          |
+| staticOptions  | Look at `server-static`                        | `{}`                      | Object            |
+| headers        | extra headers to pass                          | `{}`                      | Object            |
+| proxies        | Array of proxies `{ source , target }`         | `[]`                      | Array             |
+| mock           | Create mock REST API using json-server         | `false`                   | Boolean or String |
+| debugger       | Socket.io debugger                             | `true`                    | Boolean or Object |
+| inject         | inject file to the html you want               | false                     | Object            | 
 
 Please see wiki for more information about all the available options.
 
@@ -233,6 +236,7 @@ You can combine with our [generator-nodex](https://github.com/NewbranLTD/generat
 ## License
 
 MIT © [NEWBRAN.CH](https://newbran.ch) &amp; [to1source](https://to1source.com)
+
 
 
 [npm-image]: https://badge.fury.io/js/gulp-server-io.svg
