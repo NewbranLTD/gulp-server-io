@@ -16,6 +16,7 @@ const isarray = Array.isArray;
 // Properties
 const { createConfiguration } = require('./options');
 // Modules
+const { toArray } = require('./utils/helper');
 const logutil = require('./utils/log');
 const mockServer = require('./utils/mock-server');
 const debuggerClient = require('./debugger/client');
@@ -96,7 +97,7 @@ module.exports = function(options) {
   }
   // Proxy requests
   // @BUG this is not working in server mode
-  proxies.forEach(proxyoptions => {
+  toArray(proxies).forEach(proxyoptions => {
     if (!proxyoptions.target || !proxyoptions.source) {
       logutil(chalk.red('Missing target or source property for proxy setting!'));
       return; // ignore!

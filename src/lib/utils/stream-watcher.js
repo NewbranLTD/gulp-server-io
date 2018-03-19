@@ -8,7 +8,7 @@ const bacon = require('baconjs');
 const chokidar = require('chokidar');
 // Our tools
 const logutil = require('./log');
-const { toArray } = require('./helpers');
+const { toArray } = require('./helper');
 /**
  * Watch folder method
  * @param {array} filePaths to watch
