@@ -23,25 +23,6 @@ describe('gulp-webserver-io stock test', () => {
     stream = undefined;
   });
 
-  // (9) this will be the last directory listing test - we skip the other disabled negative test etc
-  // there were:
-  // - should not show a directory listing when the shorthand setting is disabled
-  // - should show a directory listing when the shorthand setting is enabled and using custom path
-  // they are not being use very often
-  test.skip('(9) should show a directory listing when the shorthand settings is enabled', () => {
-    stream = webserver({
-      debugger: false,
-      reload: false,
-      directoryListing: true
-    });
-
-    stream.write(directoryIndexMissingDir);
-
-    return request(defaultUrl)
-      .get('/')
-      .expect(200, /listing directory/);
-  });
-
   // (10) this one will be different because the v2 assign a random port between 35000~40000
   // therefore we need to fix on one port number
   test.skip('(10) should start the livereload server when the shorthand setting is enabled', () => {
@@ -49,7 +30,6 @@ describe('gulp-webserver-io stock test', () => {
     stream = webserver({
       debugger: false,
       reload: {
-        enable: true,
         port: test10port
       }
     });

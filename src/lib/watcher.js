@@ -30,13 +30,17 @@ module.exports = function(filePaths, reloadServerFn, config) {
         }
         // New allow to pass as a function
         if (typeof reloadServerFn === 'function') {
-          reloadServerFn();
-        } else if (reloadServerFn && typeof reloadServerFn.reload === 'function') {
+          reloadServerFn(files);
+        } else if (
+          reloadServerFn &&
+          reloadServerFn.reload &&
+          typeof reloadServerFn.reload === 'function'
+        ) {
           reloadServerFn.reload();
         } else {
           logutil(
             chalk.red(
-              'Could not call reload server, it must be a function or an object contain a reload function!'
+              'Could not call reload callback, it must be a function or an object contains a reload function!'
             )
           );
         }
