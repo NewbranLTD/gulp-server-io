@@ -6,6 +6,7 @@
 const chalk = require('chalk');
 const bacon = require('baconjs');
 const chokidar = require('chokidar');
+const debug = require('gulp-webserver-io:stream-watcher');
 // Our tools
 const logutil = require('./log');
 const { toArray } = require('./helper');
@@ -19,6 +20,7 @@ module.exports = function(filePaths, verbose) {
   return bacon.fromBinder(sink => {
     toArray(filePaths).forEach(file => {
       const webroot = file.path;
+      debug('[Watcher][webroot]', webroot);
       if (verbose) {
         logutil(chalk.white('[Watcher]'), webroot);
       }
@@ -27,6 +29,7 @@ module.exports = function(filePaths, verbose) {
         ignoreInitial: true
       });
       watcher.on('all', (event, path) => {
+        debug('[Watcher][on]', event, path);
         sink({ event: event, path: path });
         return () => {
           watcher.close();
