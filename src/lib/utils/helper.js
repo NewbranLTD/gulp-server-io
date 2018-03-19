@@ -18,6 +18,13 @@ const getRandomInt = function (min, max) {
 };
 
 /**
+ * Make sure the supply argument is an array
+ */
+exports.toArray = (param) => {
+  return Array.isArray(param) ? param : [param];
+};
+
+/**
  * @param {mixed} opt
  * @return {boolean} result
  */
