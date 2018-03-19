@@ -33,10 +33,12 @@ Using yarn
 
 There are several ways to use this package. First, during development and, use it with `gulp`:
 
+<span style="color:red">1.4.0 final version will remove the `gulp-server-io/gulp`, instead use `gulp-server-io/export`</span>
+
 ```js
 // gulpfile.js  
 // We have include the Gulp 4 with this package and expose it back as well
-const { gulp } = require('gulp-server-io/gulp');
+const { gulp } = require('gulp-server-io/export');
 const gulpServerIo = require('gulp-server-io');
 
 gulp.task('serve', () => {
@@ -225,7 +227,7 @@ server({
 | proxies        | Array of proxies `{ source , target }`         | `[]`                      | Array             |
 | mock           | Create mock REST API using json-server         | `false`                   | Boolean or String |
 | debugger       | Socket.io debugger                             | `true`                    | Boolean or Object |
-| inject         | inject file to the html you want               | false                     | Object            | 
+| inject         | inject file to the html you want               | false                     | Object            |
 
 Please see wiki for more information about all the available options.
 
