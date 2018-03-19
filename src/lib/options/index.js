@@ -13,8 +13,7 @@ const defaultProperties = [
   'serverReload',
   'inject',
   'open',
-  'https',
-  'proxies'
+  'https'
 ];
 // Rename to the key defaultOptions
 const defaultOptions = {
@@ -38,10 +37,7 @@ const defaultOptions = {
   // replace with the `http-proxy-middleware`
   // @2018-03-19 it was just an array but some how the lodash.merge turns an
   // object into an array so when we call it, it couldn't tell
-  proxies: {
-    enable: false,
-    entries: []
-  },
+  proxies: [],
   // Stock certicates @TODO combine this together
   open: {
     enable: true,
@@ -104,11 +100,17 @@ const defaultOptions = {
     log: false // @TODO further develop this later
   }
 };
+const arraySource = ['middleware', 'proxies'];
 // Export just one function
 module.exports = {
   defaultOptions,
   defaultProperties,
   createConfiguration: function(options = {}) {
-    return enableMiddlewareShorthand(defaultOptions, defaultProperties, options);
+    return enableMiddlewareShorthand(
+      defaultOptions,
+      defaultProperties,
+      arraySource,
+      options
+    );
   }
 };

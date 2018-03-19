@@ -32,13 +32,8 @@ module.exports = function(options) {
   // Init the app
   const app = express();
   let addDebugger = false;
-  // @BUG here if we try to move the object into array
-  // somehow it disappear later (2017-12-14)
-
+  // Fixed on 1.4.0-beta.3
   let proxies = config.proxies;
-
-  console.log('config.proxies', proxies);
-
   // Default callbacks
   const closeFn = { close: () => {} };
   let mockServerInstance = closeFn;
@@ -102,7 +97,6 @@ module.exports = function(options) {
 
   // Proxy requests final
   proxies.forEach(proxyoptions => {
-    console.log('wtf', proxyoptions);
     if (!proxyoptions.target || !proxyoptions.source) {
       console.log(chalk.red('Missing target or source property for proxy setting!'));
       return; // ignore!

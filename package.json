@@ -48,8 +48,8 @@
     "cli-test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest main/4-fallback.test.js",
     "gulp-example": "gulp serve --gulpfile ./__tests__/examples/gulpfile.js",
     "standalone-example": "node ./__tests__/examples/standalone.js",
-    "test:part": "jest ./__tests__/standalone/4-proxy.test.js",
-    "example": "NODE_ENV=test node ./__tests__/examples/proxy.js"
+    "test:part": "jest ./__tests__/main/2-custom-a.test.js",
+    "example": "NODE_ENV=test node ./__tests__/examples/index.js"
   },
   "lint-staged": {
     "*.js": ["eslint --fix", "git add"],

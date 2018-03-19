@@ -20,7 +20,7 @@ const getRandomInt = function (min, max) {
 /**
  * Make sure the supply argument is an array
  */
-exports.toArray = (param) => {
+const toArray = (param) => {
   return Array.isArray(param) ? param : [param];
 };
 
@@ -81,7 +81,7 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
   // @TODO configure the directoryListing option here
   const staticOptions = _.merge(
     {
-      index: config.indexes,
+      index: toArray(config.indexes),
       etag: etag
     },
     headerOption,
@@ -101,7 +101,7 @@ exports.directoryListing = (dir) => {
 // export for other use
 exports.setHeaders = setHeaders;
 exports.getRandomInt = getRandomInt;
-
+exports.toArray = toArray;
 /**
  * delay proxy
  * @param {string} originalUrl (url to delay)

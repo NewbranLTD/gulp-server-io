@@ -12,7 +12,12 @@ const options = {
   serverReload: true,
   mock: {
     enable: true
-  }
+  },
+  proxies: {
+    source: '/api',
+    target: 'http://localhost:3000'
+  },
+  indexes: 'amp.html'
 };
 
 const config = createConfiguration(options);
