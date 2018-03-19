@@ -6,7 +6,9 @@
 const chalk = require('chalk');
 const bacon = require('baconjs');
 const chokidar = require('chokidar');
+// Our tools
 const logutil = require('./log');
+const { toArray } = require('./helper');
 /**
  * Watch folder method
  * @param {array} filePaths to watch
@@ -15,7 +17,7 @@ const logutil = require('./log');
  */
 module.exports = function(filePaths, verbose) {
   return bacon.fromBinder(sink => {
-    filePaths.forEach(file => {
+    toArray(filePaths).forEach(file => {
       const webroot = file.path;
       if (verbose) {
         logutil(chalk.white('[Watcher]'), webroot);

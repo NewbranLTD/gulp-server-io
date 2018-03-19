@@ -37,12 +37,6 @@ module.exports = function(options = {}) {
     .obj((file, enc, callback) => {
       // Serve up the files
       app.use(config.path, serveStatic(file.path, config));
-      // Enable directoryListing - no longer support since 1.4.0-alpha.2
-      // To do this the user should add to the middlewares and install the module
-      /*
-      if (config.directoryListing) {
-        app.use(directoryListing(file.path));
-      } */
       files.push(file);
       callback();
     })

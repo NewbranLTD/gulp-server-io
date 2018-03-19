@@ -1,6 +1,6 @@
 {
   "name": "gulp-server-io",
-  "version": "1.4.0-beta.2",
+  "version": "1.4.0-beta.3",
   "description":
     "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
   "homepage": "https://newbran.ch",
@@ -15,11 +15,13 @@
     "node",
     "connect",
     "server",
+    "express",
     "livereload",
     "socket.io",
     "gulp",
     "development",
-    "spa"
+    "SPA",
+    "deployment"
   ],
   "devDependencies": {
     "coveralls": "^3.0.0",
@@ -46,8 +48,8 @@
     "cli-test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest main/4-fallback.test.js",
     "gulp-example": "gulp serve --gulpfile ./__tests__/examples/gulpfile.js",
     "standalone-example": "node ./__tests__/examples/standalone.js",
-    "test:part": "jest ./__tests__/main/1-basic-1.test.js",
-    "example": "NODE_ENV=example node ./__tests__/examples/index.js"
+    "test:part": "jest ./__tests__/main/2-custom-a.test.js",
+    "example": "NODE_ENV=test node ./__tests__/examples/index.js"
   },
   "lint-staged": {
     "*.js": ["eslint --fix", "git add"],
@@ -87,7 +89,7 @@
     "express-interceptor": "^1.2.0",
     "fancy-log": "^1.3.2",
     "fs-extra": "^5.0.0",
-    "gulp": "gulpjs/gulp#4.0",
+    "gulp": "gulp@next",
     "helmet": "^3.12.0",
     "http-proxy-middleware": "^0.18.0",
     "json-server": "^0.12.1",

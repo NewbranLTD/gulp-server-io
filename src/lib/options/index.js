@@ -35,6 +35,8 @@ const defaultOptions = {
   // For possible options, see:
   // https://github.com/chimurai/http-proxy-middleware
   // replace with the `http-proxy-middleware`
+  // @2018-03-19 it was just an array but some how the lodash.merge turns an
+  // object into an array so when we call it, it couldn't tell
   proxies: [],
   // Stock certicates @TODO combine this together
   open: {
@@ -98,11 +100,17 @@ const defaultOptions = {
     log: false // @TODO further develop this later
   }
 };
+const arraySource = ['middleware', 'proxies'];
 // Export just one function
 module.exports = {
   defaultOptions,
   defaultProperties,
   createConfiguration: function(options = {}) {
-    return enableMiddlewareShorthand(defaultOptions, defaultProperties, options);
+    return enableMiddlewareShorthand(
+      defaultOptions,
+      defaultProperties,
+      arraySource,
+      options
+    );
   }
 };

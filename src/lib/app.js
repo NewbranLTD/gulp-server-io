@@ -16,6 +16,7 @@ const isarray = Array.isArray;
 // Properties
 const { createConfiguration } = require('./options');
 // Modules
+const { toArray } = require('./utils/helper');
 const logutil = require('./utils/log');
 const mockServer = require('./utils/mock-server');
 const debuggerClient = require('./debugger/client');
@@ -31,8 +32,7 @@ module.exports = function(options) {
   // Init the app
   const app = express();
   let addDebugger = false;
-  // @BUG here if we try to move the object into array
-  // somehow it disappear later (2017-12-14)
+  // Fixed on 1.4.0-beta.3
   let proxies = config.proxies;
   // Default callbacks
   const closeFn = { close: () => {} };
@@ -85,20 +85,20 @@ module.exports = function(options) {
   if (middlewares.length) {
     middlewares.filter(m => typeof m === 'function').forEach(m => app.use(m));
   }
-  // First need to setup the mock (NEW)
+  // First need to setup the mock json server
   if (config.mock.enable && config.mock.json && config.development) {
     // Here we overwrite the proxies so the proxy get to the mock server
     // @TODO sort out particular url that shouldn't be mock?
     const _mock = mockServer(config);
     mockServerInstance = _mock.server;
-    // Overwrite the proxies
+    // Overwrite the proxies @TODO look at how to merge multiple proxies
     proxies = _mock.proxies;
   }
-  // Proxy requests
-  // @BUG this is not working in server mode
+
+  // Proxy requests final
   proxies.forEach(proxyoptions => {
     if (!proxyoptions.target || !proxyoptions.source) {
-      logutil(chalk.red('Missing target or source property for proxy setting!'));
+      console.log(chalk.red('Missing target or source property for proxy setting!'));
       return; // ignore!
     }
     let source = proxyoptions.source;
