@@ -28,10 +28,11 @@ describe('Testing the standlone setup via the gulp-server-io/server', () => {
     server = standaloneSrv({
       webroot: root,
       reload: false,
-      proxies: [{
+      // @2018-03-19 pass as an object to check the toArray working or not
+      proxies: {
         source: '/api',
         target: proxyEndpoint
-      }]
+      }
     });
   });
 
