@@ -85,13 +85,13 @@ module.exports = function(options) {
   if (middlewares.length) {
     middlewares.filter(m => typeof m === 'function').forEach(m => app.use(m));
   }
-  // First need to setup the mock (NEW)
+  // First need to setup the mock json server
   if (config.mock.enable && config.mock.json && config.development) {
     // Here we overwrite the proxies so the proxy get to the mock server
     // @TODO sort out particular url that shouldn't be mock?
     const _mock = mockServer(config);
     mockServerInstance = _mock.server;
-    // Overwrite the proxies
+    // Overwrite the proxies @TODO look at how to merge multiple proxies
     proxies = _mock.proxies;
   }
 

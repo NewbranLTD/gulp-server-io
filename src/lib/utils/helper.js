@@ -33,7 +33,7 @@ const isString = function (opt) {
 };
 
 /**
- * Set headers
+ * Set headers @TODO there is bug here that cause the server not running correctly
  * @param {object} config
  * @param {string} urlToOpen
  * @return {function} middleware
@@ -60,6 +60,7 @@ const setHeaders = (config, urlToOpen) => {
     );
   };
 };
+
 /**
  * @param {string} webroot path to where the files are
  * @param {object} config the main config
@@ -90,26 +91,15 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
   // does this need to be replace with serve-static? 05032018
   return express.static(webroot, staticOptions);
 };
+
 /**
- * directory listing - no longer support since 1.4.0-alpha.2
- */
-/*
-exports.directoryListing = (dir) => {
-  return express.directory(dir);
-};
-*/
-// export for other use
-exports.setHeaders = setHeaders;
-exports.getRandomInt = getRandomInt;
-exports.toArray = toArray;
-/**
- * delay proxy
+ * delay proxy @TODO not finish yet - 1.5.0 feature
  * @param {string} originalUrl (url to delay)
  * @param {int} delayReqTime time to delay when request in ms
  * @param {int} delayResTime time to delay when response in ms
  * @return {function} middleware to use: app.use(url, proxyDelay, myProxy);
  */
-exports.proxyDelay = function(originalUrl, delayReqTime, delayResTime) {
+const proxyDelay = function(originalUrl, delayReqTime, delayResTime) {
   return function (req, res, next) {
     if (req.originalUrl === originalUrl) {
       // Delay request by 2 seconds
@@ -126,3 +116,18 @@ exports.proxyDelay = function(originalUrl, delayReqTime, delayResTime) {
     }
   }
 };
+
+/**
+ * directory listing - no longer support since 1.4.0-alpha.2
+ */
+/*
+exports.directoryListing = (dir) => {
+  return express.directory(dir);
+};
+*/
+
+// export for other use
+exports.setHeaders = setHeaders;
+exports.getRandomInt = getRandomInt;
+exports.toArray = toArray;
+exports.proxyDelay = proxyDelay;
