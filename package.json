@@ -9,7 +9,7 @@
     "email": "info@newbran.ch",
     "url": "https://newbran.ch"
   },
-  "files": ["src", "index.js", "server.js", "gulp.js", "cli.js"],
+  "files": ["src", "index.js", "server.js", "gulp.js", "cli.js", "export.js"],
   "main": "index.js",
   "keywords": [
     "node",
