@@ -34,7 +34,11 @@ module.exports = function(options) {
   let addDebugger = false;
   // @BUG here if we try to move the object into array
   // somehow it disappear later (2017-12-14)
+
   let proxies = config.proxies;
+
+  console.log('config.proxies', proxies);
+
   // Default callbacks
   const closeFn = { close: () => {} };
   let mockServerInstance = closeFn;
@@ -95,11 +99,12 @@ module.exports = function(options) {
     // Overwrite the proxies
     proxies = _mock.proxies;
   }
-  // Proxy requests
-  // @BUG this is not working in server mode
-  toArray(proxies).forEach(proxyoptions => {
+
+  // Proxy requests final
+  proxies.forEach(proxyoptions => {
+    console.log('wtf', proxyoptions);
     if (!proxyoptions.target || !proxyoptions.source) {
-      logutil(chalk.red('Missing target or source property for proxy setting!'));
+      console.log(chalk.red('Missing target or source property for proxy setting!'));
       return; // ignore!
     }
     let source = proxyoptions.source;

@@ -23,7 +23,7 @@ describe('Testing the standlone setup via the gulp-server-io/server', () => {
     proxyServer.use(router);
     // this is where the actual http server return!
     srv = proxyServer.listen(proxyPort, () => {
-      log.info(`JSON Server is running @ ${proxyEndpoint}`);
+      console.log(`JSON Server is running @ ${proxyEndpoint}`);
     });
     server = standaloneSrv({
       webroot: root,

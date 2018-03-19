@@ -13,7 +13,8 @@ const defaultProperties = [
   'serverReload',
   'inject',
   'open',
-  'https'
+  'https',
+  'proxies'
 ];
 // Rename to the key defaultOptions
 const defaultOptions = {
@@ -35,7 +36,12 @@ const defaultOptions = {
   // For possible options, see:
   // https://github.com/chimurai/http-proxy-middleware
   // replace with the `http-proxy-middleware`
-  proxies: [],
+  // @2018-03-19 it was just an array but some how the lodash.merge turns an
+  // object into an array so when we call it, it couldn't tell
+  proxies: {
+    enable: false,
+    entries: []
+  },
   // Stock certicates @TODO combine this together
   open: {
     enable: true,

@@ -13,7 +13,7 @@ const { version } = require('../../../package.json');
 module.exports = function(defaults, props, options) {
   const originalOptions = merge({}, options);
   const originalDefaults = merge({}, defaults);
-  let config = merge(defaults, options);
+  let config = merge({}, originalDefaults, originalOptions);
   // This just make sure it's an array
   if (Object.prototype.toString.call(props) === '[object String]') {
     props = [props];
