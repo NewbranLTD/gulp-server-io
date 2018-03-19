@@ -11,8 +11,9 @@ const defaultUrl = ['http://', baseUrl, ':', defaultPort].join('');
 const defaultSSLUrl = ['https://', baseUrl, ':', defaultPort].join('');
 const root = path.resolve( join(__dirname, 'app') );
 const rootDir = new File({ path: join(__dirname, 'app') });
+const directoryIndexMissingDirRaw = join(__dirname, 'directoryIndexMissing');
 const directoryIndexMissingDir = new File({
-  path: join(__dirname, 'directoryIndexMissing')
+  path: directoryIndexMissingDirRaw
 });
 // grab the original options as well
 const { defaultOptions } = require('../../src/lib/options');
@@ -25,5 +26,6 @@ module.exports = {
   defaultPort,
   defaultSSLUrl,
   directoryIndexMissingDir,
-  defaultOptions
+  defaultOptions,
+  directoryIndexMissingDirRaw
 };

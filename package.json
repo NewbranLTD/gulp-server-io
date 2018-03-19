@@ -49,7 +49,7 @@
     "gulp-example": "gulp serve --gulpfile ./__tests__/examples/gulpfile.js",
     "standalone-example": "node ./__tests__/examples/standalone.js",
     "test:part": "jest ./__tests__/standalone/7-watcher.test.js",
-    "example": "NODE_ENV=test node ./__tests__/examples/index.js"
+    "example": "NODE_ENV=testx node ./__tests__/examples/index.js"
   },
   "lint-staged": {
     "*.js": ["eslint --fix", "git add"],

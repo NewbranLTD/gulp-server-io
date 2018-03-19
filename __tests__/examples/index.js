@@ -30,4 +30,23 @@ const options = {
 
 const config = createConfiguration(options);
 
-console.log(chalk.yellow(JSON.stringify(config, null, 2)));
+// console.log(chalk.yellow(JSON.stringify(config, null, 2)));
+
+// Use this same file to test out the watcher function
+const { watcher } = require('../../gulp');
+const fs = require('fs-extra');
+const { join } = require('path');
+const { directoryIndexMissingDirRaw } = require('../fixtures/config.js');
+const target = 'package.json';
+let closeFn;
+
+closeFn = watcher(directoryIndexMissingDirRaw, function(files) {
+  files.forEach( f => {
+    console.log('file touched', f);
+    if (f.path.indexOf(target) > -1) {
+      console.log('target touched', target);
+      // fs.writeJsonSync(pkgFile, data);
+      // done();
+    }
+  });
+});

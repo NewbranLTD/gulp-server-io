@@ -26,25 +26,3 @@ describe('Testing the default gulp-server-io/server setup for standalone server'
       .expect(200, /Bootstrap Template test for gulp-server-io/);
   });
 });
-// Testing the https
-/*
-  @2018-02-15 disable this for now until I could find the root cause of why its keep failing
-
-describe('Testing the gulp-server-io/server https', () => {
-  let server;
-  beforeEach(() => {
-    server = standaloneSrv({
-      webroot: root,
-      https: true
-    });
-  });
-  afterEach(() => {
-    server.close();
-  });
-  test('It should serve up https connection', () => {
-    return request('https://localhost:8000')
-      .get('/')
-      .expect(200, /Bootstrap Template test for gulp-server-io/);
-  });
-});
-*/

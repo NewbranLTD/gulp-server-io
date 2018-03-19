@@ -6,7 +6,7 @@
 const chalk = require('chalk');
 const bacon = require('baconjs');
 const chokidar = require('chokidar');
-const debug = require('gulp-webserver-io:stream-watcher');
+const debug = require('debug')('gulp-webserver-io:stream-watcher');
 // Our tools
 const logutil = require('./log');
 const { toArray } = require('./helper');
