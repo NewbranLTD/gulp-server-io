@@ -1,6 +1,6 @@
 {
   "name": "gulp-server-io",
-  "version": "1.4.0-beta.4",
+  "version": "1.4.0-beta.5",
   "description":
     "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
   "homepage": "https://newbran.ch",
@@ -48,7 +48,7 @@
     "cli-test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest main/4-fallback.test.js",
     "gulp-example": "gulp serve --gulpfile ./__tests__/examples/gulpfile.js",
     "standalone-example": "node ./__tests__/examples/standalone.js",
-    "test:part": "jest ./__tests__/standalone/7-watcher.test.js",
+    "test:part": "jest --forceExit ./__tests__/main/2-custom-a.test.js",
     "example": "NODE_ENV=testx node ./__tests__/examples/index.js"
   },
   "lint-staged": {
