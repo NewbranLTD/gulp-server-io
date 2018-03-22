@@ -4,6 +4,7 @@
  * useful for other
  */
 const fs = require('fs');
+const path = require('path');
 const chalk = require('chalk');
 const bacon = require('baconjs');
 const chokidar = require('chokidar');
@@ -11,10 +12,19 @@ const debug = require('debug')('gulp-webserver-io:stream-watcher');
 // Our tools
 const logutil = require('./log');
 const { toArray } = require('./helper');
-
-// Make sure to pass directories to this method
+/**
+ * Make sure to pass directories to this method
+ * @20180322 Add if this is not a directory then we resolve the file path directory
+ */
 const ensureIsDir = filePaths => {
-  return toArray(filePaths).filter(f => fs.lstatSync(f).isDirectory());
+  const paths = toArray(filePaths);
+  const dirs = paths.filter(f => fs.lstatSync(f).isDirectory());
+  if (dirs.length !== paths.length) {
+    return dirs.concat(
+      paths.filter(f => !fs.lstatSync(f).isDirectory()).map(f => path.dirname(f))
+    );
+  }
+  return dirs;
 };
 
 /**
