@@ -160,7 +160,7 @@ Once you use the mock option, all your proxies definition will be
 overwritten by the mock JSON path.
 
 *NEW @ 1.4.0* I have added a watcher to your JSON file, so whenever you edit your mock JSON data file,
-the mock server will automatically restart.
+the mock server will automatically restart. *1.4.0-beta.4 has an error regarding the non-directory option, it's been fixed in the later release*
 
 ## CLI
 
