@@ -1,4 +1,7 @@
 'use strict';
+
+jest.setTimeout = 10000;
+
 const chalk = require('chalk');
 const request = require('supertest');
 const File = require('vinyl');
