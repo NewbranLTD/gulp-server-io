@@ -3,8 +3,9 @@
  * Seperate the watch method and report it
  * useful for other
  */
-// const fs = require('fs');
-// const path = require('path');
+const _ = require('lodash');
+const fs = require('fs');
+const path = require('path');
 const chalk = require('chalk');
 const bacon = require('baconjs');
 const chokidar = require('chokidar');
@@ -18,12 +19,17 @@ const { toArray } = require('./helper');
  */
 const ensureIsDir = filePaths => {
   const paths = toArray(filePaths);
-  return paths.map(d => {
-    if (d.cwd) {
-      return d.cwd;
-    }
-    return d;
-  });
+  return _.compact(
+    paths.map(d => {
+      if (d.cwd) {
+        return d.cwd;
+      }
+      // This doesn't take into account the path might not exist @TODO
+      return fs.existsSync(d)
+        ? fs.lstatSync(d).isDirectory() ? d : path.dirname(d)
+        : false;
+    })
+  );
 };
 
 /**
