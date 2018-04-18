@@ -26,7 +26,9 @@ const ensureIsDir = filePaths => {
       }
       // This doesn't take into account the path might not exist @TODO
       return fs.existsSync(d)
-        ? fs.lstatSync(d).isDirectory() ? d : path.dirname(d)
+        ? fs.lstatSync(d).isDirectory()
+          ? d
+          : path.dirname(d)
         : false;
     })
   );

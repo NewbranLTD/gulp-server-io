@@ -27,6 +27,9 @@ describe('Testing the mock server gulp-server-io/server', () => {
   test('It should able to mock data via the json-server', () => {
     return request(server)
       .get('/api')
-      .expect(200, /cats/);
+      .expect(200, /cats/)
+      .catch(err => {
+        console.log('FAILED', err);
+      });
    });
 });
