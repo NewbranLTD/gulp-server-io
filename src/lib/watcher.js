@@ -5,7 +5,7 @@
 const chalk = require('chalk');
 const logutil = require('./utils/log');
 const streamWatcher = require('./utils/stream-watcher');
-const defaultInterval = 300;
+const defaultInterval = 1000; // Extend to 1 second
 /**
  * @20171112 - change where we start the reload server
  * @param {array} filePaths the path to the folder get watch

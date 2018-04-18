@@ -197,12 +197,37 @@ If you need more option then you should set it up as a regular `gulpfile.js`
 
 ### Using the `server` as a quick deploy server option
 
+By default using this standalone server will disable the following:
+
+- open: false
+- reload: false
+- debugger: false
+
+Unless you pass `development:true` as option.
+
 ```js
 const server = require('gulp-server-io/server');
-// by default when you set development to false
+// by default when you use this `server` it will set the development flag to false
+// And it will disable `open`,`reload`,`debugger`
 // the folder is <YOUR_APP_ROOT>/dest
+server();
+
+```
+
+More elaborate setup:
+
+```js
+const server = require('gulp-server-io/server');
+const { join } = require('path');
+
 server({
-  development: false
+  webroot: join(__dirname, 'build'),
+  port: 8800,
+  indexes: ['amp.html'],
+  proxies: [{
+    source: '/api',
+    target: 'http://localhost:3456'
+  }]
 });
 
 ```
@@ -218,7 +243,6 @@ server({
 | fallback       | when 404 where to fallback to                  | `false`                   | Boolean or String |
 | https          | Use secure or not @TODO                        | `false`                   | Object            |
 | open           | automatically open browser                     | `true`                    | Boolean or String |
-| indexes        | Array of indexes to search                     | `[index.html, index.htm]` | Array             |
 | callback       | A function to execute after the server start   | `() => {}`                | Function          |
 | staticOptions  | Look at `server-static`                        | `{}`                      | Object            |
 | headers        | extra headers to pass                          | `{}`                      | Object            |
@@ -226,6 +250,7 @@ server({
 | mock           | Create mock REST API using json-server         | `false`                   | Boolean or String |
 | debugger       | Socket.io debugger                             | `true`                    | Boolean or Object |
 | inject         | inject file to the html you want               | false                     | Object            |
+| reload         | detect files change and restart server         | verbose:true,interval:1000| Object            |
 
 Please see wiki for more information about all the available options.
 

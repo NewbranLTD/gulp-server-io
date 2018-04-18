@@ -16,7 +16,7 @@ const disable = {
 // Export
 module.exports = function(options = {}) {
   // We always overwrite it here to disable feature that shouldn't be use
-  if (options.development === false) {
+  if (!options.development) {
     options = _.merge(options, disable);
   }
   // Generate the app
