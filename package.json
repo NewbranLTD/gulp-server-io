@@ -25,6 +25,7 @@
   ],
   "devDependencies": {
     "coveralls": "^3.0.0",
+    "debug": "^3.1.0",
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-xo": "^0.20.1",
