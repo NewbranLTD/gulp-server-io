@@ -6,6 +6,7 @@ const chalk = require('chalk');
 const logutil = require('./utils/log');
 const streamWatcher = require('./utils/stream-watcher');
 const defaultInterval = 1000; // Extend to 1 second
+const debug = require('debug')('gulp-server-io:stream-watcher');
 /**
  * @20171112 - change where we start the reload server
  * @param {array} filePaths the path to the folder get watch
@@ -30,12 +31,14 @@ module.exports = function(filePaths, reloadServerFn, config) {
         }
         // New allow to pass as a function
         if (typeof reloadServerFn === 'function') {
+          debug('reloadServerFn', 'custom fn called');
           reloadServerFn(files);
         } else if (
           reloadServerFn &&
           reloadServerFn.reload &&
           typeof reloadServerFn.reload === 'function'
         ) {
+          debug('reloadServerFn.reload', 'stock reload fn called');
           reloadServerFn.reload();
         } else {
           logutil(

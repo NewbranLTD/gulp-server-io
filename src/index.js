@@ -13,6 +13,8 @@ const serverGenerator = require('./lib/webserver');
 const debuggerServer = require('./lib/debugger');
 const { serveStatic } = require('./lib/utils/helper');
 const logutil = require('./lib/utils/log');
+// Adding debug options here
+const debug = require('debug')('gulp-server-io:main');
 // Porting back from src/index.js
 /**
  * This will be come the main export file
@@ -44,11 +46,13 @@ module.exports = function(options = {}) {
       files.push(f);
     })
     .on('end', () => {
+      debug('files/dir being serve', files);
       // Run the watcher, return an unwatch function
       if (config.reload.enable) {
         // Limiting the config options
         const reloadServer = reload(app, { verbose: config.reload.verbose });
         unwatchFn = appWatcher(files, reloadServer, config.reload);
+        debug('config.reload.enable', 'start up the reload server');
       }
       // @TODO add watching server side files
 
