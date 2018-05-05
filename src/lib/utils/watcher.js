@@ -3,17 +3,17 @@
  * And communicate back via the subprocess.send
  */
 const streamWatcher = require('./stream-watcher');
-const _ = require('lodash');
+let fn = () => {};
 /**
  * Watcher - moving back from the gulp.js export
  * Rename from watcher --> fileWatcher
  * @param {mixed} filePaths array of string
- * @param {function} callback function to execute when file change
  * @param {boolean} verbose param pass to the streamWatcher should show console.log or not
  * @param {int} debounce ms to determine when the callback should execute
+ * @param {function} callback function to execute when file change
  * @return {function} the streamWatcher terminate callback
  */
-const fileWatcher = (filePaths, callback, verbose = true, debounce = 300) => {
+const fileWatcher = (filePaths, verbose, debounce, callback) => {
   let files = [];
   return streamWatcher(filePaths, verbose)
     .doAction(f => files.push(f))
@@ -28,35 +28,22 @@ const fileWatcher = (filePaths, callback, verbose = true, debounce = 300) => {
 };
 
 /**
- * Wrapper for the serverReload option - this will run in it's own process
- * @TODO try to figure out how to run this in a different process to avoid too many watchers
- * @param {object} config we pass the options.serverReload here
- * @return {mixed} ps config.enable or false
- */
-const serverReload = config => {
-  if (config.enable && _.isFunction(config.callback)) {
-    // This didn't work, so I need to figure out how to use fork to
-    // create a new process for this watch function to execute
-    return fileWatcher(
-      config.dir,
-      config.callback,
-      config.config.verbose,
-      config.config.debounce
-    );
-  }
-  return () => {};
-};
-
-/**
  * This is when we received call from the parent process
  */
 process.on('message', m => {
-  console.log('CHILD got message:', m);
-  serverReload({ enable: false });
-  setTimeout(() => {
-    process.send({ message: 'send another message after 1 second' });
-  }, 1000);
+  switch (m.type) {
+    case 'start':
+      try {
+        fn = fileWatcher(m.dir, m.verbose, m.debounce, files => {
+          process.send({ type: 'change', files: files });
+        });
+      } catch (e) {
+        process.send({ type: 'error', err: e });
+      }
+      break;
+    case 'exit':
+      fn();
+      break;
+    default:
+  }
 });
-
-// Causes the parent to print: PARENT got message: { foo: 'bar', baz: null }
-process.send({ foo: 'bar', baz: NaN });
