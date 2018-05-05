@@ -11,7 +11,7 @@ const appWatcher = require('./lib/watcher');
 const openInBrowser = require('./lib/open');
 const serverGenerator = require('./lib/webserver');
 const debuggerServer = require('./lib/debugger');
-const { serveStatic } = require('./lib/utils/helper');
+const { serveStatic, serverReload } = require('./lib/utils/helper');
 const logutil = require('./lib/utils/log');
 // Adding debug options here
 const debug = require('debug')('gulp-server-io:main');
@@ -89,6 +89,9 @@ module.exports = function(options = {}) {
     const { close } = debuggerServer(config, webserver);
     closeDebuggerFn = close;
   }
+  // New @1.4.0-beta.11 watch a different path and pass a callback
+  const unwatchServerReload = serverReload(config.serverReload);
+
   // When ctrl-c or stream.emit('kill')
   stream.on('kill', () => {
     // This is unnecessary
@@ -99,6 +102,8 @@ module.exports = function(options = {}) {
     closeDebuggerFn();
     // Kill watcher
     unwatchFn();
+    // Kill serverReload
+    unwatchServerReload();
   });
   // Return
   return stream;

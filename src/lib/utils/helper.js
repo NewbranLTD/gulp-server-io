@@ -4,7 +4,7 @@
  * Move some of the functions out of the main.js to reduce the complexity
  */
 const path = require('path');
-const { spawn } = require('child_process');
+// const { spawn } = require('child_process');
 // Third parties modules
 const _ = require('lodash');
 const express = require('express');
@@ -145,6 +145,19 @@ const fileWatcher = function(filePaths, callback, verbose = true, debounce = 300
 };
 
 /**
+ * Wrapper for the serverReload option - this will run in it's own process
+ * @TODO try to figure out how to run this in a different process to avoid too many watchers
+ * @param {object} config we pass the options.serverReload here 
+ * @return {mixed} ps config.enable or false
+ */
+const serverReload = config => {
+  if (config.enable && _.isFunction(config.callback)) {
+    return fileWatcher(config.dir, config.callback, config.config.verbose, config.config.debounce);
+  }
+  return () => {};
+};
+
+/**
  * directory listing - no longer support since 1.4.0-alpha.2
  */
 /*
@@ -160,5 +173,6 @@ module.exports = {
   toArray,
   proxyDelay,
   serveStatic,
-  fileWatcher
+  fileWatcher,
+  serverReload
 };
