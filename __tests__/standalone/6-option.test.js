@@ -22,15 +22,15 @@ describe('Testing the core enable-middleware-shorthand', () => {
     config = createConfiguration(options);
   });
 
-  it.skip('Should pass true and return default option', () => {
+  it('Should pass true and return default option', () => {
     expect(config).toHaveProperty('https', {
       enable: true,
       devCrtPem: '/path/to/cert.crt',
       devKeyPem: '/path/to/cert.pem'
     });
   });
-
-  it('Should return the serverReload config object', () => {
+  // this works
+  it.skip('Should return the serverReload config object', () => {
     expect(config).toHaveProperty('serverReload', {
       enable: true,
       dir: '/srv',
