@@ -63,5 +63,6 @@ module.exports = function(filePaths, verbose) {
       });
     });
   }
-  throw new Error('[streamWatcher] You must pass diretory to this function');
+  // Now we have the ensureIsDir fn so this should never get throw
+  throw new Error('[streamWatcher] You must pass an array of directory to this function');
 };
