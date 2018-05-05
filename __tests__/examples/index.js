@@ -30,8 +30,6 @@ const options = {
 
 const config = createConfiguration(options);
 
-// console.log(chalk.yellow(JSON.stringify(config, null, 2)));
-
 // Use this same file to test out the watcher function
 const { watcher } = require('../../export');
 const fs = require('fs-extra');

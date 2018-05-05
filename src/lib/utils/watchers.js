@@ -32,6 +32,9 @@ exports.fileWatcher = (filePaths, callback, verbose = true, debounce = 300) => {
  */
 exports.serverReload = config => {
   if (config.enable && _.isFunction(config.callback)) {
+    // This didn't work, so I need to figure out how to use fork to
+    // create a new process for this watch function to execute
+
     return exports.fileWatcher(
       config.dir,
       config.callback,

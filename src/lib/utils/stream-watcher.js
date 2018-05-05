@@ -18,7 +18,6 @@ const { toArray } = require('./helper');
  * @20180322 Add if this is not a directory then we resolve the file path directory
  */
 const ensureIsDir = filePaths => {
-  console.log(toArray, typeof toArray);
   const paths = toArray(filePaths);
   return _.compact(
     paths.map(d => {
