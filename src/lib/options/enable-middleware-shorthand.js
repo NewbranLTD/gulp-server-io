@@ -69,6 +69,7 @@ module.exports = function(defaults, props, arraySource, options) {
   }
   // Here we add things that we don't want to get overwritten
   config.version = version;
-  config.sessionId = Date.now();
+  // Change from sessionId to timestamp, just for reference not in use anywhere
+  config.timestamp = Date.now();
   return config;
 };
