@@ -7,6 +7,7 @@ const _ = require('lodash');
 const path = require('path');
 const express = require('express');
 const logutil = require('./log.js');
+const streamWatcher = require('./stream-watcher');
 /**
  * create a random number between two values, for creating a random port number
  * @param {int} min
@@ -115,6 +116,29 @@ const proxyDelay = function(originalUrl, delayReqTime, delayResTime) {
       next();
     }
   }
+};
+
+/**
+ * Watcher - moving back from the gulp.js export
+ * Rename from watcher --> fileWatcher 
+ * @param {mixed} filePaths array of string 
+ * @param {function} callback function to execute when file change 
+ * @param {boolean} verbose param pass to the streamWatcher should show console.log or not
+ * @param {int} debounce ms to determine when the callback should execute
+ * @return {function} the streamWatcher terminate callback
+ */
+exports.fileWatcher = function(filePaths, callback, verbose = true, debounce = 300) {
+  let files = [];
+  return streamWatcher(filePaths, verbose)
+    .doAction(f => files.push(f))
+    .debounce(debounce)
+    .onValue(() => {
+      if (files.length) {
+        callback(files);
+        // Reset
+        files = [];
+      }
+    });
 };
 
 /**
