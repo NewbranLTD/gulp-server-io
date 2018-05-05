@@ -10,9 +10,9 @@ const streamWatcher = require('./src/lib/utils/stream-watcher');
 const { fileWatcher } = require('./src/lib/utils/helper');
 // Re-export
 module.exports = {
-  gulp,
-  helmet,
-  bodyParser,
-  streamWatcher,
-  fileWatcher
+  gulp: gulp,
+  helmet: helmet,
+  bodyParser: bodyParser,
+  streamWatcher: streamWatcher,
+  fileWatcher: fileWatcher
 };

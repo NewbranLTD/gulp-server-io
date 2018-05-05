@@ -1,5 +1,4 @@
 /* eslint-disable */
-'use strict';
 /**
  * Move some of the functions out of the main.js to reduce the complexity
  */
@@ -17,14 +16,14 @@ const streamWatcher = require('./stream-watcher');
  * @param {int} max
  * @return {int} port
  */
-const getRandomInt = function (min, max) {
+const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 /**
  * Make sure the supply argument is an array
  */
-const toArray = (param) => {
+const toArray = param => {
   return Array.isArray(param) ? param : [param];
 };
 
@@ -32,7 +31,7 @@ const toArray = (param) => {
  * @param {mixed} opt
  * @return {boolean} result
  */
-const isString = function (opt) {
+const isString = opt => {
   return _.isString(opt);
 };
 
@@ -103,7 +102,7 @@ const serveStatic = (webroot, config, urlToOpen = '') => {
  * @param {int} delayResTime time to delay when response in ms
  * @return {function} middleware to use: app.use(url, proxyDelay, myProxy);
  */
-const proxyDelay = function(originalUrl, delayReqTime, delayResTime) {
+const proxyDelay = (originalUrl, delayReqTime, delayResTime) => {
   return function (req, res, next) {
     if (req.originalUrl === originalUrl) {
       // Delay request by 2 seconds
@@ -130,7 +129,7 @@ const proxyDelay = function(originalUrl, delayReqTime, delayResTime) {
  * @param {int} debounce ms to determine when the callback should execute
  * @return {function} the streamWatcher terminate callback
  */
-const fileWatcher = function(filePaths, callback, verbose = true, debounce = 300) {
+const fileWatcher = (filePaths, callback, verbose = true, debounce = 300) => {
   let files = [];
   return streamWatcher(filePaths, verbose)
     .doAction(f => files.push(f))
@@ -168,11 +167,11 @@ exports.directoryListing = (dir) => {
 
 // Export
 module.exports = {
-  setHeaders,
-  getRandomInt,
-  toArray,
-  proxyDelay,
-  serveStatic,
-  fileWatcher,
-  serverReload
+  setHeaders: setHeaders,
+  getRandomInt: getRandomInt,
+  toArray: toArray,
+  proxyDelay: proxyDelay,
+  serveStatic: serveStatic,
+  fileWatcher: fileWatcher,
+  serverReload: serverReload
 };
