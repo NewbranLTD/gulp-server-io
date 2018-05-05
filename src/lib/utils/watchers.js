@@ -30,7 +30,7 @@ exports.fileWatcher = (filePaths, callback, verbose = true, debounce = 300) => {
  * @param {object} config we pass the options.serverReload here
  * @return {mixed} ps config.enable or false
  */
-exports.erverReload = config => {
+exports.serverReload = config => {
   if (config.enable && _.isFunction(config.callback)) {
     return exports.fileWatcher(
       config.dir,
