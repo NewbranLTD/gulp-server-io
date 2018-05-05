@@ -30,7 +30,7 @@ const toArray = (param) => {
  * @return {boolean} result
  */
 const isString = function (opt) {
-  return (typeof opt === 'string');
+  return _.isString(opt);
 };
 
 /**
@@ -68,7 +68,7 @@ const setHeaders = (config, urlToOpen) => {
  * @param {string} urlToOpen (optional) @TODO
  * @return {function} middleware
  */
-exports.serveStatic = (webroot, config, urlToOpen = '') => {
+const serveStatic = (webroot, config, urlToOpen = '') => {
   let etag = true;
   if (config.development === false) {
     const _root = process.cwd();
@@ -127,7 +127,7 @@ const proxyDelay = function(originalUrl, delayReqTime, delayResTime) {
  * @param {int} debounce ms to determine when the callback should execute
  * @return {function} the streamWatcher terminate callback
  */
-exports.fileWatcher = function(filePaths, callback, verbose = true, debounce = 300) {
+const fileWatcher = function(filePaths, callback, verbose = true, debounce = 300) {
   let files = [];
   return streamWatcher(filePaths, verbose)
     .doAction(f => files.push(f))
@@ -150,8 +150,12 @@ exports.directoryListing = (dir) => {
 };
 */
 
-// export for other use
-exports.setHeaders = setHeaders;
-exports.getRandomInt = getRandomInt;
-exports.toArray = toArray;
-exports.proxyDelay = proxyDelay;
+// Export
+module.exports = {
+  setHeaders,
+  getRandomInt,
+  toArray,
+  proxyDelay,
+  serveStatic,
+  fileWatcher
+};
