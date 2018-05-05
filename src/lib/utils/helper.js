@@ -3,9 +3,12 @@
 /**
  * Move some of the functions out of the main.js to reduce the complexity
  */
-const _ = require('lodash');
 const path = require('path');
+const { spawn } = require('child_process');
+// Third parties modules
+const _ = require('lodash');
 const express = require('express');
+// Our modules
 const logutil = require('./log.js');
 const streamWatcher = require('./stream-watcher');
 /**
@@ -89,7 +92,7 @@ const serveStatic = (webroot, config, urlToOpen = '') => {
     headerOption,
     config.staticOptions
   );
-  // does this need to be replace with serve-static? 05032018
+  // Does this need to be replace with serve-static? 05032018
   return express.static(webroot, staticOptions);
 };
 
