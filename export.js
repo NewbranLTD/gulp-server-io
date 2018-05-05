@@ -6,13 +6,11 @@
 const gulp = require('gulp');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
-const streamWatcher = require('./src/lib/utils/stream-watcher');
-const { fileWatcher } = require('./src/lib/utils/helper');
+const { fileWatcher } = require('./src/lib/utils/watchers');
 // Re-export
 module.exports = {
   gulp: gulp,
   helmet: helmet,
   bodyParser: bodyParser,
-  streamWatcher: streamWatcher,
   fileWatcher: fileWatcher
 };

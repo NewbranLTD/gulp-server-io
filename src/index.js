@@ -11,7 +11,8 @@ const appWatcher = require('./lib/watcher');
 const openInBrowser = require('./lib/open');
 const serverGenerator = require('./lib/webserver');
 const debuggerServer = require('./lib/debugger');
-const { serveStatic, serverReload } = require('./lib/utils/helper');
+const { serveStatic } = require('./lib/utils/helper');
+const { serverReload } = require('./lib/utils/watchers');
 const logutil = require('./lib/utils/log');
 // Adding debug options here
 const debug = require('debug')('gulp-server-io:main');
