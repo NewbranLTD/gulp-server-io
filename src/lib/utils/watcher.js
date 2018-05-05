@@ -1,4 +1,7 @@
-// Watchers method breakout from helper
+/**
+ * This file will only get call from the main setup process as a fork process
+ * And communicate back via the subprocess.send
+ */
 const streamWatcher = require('./stream-watcher');
 const _ = require('lodash');
 /**
@@ -10,7 +13,7 @@ const _ = require('lodash');
  * @param {int} debounce ms to determine when the callback should execute
  * @return {function} the streamWatcher terminate callback
  */
-exports.fileWatcher = (filePaths, callback, verbose = true, debounce = 300) => {
+const fileWatcher = (filePaths, callback, verbose = true, debounce = 300) => {
   let files = [];
   return streamWatcher(filePaths, verbose)
     .doAction(f => files.push(f))
@@ -30,12 +33,11 @@ exports.fileWatcher = (filePaths, callback, verbose = true, debounce = 300) => {
  * @param {object} config we pass the options.serverReload here
  * @return {mixed} ps config.enable or false
  */
-exports.serverReload = config => {
+const serverReload = config => {
   if (config.enable && _.isFunction(config.callback)) {
     // This didn't work, so I need to figure out how to use fork to
     // create a new process for this watch function to execute
-
-    return exports.fileWatcher(
+    return fileWatcher(
       config.dir,
       config.callback,
       config.config.verbose,
@@ -44,3 +46,17 @@ exports.serverReload = config => {
   }
   return () => {};
 };
+
+/**
+ * This is when we received call from the parent process
+ */
+process.on('message', m => {
+  console.log('CHILD got message:', m);
+  serverReload({ enable: false });
+  setTimeout(() => {
+    process.send({ message: 'send another message after 1 second' });
+  }, 1000);
+});
+
+// Causes the parent to print: PARENT got message: { foo: 'bar', baz: null }
+process.send({ foo: 'bar', baz: NaN });

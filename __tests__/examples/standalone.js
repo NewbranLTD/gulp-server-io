@@ -19,7 +19,6 @@ const server = standaloneSrv({
   mock: {
     json: path.join(__dirname, '..', 'fixtures', 'dummy.json')
   }
-
 });
 
 server.on('connect', () => console.log('detect server connected'));
