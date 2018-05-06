@@ -13,6 +13,7 @@ const debug = require('debug')('gulp-webserver-io:stream-watcher');
 // Our tools
 const logutil = require('./log');
 const { toArray } = require('./helper');
+let watcher;
 /**
  * Make sure to pass directories to this method
  * @20180322 Add if this is not a directory then we resolve the file path directory
@@ -43,13 +44,14 @@ module.exports = function(filePaths, verbose) {
   debug('[verbose]', verbose);
   const directories = ensureIsDir(filePaths);
   if (directories.length) {
+    debug('[directories]', directories);
     return bacon.fromBinder(sink => {
       directories.forEach(dir => {
         debug('[Watcher][directory]', dir);
         if (verbose) {
           logutil(chalk.white('[Watcher][directory]'), dir);
         }
-        let watcher = chokidar.watch(dir, {
+        watcher = chokidar.watch(dir, {
           ignored: /(^|[\/\\])\../,
           ignoreInitial: true
         });
