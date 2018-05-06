@@ -8,9 +8,11 @@ const serverReload = require(join(__dirname, '..', '..', 'src', 'lib', 'server-r
 const fileWatcher = require(join(__dirname, '..', '..', 'src', 'lib', 'utils', 'watcher'));
 const dir = join(__dirname, '..', '.tmp');
 
-fileWatcher(dir, true, 500, files => {
+const fn = fileWatcher(dir, true, 500, files => {
     debug('files changed', files);
 });
+
+debug('[fn]', fn);
 
 /*
 serverReload({

@@ -40,6 +40,7 @@ const ensureIsDir = filePaths => {
  * @return {function} bacon method
  */
 module.exports = function(filePaths, verbose) {
+  debug('[verbose]', verbose);
   const directories = ensureIsDir(filePaths);
   if (directories.length) {
     return bacon.fromBinder(sink => {
