@@ -6,6 +6,7 @@ const chalk = require('chalk');
 const { join } = require('path');
 const { fork } = require('child_process');
 const watcher = join(__dirname, 'watcher');
+console.log(watcher);
 // Main
 module.exports = config => {
   if (config.enable && config.dir && _.isFunction(config.callback)) {
@@ -24,7 +25,7 @@ module.exports = config => {
     // Trigger the start process
     p.send({
       type: 'start',
-      filePaths: config.dir,
+      dir: config.dir,
       debounce: config.debounce,
       verbose: config.verbose
     });

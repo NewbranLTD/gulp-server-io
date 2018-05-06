@@ -53,7 +53,8 @@
       "DEBUG=gulp-webserver-io:stream-watcher gulp wire --gulpfile ./__tests__/examples/gulpfile.js",
     "example:standalone": "node ./__tests__/examples/standalone.js",
     "example:main": "NODE_ENV=testx node ./__tests__/examples/index.js",
-    "example:fork": "node ./__tests__/examples/child.js"
+    "example:fork":
+      "DEBUG=gulp-webserver-io:stream-watcher node ./__tests__/examples/child.js"
   },
   "lint-staged": {
     "*.js": ["eslint --fix", "git add"],

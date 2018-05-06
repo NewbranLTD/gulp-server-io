@@ -3,13 +3,35 @@
  */
 const { fork } = require('child_process');
 const { join } = require('path');
+const serverReload = require(join(__dirname, '..', '..', 'src', 'lib', 'utils', 'server-reload'));
+
+
+serverReload({
+    enable: true,
+    dir: join(__dirname, '..', '.tmp'),
+    callback: files => {
+        console.log('files changed', files);
+    }
+});
+
+/*
 const mod = join(__dirname, '..', '..', 'src', 'lib', 'utils', 'watcher');
 
 const p = fork(mod);
 
 p.on('message', m => {
-    console.log('received message from child', m);
-    p.send({start: false, msg: 'another message'});
+    switch (m.type) {
+        case 'change':
+            console.log('files changed', m.files);
+        break;
+        default:
+    }
 });
 
-p.send({start: true, config: {verbose: true, debounce: 500}});
+p.send({
+    type: 'start', 
+    verbose: true, 
+    debounce: 500, 
+    dir: join(__dirname, '..', '.tmp')
+});
+*/
