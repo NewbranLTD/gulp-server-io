@@ -16,6 +16,7 @@ const serverReload = require('./lib/server-reload');
 const logutil = require('./lib/utils/log');
 // Adding debug options here
 const debug = require('debug')('gulp-server-io:main');
+const emptyFn = () => {};
 // Porting back from src/index.js
 /**
  * This will be come the main export file
@@ -30,9 +31,10 @@ module.exports = function(options = {}) {
   const { app, config, mockServerInstance } = appGenerator(options);
   // Store the files for ?
   let files = [];
-  let closeDebuggerFn = () => {};
-  // @TODO change to array, there will be more than one soon
-  let unwatchFn = () => {};
+  // Should change to array
+  let unwatchFn = emptyFn;
+  let closeDebuggerFn = emptyFn;
+  let unwatchServerReload = emptyFn;
   // Create static server wrap in a stream
   // Please note it could pass an array of paths
   // So this will call multiple times
@@ -40,10 +42,12 @@ module.exports = function(options = {}) {
     .obj((file, enc, callback) => {
       // Serve up the files
       app.use(config.path, serveStatic(file.path, config));
+      console.log('file', file);
       files.push(file);
       callback();
     })
     .on('data', f => {
+      console.log('data f', f);
       files.push(f);
     })
     .on('end', () => {
@@ -56,7 +60,8 @@ module.exports = function(options = {}) {
         debug('config.reload.enable', 'start up the reload server');
       }
       // @TODO add watching server side files
-
+      // New @1.4.0-beta.11 watch a different path and pass a callback
+      unwatchServerReload = serverReload(config.serverReload);
       // Setup fallback i.e. 404.html
       if (config.fallback !== false) {
         files.forEach(file => {
@@ -90,8 +95,7 @@ module.exports = function(options = {}) {
     const { close } = debuggerServer(config, webserver);
     closeDebuggerFn = close;
   }
-  // New @1.4.0-beta.11 watch a different path and pass a callback
-  const unwatchServerReload = serverReload(config.serverReload);
+
   // When ctrl-c or stream.emit('kill')
   stream.on('kill', () => {
     // This is unnecessary
