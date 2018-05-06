@@ -24,7 +24,10 @@ const getRandomInt = (min, max) => {
  * Make sure the supply argument is an array
  */
 const toArray = param => {
-  return Array.isArray(param) ? param : [param];
+  if (param) {
+    return Array.isArray(param) ? param : [param];
+  }
+  return [];
 };
 
 /**

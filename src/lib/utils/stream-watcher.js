@@ -22,9 +22,9 @@ const ensureIsDir = filePaths => {
   const paths = toArray(filePaths);
   return _.compact(
     paths.map(d => {
-      if (d.cwd) {
+      /* If (d.cwd) {
         return d.cwd;
-      }
+      } */
       return fs.existsSync(d)
         ? fs.lstatSync(d).isDirectory()
           ? d

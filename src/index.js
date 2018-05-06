@@ -42,13 +42,11 @@ module.exports = function(options = {}) {
     .obj((file, enc, callback) => {
       // Serve up the files
       app.use(config.path, serveStatic(file.path, config));
-      console.log('file', file);
-      files.push(file);
+      files.push(file.path);
       callback();
     })
     .on('data', f => {
-      console.log('data f', f);
-      files.push(f);
+      files.push(f.path);
     })
     .on('end', () => {
       debug('files/dir being serve', files);
