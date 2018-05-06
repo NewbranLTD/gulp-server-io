@@ -8,13 +8,14 @@ const serverReload = require(join(__dirname, '..', '..', 'src', 'lib', 'server-r
 const fileWatcher = require(join(__dirname, '..', '..', 'src', 'lib', 'utils', 'watcher'));
 const dir = join(__dirname, '..', '.tmp');
 
+/*
 const fn = fileWatcher(dir, true, 500, files => {
     debug('files changed', files);
 });
 
 debug('[fn]', fn);
+*/
 
-/*
 serverReload({
     enable: true,
     dir: join(__dirname, '..', '.tmp'),
@@ -22,7 +23,7 @@ serverReload({
         console.log('files changed', files);
     }
 });
-*/
+
 /*
 const mod = join(__dirname, '..', '..', 'src', 'lib', 'utils', 'watcher');
 
