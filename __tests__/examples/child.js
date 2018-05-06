@@ -3,7 +3,7 @@
  */
 const { fork } = require('child_process');
 const { join } = require('path');
-const serverReload = require(join(__dirname, '..', '..', 'src', 'lib', 'utils', 'server-reload'));
+const serverReload = require(join(__dirname, '..', '..', 'src', 'lib', 'server-reload'));
 
 
 serverReload({

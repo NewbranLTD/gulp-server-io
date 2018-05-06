@@ -5,7 +5,7 @@ const _ = require('lodash');
 const chalk = require('chalk');
 const { join } = require('path');
 const { fork } = require('child_process');
-const watcher = join(__dirname, 'watcher');
+const watcher = join(__dirname, 'utils', 'watcher');
 console.log(watcher);
 // Main
 module.exports = config => {
