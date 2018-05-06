@@ -7,7 +7,7 @@ const reload = require('reload');
 const through = require('through2');
 // Our modules
 const appGenerator = require('./lib/app');
-const appWatcher = require('./lib/watcher');
+const appWatcher = require('./lib/app-watcher');
 const openInBrowser = require('./lib/open');
 const serverGenerator = require('./lib/webserver');
 const debuggerServer = require('./lib/debugger');

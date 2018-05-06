@@ -13,7 +13,7 @@ let fn = () => {};
  * @param {function} callback function to execute when file change
  * @return {function} the streamWatcher terminate callback
  */
-const fileWatcher = (filePaths, verbose, debounce, callback) => {
+const fileWatcher = (filePaths, verbose = true, debounce = 500, callback) => {
   let files = [];
   return streamWatcher(filePaths, verbose)
     .doAction(f => files.push(f))

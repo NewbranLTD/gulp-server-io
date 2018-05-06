@@ -44,9 +44,9 @@ module.exports = function(filePaths, verbose) {
   if (directories.length) {
     return bacon.fromBinder(sink => {
       directories.forEach(dir => {
-        debug('[Watcher][webroot]', dir);
+        debug('[Watcher][directory]', dir);
         if (verbose) {
-          logutil(chalk.white('[Watcher]'), dir);
+          logutil(chalk.white('[Watcher][directory]'), dir);
         }
         let watcher = chokidar.watch(dir, {
           ignored: /(^|[\/\\])\../,
@@ -54,6 +54,9 @@ module.exports = function(filePaths, verbose) {
         });
         watcher.on('all', (event, path) => {
           debug('[Watcher][on]', event, path);
+          if (verbose) {
+            logutil(chalk.white('[Watcher][on]', event, path));
+          }
           sink({ event: event, path: path });
           return () => {
             watcher.close();
