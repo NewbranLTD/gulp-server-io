@@ -62,8 +62,13 @@ const defaultOptions = {
   serverReload: {
     enable: false,
     dir: '/srv',
-    start: () => {}, // Start server method
-    stop: () => {} // Stop server method
+    config: {
+      verbose: true,
+      debounce: 500
+    },
+    callback: () => {
+      console.log('server reload callback executed');
+    }
   },
   inject: {
     enable: false,

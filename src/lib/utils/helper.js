@@ -1,35 +1,41 @@
 /* eslint-disable */
-'use strict';
 /**
  * Move some of the functions out of the main.js to reduce the complexity
  */
-const _ = require('lodash');
 const path = require('path');
+// const { spawn } = require('child_process');
+// Third parties modules
+const _ = require('lodash');
 const express = require('express');
-const logutil = require('./log.js');
+// Our modules
+const logutil = require('./log');
+// const streamWatcher = require('./stream-watcher');
 /**
  * create a random number between two values, for creating a random port number
  * @param {int} min
  * @param {int} max
  * @return {int} port
  */
-const getRandomInt = function (min, max) {
+const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 /**
  * Make sure the supply argument is an array
  */
-const toArray = (param) => {
-  return Array.isArray(param) ? param : [param];
+const toArray = param => {
+  if (param) {
+    return Array.isArray(param) ? param : [param];
+  }
+  return [];
 };
 
 /**
  * @param {mixed} opt
  * @return {boolean} result
  */
-const isString = function (opt) {
-  return (typeof opt === 'string');
+const isString = opt => {
+  return _.isString(opt);
 };
 
 /**
@@ -67,7 +73,7 @@ const setHeaders = (config, urlToOpen) => {
  * @param {string} urlToOpen (optional) @TODO
  * @return {function} middleware
  */
-exports.serveStatic = (webroot, config, urlToOpen = '') => {
+const serveStatic = (webroot, config, urlToOpen = '') => {
   let etag = true;
   if (config.development === false) {
     const _root = process.cwd();
@@ -88,7 +94,7 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
     headerOption,
     config.staticOptions
   );
-  // does this need to be replace with serve-static? 05032018
+  // Does this need to be replace with serve-static? 05032018
   return express.static(webroot, staticOptions);
 };
 
@@ -99,7 +105,7 @@ exports.serveStatic = (webroot, config, urlToOpen = '') => {
  * @param {int} delayResTime time to delay when response in ms
  * @return {function} middleware to use: app.use(url, proxyDelay, myProxy);
  */
-const proxyDelay = function(originalUrl, delayReqTime, delayResTime) {
+const proxyDelay = (originalUrl, delayReqTime, delayResTime) => {
   return function (req, res, next) {
     if (req.originalUrl === originalUrl) {
       // Delay request by 2 seconds
@@ -126,8 +132,11 @@ exports.directoryListing = (dir) => {
 };
 */
 
-// export for other use
-exports.setHeaders = setHeaders;
-exports.getRandomInt = getRandomInt;
-exports.toArray = toArray;
-exports.proxyDelay = proxyDelay;
+// Export
+module.exports = {
+  setHeaders: setHeaders,
+  getRandomInt: getRandomInt,
+  toArray: toArray,
+  proxyDelay: proxyDelay,
+  serveStatic: serveStatic
+};

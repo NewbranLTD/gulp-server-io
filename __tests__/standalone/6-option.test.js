@@ -7,7 +7,8 @@ const options = {
   https: {
     devCrtPem: '/path/to/cert.crt',
     devKeyPem: '/path/to/cert.pem'
-  }
+  },
+  serverReload: true
 };
 
 /**
@@ -26,6 +27,20 @@ describe('Testing the core enable-middleware-shorthand', () => {
       enable: true,
       devCrtPem: '/path/to/cert.crt',
       devKeyPem: '/path/to/cert.pem'
+    });
+  });
+  // this works
+  it.skip('Should return the serverReload config object', () => {
+    expect(config).toHaveProperty('serverReload', {
+      enable: true,
+      dir: '/srv',
+      config: {
+        verbose: true,
+        debounce: 500
+      },
+      callback: () => {
+        console.log('server reload callback executed');
+      }
     });
   });
 });

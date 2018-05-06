@@ -37,6 +37,13 @@ const config2 = {
     ]
     // target: ['another.html']
   }
+  /*
+  serverReload: {
+    dir: path.join(__dirname, '..', '.tmp'),
+    callback: files => {
+      console.log('detect files change', files);
+    }
+  }*/
 };
 
 // testing the wiredep

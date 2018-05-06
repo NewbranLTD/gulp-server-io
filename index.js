@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Top level export method
  * @TODO export a gulp version with the gulp-inject

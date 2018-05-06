@@ -7,7 +7,7 @@ const fs = require('fs-extra');
 const chalk = require('chalk');
 const jsonServer = require('json-server');
 const logutil = require('./log');
-const watcherFn = require('../watcher');
+const watcherFn = require('../app-watcher');
 // Expect to return this server config for the proxies
 module.exports = function(options) {
   let proxies = [];

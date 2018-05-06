@@ -23,7 +23,7 @@ const debuggerClient = require('./debugger/client');
 const { scriptsInjector, filesInjector } = require('./injector');
 /**
  * Export
- * @param {object} options
+ * @param {object} options pass from config
  * @return {object} app and config for destructing
  */
 module.exports = function(options) {

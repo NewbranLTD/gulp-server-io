@@ -37,6 +37,18 @@
       });
   };
   /**
+   * added on V1.4.0 
+   */
+  window.onunhandledrejection = function(e) {
+    StackTrace.fromError(e)
+      .then(function(data) {
+        send({msg: data, from: 'onunhandledrejection', color: 'warning'});
+      })
+      .catch(function(err) {
+        send({msg: err, from: 'catch onunhandledrejection', color: 'debug'});
+      });
+  }
+  /**
    * Allow this send method available in the global environment
    */
   window.$gulpServerIo.debugger = send;
