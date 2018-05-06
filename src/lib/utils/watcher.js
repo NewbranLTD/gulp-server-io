@@ -26,7 +26,6 @@ const fileWatcher = (filePaths, verbose = true, debounce = 500, callback) => {
       }
     });
 };
-
 /**
  * This is when we received call from the parent process
  */
@@ -47,3 +46,5 @@ process.on('message', m => {
     default:
   }
 });
+// Report it
+module.exports = fileWatcher;
