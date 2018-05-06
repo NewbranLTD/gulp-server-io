@@ -6,7 +6,8 @@ const chalk = require('chalk');
 const { join } = require('path');
 const { fork } = require('child_process');
 const watcher = join(__dirname, 'utils', 'watcher');
-console.log(watcher);
+const debug = require('debug')('gulp-server-io:stream-watcher');
+debug('path to external watcher', watcher);
 // Main
 module.exports = config => {
   if (config.enable && config.dir && _.isFunction(config.callback)) {
@@ -39,6 +40,7 @@ module.exports = config => {
       }
     };
   }
+  debug('Error: config didnt pass', config);
   // Return an empty method
   return () => {};
 };

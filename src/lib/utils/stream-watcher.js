@@ -17,6 +17,8 @@ let watcher;
 /**
  * Make sure to pass directories to this method
  * @20180322 Add if this is not a directory then we resolve the file path directory
+ * @param {array} filePaths array of directories
+ * @return {array} fixed paths
  */
 const ensureIsDir = filePaths => {
   const paths = toArray(filePaths);
@@ -38,7 +40,7 @@ const ensureIsDir = filePaths => {
  * Watch folder method
  * @param {array} filePaths to watch
  * @param {boolean} verbose to output or not
- * @return {function} bacon method
+ * @return {function} bacon unwatch method
  */
 module.exports = function(filePaths, verbose) {
   debug('[verbose]', verbose);

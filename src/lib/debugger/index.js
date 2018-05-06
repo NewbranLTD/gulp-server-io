@@ -9,6 +9,8 @@ const socketIO = require('socket.io');
 const logutil = require('../utils/log');
 /**
  * Just getting some color configuration
+ * @param {object} data from config
+ * @return {string} color
  */
 const getColor = function(data) {
   let dc = 'cyan';
@@ -34,7 +36,7 @@ const getColor = function(data) {
  * DebuggerServer
  * @param {object} config - the full configuration object
  * @param {object} server http/https server instance
- * @param {function} logger
+ * @param {function} logger util for logging
  * @return {object} socket the namespace instance and a close method
  */
 module.exports = function(config, server, logger) {
@@ -78,7 +80,6 @@ module.exports = function(config, server, logger) {
       return data;
     }
   };
-
   // Encap to one func
   const displayError = e => {
     // This is required so we just do a simple test here

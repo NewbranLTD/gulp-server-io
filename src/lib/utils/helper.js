@@ -123,8 +123,6 @@ const proxyDelay = (originalUrl, delayReqTime, delayResTime) => {
   }
 };
 
-
-
 /**
  * directory listing - no longer support since 1.4.0-alpha.2
  */

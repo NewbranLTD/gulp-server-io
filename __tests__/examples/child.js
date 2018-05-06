@@ -6,7 +6,7 @@ const { join } = require('path');
 const debug = require('debug')('gulp-webserver-io:stream-watcher');
 const serverReload = require(join(__dirname, '..', '..', 'src', 'lib', 'server-reload'));
 const fileWatcher = require(join(__dirname, '..', '..', 'src', 'lib', 'utils', 'watcher'));
-const dir = join(__dirname, '..', '.tmp');
+const dir = join(__dirname, '..', 'fixtures', 'rootDir');
 
 /*
 const fn = fileWatcher(dir, true, 500, files => {
@@ -18,7 +18,7 @@ debug('[fn]', fn);
 
 serverReload({
     enable: true,
-    dir: join(__dirname, '..', '.tmp'),
+    dir: dir,
     callback: files => {
         console.log('files changed', files);
     }
