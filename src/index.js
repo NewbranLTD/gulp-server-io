@@ -74,7 +74,10 @@ module.exports = function(options = {}) {
   // Overwriting the callback
   const cb = config.callback;
   config.callback = () => {
-    cb();
+    // For some reason the config is undefined and nothing can pass to it
+    if (typeof cb === 'function') {
+      Reflect.apply(cb, null, [config]);
+    }
     // Notify
     logutil(
       chalk.white(`gulp-server-io (${config.version}) running at`),
