@@ -1,6 +1,6 @@
 {
   "name": "gulp-server-io",
-  "version": "1.4.0-beta.11",
+  "version": "1.4.0-beta.12",
   "description":
     "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
   "homepage": "https://newbran.ch",
@@ -45,7 +45,8 @@
     "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --runInBand --forceExit",
     "meow": "node ./cli-meow.js",
     "dev": "node ./__tests__/examples/site.js",
-    "test:option": "jest standalone/6-option.test.js",
+    "test:option":
+      "DEBUG=gulp-server-io:inject jest standalone/6-option.test.js",
     "test:socket": "jest standalone/1-basic.test.js",
     "test:part": "jest --forceExit ./__tests__/main/2-custom-a.test.js",
     "test:cli": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest main/4-fallback.test.js",
