@@ -51,10 +51,13 @@
 
  */
 const log = require('../utils/log');
+
+const glob = require('glob');
 const chalk = require('chalk');
 const cheerio = require('cheerio');
 const interceptor = require('express-interceptor');
-const glob = require('glob');
+const debug = require('debug')('gulp-server-io:inject');
+
 /**
  * @param {array} files to wrap with tag
  * @param {string} ignorePath to strip out
@@ -85,6 +88,7 @@ const tagJs = (files, ignorePath) => {
     })
     .join('\r\n');
 };
+
 /**
  * @param {string} source to process
  * @return {array} result
@@ -98,9 +102,19 @@ const processFiles = source => {
   }
   return files;
 };
+
+/**
+ * @param {strimg} name file
+ * @return {boolean} true found css
+ */
 const isCss = name => {
   return name.toLowerCase().substr(-3) === 'css';
 };
+
+/**
+ * @param {string} name file
+ * @return {boolean} true found js
+ */
 const isJs = name => {
   return name.toLowerCase().substr(-2) === 'js';
 };
@@ -138,19 +152,25 @@ const getSource = source => {
  * @param {mixed} target array or string
  * @return {mixed} Array on success of false
  */
+/*
 const getTarget = target => {
   if (target) {
     return Array.isArray(target) ? target : [target];
   }
   return false;
 };
+*/
 // Main
 module.exports = function(config) {
-  const target = getTarget(config.target);
+  // @2018-05-07 disbale this check because we couldn't get the fileanme from the middleware
+  // const target = getTarget(config.target);
   const { js, css } = getSource(config.source);
-  if (!target || !js || !css) {
+  // Const check = target && (js || css);
+  if (!js || !css) {
     // Display an error inline here
-    log(chalk.red('[inject] Configuration is incorrect for inject to work!'));
+    const msg = '[inject] Configuration is incorrect for inject to work!';
+    debug('error', msg);
+    log(chalk.red(msg, config));
     return function(req, res, next) {
       next();
     };
@@ -159,7 +179,7 @@ module.exports = function(config) {
   return interceptor(function(req, res) {
     return {
       isInterceptable: function() {
-        // @TODO need to check file name also
+        // @TODO need to check file name also - still no solution
         if (/text\/html/.test(res.get('Content-Type'))) {
           // Console.log(req.url, res.get('Content-Type'));
           return true;
