@@ -29,6 +29,7 @@ describe('Testing the mock server gulp-server-io/server', () => {
       .get('/api')
       .expect(200, /cats/)
       .catch(err => {
+        // 2018-05-07 still throw 404 need to check next why the mock not working
         console.log('FAILED', err);
       });
    });

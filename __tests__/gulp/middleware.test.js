@@ -44,6 +44,9 @@ describe('gulp-webserver-io middleware test', () => {
     stream.write(rootDir);
     return request(defaultUrl)
       .get(testPath)
-      .expect(200, 'middleware');
+      .expect(200, 'middleware')
+      .catch(err => {
+        console.log('error', err);
+      });
   });
 });

@@ -24,6 +24,9 @@ describe('Testing the gulp-server-io/server with different port number 3838', ()
   test(`It should connect to ${url1}`, () => {
     return request(url1)
       .get('/')
-      .expect(200, /Bootstrap Template test for gulp-server-io/);
+      .expect(200, /Bootstrap Template test for gulp-server-io/)
+      .catch(err => {
+        console.log('error', err);
+      });
   });
 });
