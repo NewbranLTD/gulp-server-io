@@ -86,7 +86,8 @@ module.exports = function(options) {
     middlewares.filter(m => typeof m === 'function').forEach(m => app.use(m));
   }
   // First need to setup the mock json server
-  if (config.mock.enable && config.mock.json && config.development) {
+  // @2010-05-08 remove the development flag it could be confusing
+  if (config.mock.enable && config.mock.json) {
     // Here we overwrite the proxies so the proxy get to the mock server
     // @TODO sort out particular url that shouldn't be mock?
     const _mock = mockServer(config);
