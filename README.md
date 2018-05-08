@@ -1,5 +1,4 @@
-# gulp-server-io [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url][![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
-[![jest](https://facebook.github.io/jest/img/jest-badge.svg)](https://github.com/facebook/jest)
+# gulp-server-io [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
 > Create a static server, live reload and a socket.io debugger for your SPA development with gulp
 > Plus a standalone server with Express / json-server and http proxy for rapid deployment
@@ -31,16 +30,18 @@ Using yarn
 
 There are several ways to use this package. First, during development and, use it with `gulp`:
 
-<span style="color:red">1.4.0 final version will remove the `gulp-server-io/gulp`, instead use `gulp-server-io/export`</span>
+<span style="color:red">1.5.0 final version will remove the `gulp-server-io/gulp` and `gulp-server-io/export`, because the new npm
+install dependencies in a flat structure. So if this package use it then it's available anyway.</span>
 
 ```js
 // gulpfile.js  
-// We have include the Gulp 4 with this package and expose it back as well
-const { gulp } = require('gulp-server-io/export');
+// We have include the Gulp 4 with this package and you can just require it.
+// But remember you do need to install gulp-cli globally, they are two different modules
+const gulp = require('gulp');
 const gulpServerIo = require('gulp-server-io');
 
 gulp.task('serve', () => {
-  return gulp.src('./app')
+  return gulp.src(['./app', './.dev', './tmp'])
              .pipe(
                gulpServerIo()
              );
@@ -56,6 +57,8 @@ Please note this will not be enable in the stand alone server version. It's only
 
 V.1.1.0 integrate with [stacktrace.js](https://github.com/stacktracejs/stacktrace.js/) to produce a much nicer output in the console.
 
+V.1.4.0 add `onunhandledrejection` in the client to catch those unresolved promises.
+
 The main use is when you need to run your app on your mobile, that allows you to quickly see if there is any error. Also the same method is expose globally, you can do something like this:
 
 ```js
@@ -70,7 +73,7 @@ You an pass just a full string to the method. Or you can pass an object which pr
 
 You can also use the stacktrace.js which is available globally via the `StackTrace` object.
 
-*Please remember to take this down once you are production ready, because the debugger and stacktrace.js only inject into the html dynamically during development.*
+*Please remember to take this down once you are production ready, because the debugger and stacktrace.js only inject into the HTML dynamically during development.*
 
 ## Proxies
 
@@ -162,6 +165,32 @@ overwritten by the mock JSON path.
 *NEW @ 1.4.0* I have added a watcher to your JSON file, so whenever you edit your mock JSON data file,
 the mock server will automatically restart. *1.4.0-beta.4 has an error regarding the non-directory option, it's been fixed in the later release*
 
+## serverReload
+
+This is a new option in V1.4.0.
+
+```js
+
+gulp.src(paths)
+  .pipe(
+    gulpServerIo({
+      serverReload: {
+        dir: '/path/to/where/your/server/side/files',
+        config: {verbose: true, debounce: 1000},
+        callback: files => {
+          // perform your server side restart
+        }
+      }
+    })
+  )
+
+```
+
+This is a separate watcher module expose to allow you to watch your server side files changed (or anything you want to watch).
+Internally this is execute in a different process. the minimum config is provide the `dir` and `callback` option. Where `dir` is
+where the path to your directory you want to watch. And `callback` is what you want to do when files change, it will also pass you
+an array of the files that changed.
+
 ## CLI
 
 You can also use it as a cli tool if you install this globally. *Please note we switch to `meow` instead of `yargs` from 1.3 so the option will be different.*
@@ -244,13 +273,13 @@ server({
 | https          | Use secure or not @TODO                        | `false`                   | Object            |
 | open           | automatically open browser                     | `true`                    | Boolean or String |
 | callback       | A function to execute after the server start   | `() => {}`                | Function          |
-| staticOptions  | Look at `server-static`                        | `{}`                      | Object            |
 | headers        | extra headers to pass                          | `{}`                      | Object            |
 | proxies        | Array of proxies `{ source , target }`         | `[]`                      | Array             |
 | mock           | Create mock REST API using json-server         | `false`                   | Boolean or String |
 | debugger       | Socket.io debugger                             | `true`                    | Boolean or Object |
 | inject         | inject file to the html you want               | false                     | Object            |
 | reload         | detect files change and restart server         | verbose:true,interval:1000| Object            |
+| serverReload   | A seperate watcher module to watch your server side files | TBC            | Object            |
 
 Please see wiki for more information about all the available options.
 
