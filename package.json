@@ -52,7 +52,8 @@
     "test:cli": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest main/4-fallback.test.js",
     "example:gulp":
       "DEBUG=gulp-webserver-io:stream-watcher gulp wire --gulpfile ./__tests__/examples/gulpfile.js",
-    "example:standalone": "node ./__tests__/examples/standalone.js",
+    "example:standalone":
+      "DEBUG=gulp-server-io:mock node ./__tests__/examples/standalone.js",
     "example:main": "NODE_ENV=testx node ./__tests__/examples/index.js",
     "example:fork":
       "DEBUG=gulp-webserver-io:stream-watcher node ./__tests__/examples/child.js"

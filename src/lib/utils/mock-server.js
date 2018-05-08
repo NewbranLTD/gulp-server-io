@@ -2,12 +2,13 @@
  * Mocking API call using json-server
  */
 const _ = require('lodash');
-const args = require('yargs');
+// Const args = require('yargs');
 const fs = require('fs-extra');
 const chalk = require('chalk');
 const jsonServer = require('json-server');
 const logutil = require('./log');
 const watcherFn = require('../app-watcher');
+const debug = require('debug')('gulp-server-io:mock');
 // Expect to return this server config for the proxies
 module.exports = function(options) {
   let proxies = [];
@@ -18,9 +19,9 @@ module.exports = function(options) {
   const host = opt.host || 'localhost';
   // @TODO check if the host has the http to start?
   // @TODO add https options
-  if (args.debug) {
-    logutil('mock option', opt);
-  }
+
+  debug('mock option', opt);
+
   // @TODO should allow to pass multiple json files
   const json = fs.readJsonSync(opt.json);
   _.forEach(json, (payload, name) => {
@@ -44,9 +45,7 @@ module.exports = function(options) {
   }
   // This is the real server that we need to call exit
   const server = _server.listen(port, () => {
-    if (args.debug) {
-      logutil(chalk.white('Mock json Server is running @ ', port));
-    }
+    logutil(chalk.white('Mock json Server is running @ ', port));
   });
   // Restart method
   // if pass kill then just end the instance, this will replace the mockServerInstance

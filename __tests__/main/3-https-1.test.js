@@ -31,6 +31,9 @@ describe('gulp-webserver-io stock test', () => {
     stream.write(rootDir);
     return request(defaultSSLUrl)
       .get('/')
-      .expect(200, /Bootstrap Template test for gulp-server-io/);
+      .expect(200, /Bootstrap Template test for gulp-server-io/)
+      .catch(err => {
+        console.log('error', err);
+      });
   });
 });
