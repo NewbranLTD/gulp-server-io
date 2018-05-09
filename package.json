@@ -112,7 +112,8 @@
     "yargs": "^11.0.0"
   },
   "bin": {
-    "gulp-server-io": "./cli.js"
+    "gulp-server-io": "./cli.js",
+    "gsio": "./cli.js"
   },
   "engines": {
     "node": ">=7.00"

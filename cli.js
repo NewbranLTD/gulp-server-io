@@ -2,14 +2,15 @@
 /**
  * Update cli using meow instead of yargs
  */
-
-const { gulp } = require('./gulp');
-const server = require('./index');
+const gulp = require('gulp');
 const path = require('path');
 const fs = require('fs-extra');
 const _ = require('lodash');
 const meow = require('meow');
 const log = require('fancy-log');
+// Main
+const server = require('./index');
+// Config
 const alias = {
   p: 'port',
   h: 'host',
