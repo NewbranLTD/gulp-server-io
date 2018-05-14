@@ -12,11 +12,8 @@ const filesInject = require('./files-inject');
 exports.scriptsInjector = function(features, config) {
   let scripts = [];
   if (features.reload) {
-    // Const reloadRoute = config.reload.route || 'reload';
-    // @2017-11-05 if we change the route it stop working
-    // ${reloadRoute}
-    // const liveReloadScript = `<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>`;
-    scripts.push('/reload/reload.js');
+    // @2018-05-14 using out new reload method
+    scripts.push([config.reload.namespace, 'io-reload.js'].join('/'));
   }
   if (features.debugger) {
     // @TODO if they change the debugger config

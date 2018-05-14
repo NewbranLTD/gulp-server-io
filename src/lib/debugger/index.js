@@ -52,7 +52,9 @@ module.exports = function(config, server, logger) {
           : ['websocket'];
     }
   }
+  // Need to take this constructor out and re-use with the reload
   const io = socketIO(server, socketConfig);
+
   const keys = ['browser', 'location'];
   const lb = chalk.white('-'.repeat(90));
   // Show if this is running

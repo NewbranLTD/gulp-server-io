@@ -3,9 +3,11 @@
  */
 const fs = require('fs');
 const chalk = require('chalk');
-const reload = require('reload');
+
 const through = require('through2');
 // Our modules
+
+const reload = require('./lib/reload');
 const appGenerator = require('./lib/app');
 const appWatcher = require('./lib/app-watcher');
 const openInBrowser = require('./lib/open');
@@ -47,17 +49,7 @@ module.exports = function(options = {}) {
       filePaths.push(f.path);
     })
     .on('end', () => {
-      debug('files/dir being serve', filePaths);
-      // Run the watcher, return an unwatch function
-      if (config.reload.enable) {
-        // Limiting the config options
-        const reloadServer = reload(app, { verbose: config.reload.verbose });
-        unwatchFn.push(appWatcher(filePaths, reloadServer, config.reload));
-        debug('config.reload.enable', 'start up the reload server');
-      }
-      // @TODO add watching server side files
-      // New @1.4.0-beta.11 watch a different path and pass a callback
-      unwatchFn.push(serverReload(config.serverReload));
+      // Debug('files/dir being serve', filePaths);
       // Setup fallback i.e. 404.html
       if (config.fallback !== false) {
         filePaths.forEach(file => {
@@ -89,10 +81,30 @@ module.exports = function(options = {}) {
     openInBrowser(config);
   };
   const webserver = serverGenerator(app, config);
+
+  // @TODO we need to combine the two socket server into one
+  // 1. check if those modules that require a socket server is needed
+  // 2. generate a socket server, then passing the instance back to
+  // their respective constructors
+
+  // Run the watcher, return an unwatch function
+  if (config.reload.enable) {
+    // Limiting the config options
+    const reloadServer = reload(app, { verbose: config.reload.verbose });
+    unwatchFn.push(appWatcher(filePaths, reloadServer, config.reload));
+    debug('config.reload.enable', 'start up the reload server');
+  }
+
   // Debugger server start
   if (config.debugger.enable && config.debugger.server === true) {
     const { close } = debuggerServer(config, webserver);
     unwatchFn.push(close);
+  }
+
+  // @TODO add watching server side files
+  // New @1.4.0-beta.11 watch a different path and pass a callback
+  if (config.serverReload.enable) {
+    unwatchFn.push(serverReload(config.serverReload));
   }
 
   // When ctrl-c or stream.emit('kill')
