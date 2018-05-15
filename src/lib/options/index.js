@@ -90,7 +90,8 @@ const defaultOptions = {
   reload: {
     enable: true,
     verbose: true,
-    interval: 300
+    interval: 500,
+    namespace: '/reload-io'
   },
   // Create our socket.io debugger
   // using the socket.io instead of just normal post allow us to do this cross domain
