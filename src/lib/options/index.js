@@ -50,6 +50,18 @@ const defaultOptions = {
     devCrtPem: path.join(src, 'certs', 'cert.crt')
   },
   /**
+   * NOTE:
+   * new at 1.5 take out the socket config
+   * this is ready for the future V.2 develop to have
+   * socket proxy out to a third parties server
+   */
+  socket: {
+    enable: true,
+    socketOnly: true,
+    transportConfig: ['websocket'],
+    proxy: false
+  },
+  /**
    * MIDDLEWARE DEFAULTS
    * NOTE:
    *  All middleware should defaults should have the 'enable'
@@ -91,14 +103,17 @@ const defaultOptions = {
     enable: true,
     verbose: true,
     interval: 500,
-    namespace: '/reload-io'
+    namespace: '/reload-io',
+    js: 'gulp-server-io/reload-client.js',
+    eventName: 'gulpServerIoReload',
+    hello: 'RELOAD IO is listening ...'
   },
   // Create our socket.io debugger
   // using the socket.io instead of just normal post allow us to do this cross domain
   debugger: {
     enable: true, // Turn on by default otherwise they wouldn't be using this version anyway
     namespace: '/debugger-io',
-    js: 'debugger-client.js',
+    js: 'gulp-server-io/debugger-client.js',
     eventName: 'gulpServerIoJsError',
     hello: 'IO DEBUGGER is listening ...', // Allow the user to change this as well
     client: true, // Allow passing a configuration to overwrite the client
