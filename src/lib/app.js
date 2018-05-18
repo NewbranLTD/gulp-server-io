@@ -20,6 +20,7 @@ const { toArray } = require('./utils/helper');
 const logutil = require('./utils/log');
 const mockServer = require('./utils/mock-server');
 const debuggerClient = require('./debugger/client');
+const reloadClient = require('./reload/client');
 const { scriptsInjector, filesInjector } = require('./injector');
 /**
  * Export
@@ -31,6 +32,7 @@ module.exports = function(options) {
   let config = options.__processed__ === true ? options : createConfiguration(options);
   // Init the app
   const app = express();
+  const addReload = config.reload.enable;
   let addDebugger = false;
   // Fixed on 1.4.0-beta.3
   let proxies = config.proxies;
@@ -38,6 +40,7 @@ module.exports = function(options) {
   const closeFn = { close: () => {} };
   let mockServerInstance = closeFn;
   let debuggerInstance = closeFn;
+
   // Properties
   let middlewares = proxies.length
     ? []
@@ -45,6 +48,7 @@ module.exports = function(options) {
   if (config.development) {
     middlewares.push(helmet.noCache());
   }
+
   // Make sure the namespace is correct first
   if (config.debugger.enable && config.development) {
     const namespace = config.debugger.namespace;
@@ -55,8 +59,10 @@ module.exports = function(options) {
     }
     addDebugger = config.debugger.client !== false;
   }
+
   // Live reload and inject debugger
-  if (config.reload.enable || addDebugger) {
+  // This part inject the scripts into the html files
+  if (addReload || addDebugger) {
     middlewares.push(
       scriptsInjector(
         {
@@ -67,24 +73,36 @@ module.exports = function(options) {
       )
     );
   }
+
+  // Enable inject here
+  // This one inject related assets files into the html
+  // @TODO merge this with the above scriptsInjector
+  if (config.inject.enable) {
+    middlewares.push(filesInjector(config.inject));
+  }
+
   // Init the debugger
   if (addDebugger) {
     middlewares.push(debuggerClient(config.debugger));
   }
-  // Enable inject here
-  if (config.inject.enable) {
-    middlewares.push(filesInjector(config.inject));
+
+  // Our own reload method
+  if (addReload) {
+    middlewares.push(reloadClient(config.reload));
   }
+
   // Extra middlewares pass directly from config
   if (typeof config.middleware === 'function') {
     middlewares.push(config.middleware);
   } else if (isarray(config.middleware)) {
     middlewares = middlewares.concat(config.middleware);
   }
+
   // Now inject the middlewares
   if (middlewares.length) {
     middlewares.filter(m => typeof m === 'function').forEach(m => app.use(m));
   }
+
   // First need to setup the mock json server
   // @2010-05-08 remove the development flag it could be confusing
   if (config.mock.enable && config.mock.json) {
@@ -99,7 +117,10 @@ module.exports = function(options) {
   // Proxy requests final
   proxies.forEach(proxyoptions => {
     if (!proxyoptions.target || !proxyoptions.source) {
-      console.log(chalk.red('Missing target or source property for proxy setting!'));
+      console.log(
+        chalk.red('Missing target or source property for proxy setting!'),
+        proxyoptions
+      );
       return; // ignore!
     }
     let source = proxyoptions.source;
