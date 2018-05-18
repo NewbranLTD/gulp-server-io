@@ -43,7 +43,8 @@ module.exports = function(options) {
   // Default callbacks
   const closeFn = { close: () => {} };
   let mockServerInstance = closeFn;
-  let debuggerInstance = closeFn;
+  // Let debuggerInstance = closeFn;
+  let io = null;
 
   // Properties
   let middlewares = proxies.length
@@ -76,6 +77,8 @@ module.exports = function(options) {
         config
       )
     );
+    // Init the websocket server
+    io = socketServer(app, config);
   }
 
   // Enable inject here
@@ -131,6 +134,7 @@ module.exports = function(options) {
     delete proxyoptions.source;
     app.use(source, httpProxy(proxyoptions));
   });
+
   // This is the end - we continue in the next level to construct the server
-  return { app, config, mockServerInstance };
+  return { app, io, config, mockServerInstance };
 };

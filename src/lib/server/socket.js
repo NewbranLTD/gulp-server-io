@@ -3,7 +3,12 @@
  */
 const socketIO = require('socket.io');
 // Export
-module.exports = (config, app) => {
+/**
+ * @param {object} app express app
+ * @param {object} config full config options
+ * @return {object} io instance
+ */
+module.exports = (app, config) => {
   if (!config.socket.enable) {
     return null;
   }
