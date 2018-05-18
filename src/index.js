@@ -9,12 +9,14 @@ const through = require('through2');
 
 const reload = require('./lib/reload');
 const appGenerator = require('./lib/app');
-const appWatcher = require('./lib/app-watcher');
-const openInBrowser = require('./lib/open');
-const serverGenerator = require('./lib/webserver');
-const debuggerServer = require('./lib/debugger');
+const appWatcher = require('./lib/watcher/app-watcher');
+const openInBrowser = require('./lib/utils/open');
+const { webserver } = require('./lib/server');
 const { serveStatic } = require('./lib/utils/helper');
-const serverReload = require('./lib/server-reload');
+
+const debuggerServer = require('./lib/debugger');
+const serverReload = require('./lib/utils/server-reload');
+
 const logutil = require('./lib/utils/log');
 // Adding debug options here
 const debug = require('debug')('gulp-server-io:main');
@@ -80,7 +82,7 @@ module.exports = function(options = {}) {
     // Open in browser
     openInBrowser(config);
   };
-  const webserver = serverGenerator(app, config);
+  const server = webserver(app, config);
 
   // @TODO we need to combine the two socket server into one
   // 1. check if those modules that require a socket server is needed
@@ -97,7 +99,7 @@ module.exports = function(options = {}) {
 
   // Debugger server start
   if (config.debugger.enable && config.debugger.server === true) {
-    const { close } = debuggerServer(config, webserver);
+    const { close } = debuggerServer(config, server);
     unwatchFn.push(close);
   }
 
@@ -110,7 +112,7 @@ module.exports = function(options = {}) {
   // When ctrl-c or stream.emit('kill')
   stream.on('kill', () => {
     // This is unnecessary
-    webserver.close();
+    server.close();
     // Close the mock server
     mockServerInstance.close();
     // @1.4.0-beta.11 change to array
