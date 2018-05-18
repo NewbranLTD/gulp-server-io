@@ -6,8 +6,9 @@ const _ = require('lodash');
 const fs = require('fs-extra');
 const chalk = require('chalk');
 const jsonServer = require('json-server');
-const logutil = require('./log');
-const watcherFn = require('../app-watcher');
+const logutil = require('../utils/log');
+const watcherFn = require('../watcher/app-watcher');
+
 const debug = require('debug')('gulp-server-io:mock');
 // Expect to return this server config for the proxies
 module.exports = function(options) {

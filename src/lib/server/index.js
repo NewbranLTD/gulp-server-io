@@ -5,6 +5,8 @@
  */
 const webserver = require('./webserver');
 const socketServer = require('./socket');
+const mockServer = require('./mock-server');
 
 exports.webserver = webserver;
 exports.socketServer = socketServer;
+exports.mockServer = mockServer;

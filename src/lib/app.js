@@ -18,12 +18,16 @@ const { createConfiguration } = require('./options');
 // Modules
 const { toArray } = require('./utils/helper');
 const logutil = require('./utils/log');
-const mockServer = require('./utils/mock-server');
+// Servers
+const { mockServer, socketServer } = require('./server');
+// Clients
 const debuggerClient = require('./debugger/client');
 const reloadClient = require('./reload/client');
+// Injectors
 const { scriptsInjector, filesInjector } = require('./injector');
 /**
- * Export
+ * Export @TODO we also need to generate the socket server here, export the io
+ * object for the other socket enable app to use
  * @param {object} options pass from config
  * @return {object} app and config for destructing
  */
