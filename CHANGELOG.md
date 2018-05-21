@@ -1,3 +1,15 @@
+1.5.0-alpha.1
+* make the debugger io more useful, instead of asking the user to use our own event log system. We could ask them to provide a config option at the run time to overload the `console.xxx` this way, they can be use without knowing it. 
+* provide a better logger description, why they want to use it. Also this make more sense if they use the server as a deploy option, but we still need to overcome the oddity we encouter during serving up the preact.js app about the secondary loaded js files not recognized as a application/javasript 
+* (main) completely rearchitect the socket server structure, also how the middleware get injected, at the moment it's all over the places. 
+
+2.0.0 @TODO @TBC 
+* a plugin system to allow a dashboard like functionality to track what is happening to the app in development.
+* develop a chrome plugin to integrate testing result with the collebolly network. 
+* user identity / payment tracking / remote discussion 
+* Gmail plugin to view / reply tickets
+* Slack bot
+
 1.0.0-alpha.2
 * socket.io debugger in place
 1.0.0-alpha.1
