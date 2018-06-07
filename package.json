@@ -1,0 +1,120 @@
+{
+  "name": "gulp-server-io",
+  "version": "1.4.0",
+  "description":
+    "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
+  "homepage": "https://newbran.ch",
+  "author": {
+    "name": "NEWBRAN.CH",
+    "email": "info@newbran.ch",
+    "url": "https://newbran.ch"
+  },
+  "files": ["src", "index.js", "server.js", "gulp.js", "cli.js", "export.js"],
+  "main": "index.js",
+  "keywords": [
+    "node",
+    "connect",
+    "server",
+    "express",
+    "livereload",
+    "socket.io",
+    "gulp",
+    "development",
+    "SPA",
+    "deployment"
+  ],
+  "devDependencies": {
+    "coveralls": "^3.0.1",
+    "debug": "^3.1.0",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-xo": "^0.22.1",
+    "eslint-plugin-prettier": "^2.6.0",
+    "husky": "^0.14.3",
+    "jest": "^22.4.3",
+    "jest-cli": "^23.0.0-alpha.0",
+    "lint-staged": "^7.0.5",
+    "nsp": "^3.2.1",
+    "prettier": "^1.12.1",
+    "supertest": "^3.0.0"
+  },
+  "scripts": {
+    "prepublish-Only": "nsp check",
+    "pretest": "eslint . --fix",
+    "precommit": "lint-staged",
+    "test": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest --runInBand --forceExit",
+    "meow": "node ./cli-meow.js",
+    "dev": "node ./__tests__/examples/site.js",
+    "test:option":
+      "DEBUG=gulp-server-io:inject jest standalone/6-option.test.js",
+    "test:socket": "jest standalone/1-basic.test.js",
+    "test:part": "jest --forceExit ./__tests__/main/2-custom-a.test.js",
+    "test:cli": "NODE_TLS_REJECT_UNAUTHORIZED=0 jest main/4-fallback.test.js",
+    "example:gulp":
+      "DEBUG=gulp-webserver-io:stream-watcher gulp wire --gulpfile ./__tests__/examples/gulpfile.js",
+    "example:standalone":
+      "DEBUG=gulp-server-io:mock node ./__tests__/examples/standalone.js",
+    "example:main": "NODE_ENV=testx node ./__tests__/examples/index.js",
+    "example:fork":
+      "DEBUG=gulp-webserver-io:stream-watcher node ./__tests__/examples/child.js"
+  },
+  "lint-staged": {
+    "*.js": ["eslint --fix", "git add"],
+    "*.json": ["prettier --write", "git add"]
+  },
+  "eslintConfig": {
+    "extends": ["xo", "prettier"],
+    "env": {
+      "jest": true,
+      "node": true
+    },
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "printWidth": 90
+        }
+      ]
+    },
+    "plugins": ["prettier"]
+  },
+  "repository": "git@github.com:NewbranLTD/gulp-server-io.git",
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": ["/fixtures/", "/examples/"],
+    "collectCoverage": true
+  },
+  "license": "MIT",
+  "dependencies": {
+    "baconjs": "^2.0.7",
+    "body-parser": "^1.18.2",
+    "chalk": "^2.4.1",
+    "cheerio": "^1.0.0-rc.2",
+    "chokidar": "^2.0.3",
+    "express": "^4.16.3",
+    "express-interceptor": "^1.2.0",
+    "fancy-log": "^1.3.2",
+    "fs-extra": "^6.0.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "helmet": "^3.12.0",
+    "http-proxy-middleware": "^0.18.0",
+    "json-server": "^0.12.2",
+    "lodash": "^4.17.10",
+    "meow": "^5.0.0",
+    "morgan": "^1.9.0",
+    "opn": "^5.3.0",
+    "reload": "^2.2.2",
+    "socket.io": "^2.1.0",
+    "stacktrace-js": "^2.0.0",
+    "through2": "^2.0.3",
+    "vinyl": "^2.1.0",
+    "yargs": "^11.0.0"
+  },
+  "bin": {
+    "gulp-server-io": "./cli.js"
+  },
+  "engines": {
+    "node": ">=7.00"
+  }
+}
