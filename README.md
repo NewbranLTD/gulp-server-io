@@ -1,14 +1,12 @@
+**WE HAVE MOVED TO GITLAB! This doesn't affect the published npm. You can continue to use without problem. If you want to follow our latest development or submit bug report. Please visit <a href="https://gitlab.com/newbranltd/gulp-server-io">Gulp-server-io on Gitlab</a>
+<br />
+Thank you for your continue support. And FCUK GITHUB!**
+---
+
 # gulp-server-io [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
 > Create a static server, live reload and a socket.io debugger for your SPA development with gulp
 > Plus a standalone server with Express / json-server and http proxy for rapid deployment
-
-<span style="color:red; font-size: 200%">
-  WE HAVE MOVED TO GITLAB! This doesn't affect the published npm. You can continue to use without problem.
-  If you want to follow our latest development or submit bug report. Please visit <a href="https://gitlab.com/newbranltd/gulp-server-io">Gulp-server-io on Gitlab</a>
-  <br />
-  Thank you for your continue support. And FCUK GITHUB!
-</span>
 
 
 ## Introduction
