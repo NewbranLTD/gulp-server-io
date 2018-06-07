@@ -3,7 +3,7 @@
   "version": "1.4.0",
   "description":
     "Create a static server, livereload and a socket.io debugger for your SPA development with gulp",
-  "homepage": "https://newbran.ch",
+  "homepage": "https://gitlab.com/newbranchltd/gulp-server-io",
   "author": {
     "name": "NEWBRAN.CH",
     "email": "info@newbran.ch",
@@ -79,7 +79,10 @@
     },
     "plugins": ["prettier"]
   },
-  "repository": "git@github.com:NewbranLTD/gulp-server-io.git",
+  "repository": {
+    "url": "git@gitlab.com:newbranltd/gulp-server-io.git",
+    "type": "git"
+  },
   "jest": {
     "testEnvironment": "node",
     "testPathIgnorePatterns": ["/fixtures/", "/examples/"],
